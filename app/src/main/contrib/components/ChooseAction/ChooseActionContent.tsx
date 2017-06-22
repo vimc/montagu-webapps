@@ -7,8 +7,10 @@ import { TouchstoneList } from "./TouchstoneList";
 import { RemoteContent } from "../../../shared/models/RemoteContent";
 import { RemoteContentComponent } from "../../../shared/components/RemoteContentComponent/RemoteContentComponent";
 import { isNullOrUndefined } from "util";
+import { ButtonLink } from "../../../shared/components/ButtonLink";
 
 const commonStyles = require("../../../shared/styles/common.css");
+const chooseStyles = require("./Choose.css");
 
 export interface ChooseActionContentProps extends RemoteContent {
     touchstones: Touchstone[];
@@ -29,6 +31,7 @@ export class ChooseActionContentComponent extends RemoteContentComponent<ChooseA
     }
 
     renderTouchstoneChoice(props: ChooseActionContentProps): JSX.Element {
+        const membershipUrl = `/${ props.group.id }/members/`;
         return <div>
             <div className={ commonStyles.sectionTitle }>View modelling responsibilities</div>
             <div>
@@ -38,6 +41,9 @@ export class ChooseActionContentComponent extends RemoteContentComponent<ChooseA
             <TouchstoneList touchstones={ props.touchstones }
                             group={ props.group }
                             ready={ props.ready } />
+
+            <div className={ commonStyles.sectionTitle }>View and manage modelling group membership</div>
+            <ButtonLink className={ chooseStyles.choice } href={ membershipUrl }>View group members</ButtonLink>
         </div>;
     }
 

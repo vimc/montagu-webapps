@@ -5,7 +5,7 @@ import { ButtonLink } from "../../../shared/components/ButtonLink";
 
 const commonStyles = require("../../../shared/styles/common.css");
 const styles = require("./TouchstoneList.css");
-const chooseStyles = require("./ChooseTouchstone.css");
+const chooseStyles = require("./Choose.css");
 
 export interface TouchstoneListProps extends RemoteContent {
     touchstones: Touchstone[];
