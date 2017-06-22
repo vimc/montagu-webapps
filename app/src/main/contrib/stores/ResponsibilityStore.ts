@@ -2,7 +2,7 @@ import alt from "../../shared/alt";
 import * as AltJS from "alt";
 import { RemoteContent } from "../../shared/models/RemoteContent";
 import { responsibilityActions } from "../actions/ResponsibilityActions";
-import { AbstractStore } from "../../shared/stores/AbstractStore";
+import { AbstractStore, makeStore } from "../../shared/stores/AbstractStore";
 import { ModellingGroup, Responsibilities, ScenarioTouchstoneAndCoverageSets, Touchstone } from "../../shared/models/Generated";
 import { touchstoneActions } from "../actions/TouchstoneActions";
 import { ExtendedResponsibility, ExtendedResponsibilitySet } from "../models/ResponsibilitySet";
@@ -152,4 +152,4 @@ class ResponsibilityStore extends AbstractStore<ResponsibilityState, Responsibil
     }
 }
 
-export const responsibilityStore = <ResponsibilityStoreInterface>alt.createStore<ResponsibilityState>(ResponsibilityStore);
+export const responsibilityStore = makeStore(alt, ResponsibilityStore);
