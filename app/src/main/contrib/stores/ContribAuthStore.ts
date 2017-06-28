@@ -14,14 +14,10 @@ export interface ContribAuthState extends AuthStateBase {
 export interface ContribAuthStoreInterface extends AuthStoreBaseInterface<ContribAuthState> { }
 
 export function initialAuthState(): ContribAuthState {
-    return {
-        loggedIn: false,
-        username: null,
-        bearerToken: null,
-        permissions: [],
+    return Object.assign({}, AuthStore.baseInitialState(), {
         modellingGroupIds: [],
         modellingGroups: []
-    };
+    });
 }
 
 class ContribAuthStore extends AuthStore<ContribAuthState, ContribAuthStoreInterface> {
