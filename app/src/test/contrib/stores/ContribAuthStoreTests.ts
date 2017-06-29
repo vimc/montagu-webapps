@@ -9,8 +9,8 @@ import {
 } from "../../../main/contrib/stores/ContribAuthStore";
 import { mainStore } from "../../../main/contrib/stores/MainStore";
 import { mockModellingGroup } from "../../mocks/mockModels";
-import { modellingGroupActions } from "../../../main/contrib/actions/ModellingGroupActions";
 import { AuthStoreBaseTests } from "../../shared/stores/AuthStoreBaseTests";
+import {modellingGroupActions} from "../../../main/shared/actions/ModellingGroupActions";
 const jwt = require("jsonwebtoken");
 
 class ContribAuthStoreTests extends AuthStoreBaseTests<ContribAuthState, ContribAuthStoreInterface> {
@@ -51,7 +51,7 @@ class ContribAuthStoreTests extends AuthStoreBaseTests<ContribAuthState, Contrib
             }));
 
             const group = mockModellingGroup({ id: "test.group" });
-            modellingGroupActions.update([ mockModellingGroup(), group ]);
+            modellingGroupActions.updateGroups([ mockModellingGroup(), group ]);
             expect(contribAuthStore.getState().modellingGroups).to.eql([ group ]);
         });
 

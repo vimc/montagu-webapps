@@ -1,6 +1,6 @@
-import { Source } from "../../shared/sources/Source";
-import { ModellingGroup, ModellingGroupDetails } from "../../shared/models/Generated";
-import { GroupState } from "../stores/GroupStore";
+import { Source } from "./Source";
+import { ModellingGroup, ModellingGroupDetails } from "../models/Generated";
+import { GroupState } from "../../admin/stores/GroupStore";
 import SourceModel = AltJS.SourceModel;
 import { modellingGroupActions } from "../actions/ModellingGroupActions";
 

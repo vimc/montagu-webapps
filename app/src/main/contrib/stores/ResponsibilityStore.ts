@@ -8,7 +8,6 @@ import { touchstoneActions } from "../actions/TouchstoneActions";
 import { ExtendedResponsibility, ExtendedResponsibilitySet } from "../models/ResponsibilitySet";
 import { coverageSetActions } from "../actions/CoverageSetActions";
 import { coverageTokenActions } from "../actions/CoverageActions";
-import { modellingGroupActions } from "../actions/ModellingGroupActions";
 import { contribAuthStore } from "./ContribAuthStore";
 import { ResponsibilitySource } from "../sources/ResponsibilitySource";
 import { TouchstoneSource } from "../sources/TouchstoneSource";
@@ -16,6 +15,7 @@ import { CoverageSetSource } from "../sources/CoverageSetSource";
 import { CoverageTokenSource } from "../sources/CoverageTokenSource";
 import { mainStore } from "./MainStore";
 import StoreModel = AltJS.StoreModel;
+import {modellingGroupActions} from "../../shared/actions/ModellingGroupActions";
 
 export interface ResponsibilityState extends RemoteContent {
     touchstones: Array<Touchstone>;
@@ -58,8 +58,8 @@ class ResponsibilityStore extends AbstractStore<ResponsibilityState, Responsibil
         this.registerAsync(new CoverageTokenSource());
 
         this.bindListeners({
-            handleSetCurrentModellingGroup: modellingGroupActions.setCurrentModellingGroup,
-            handleUpdateModellingGroups: modellingGroupActions.update,
+            handleSetCurrentModellingGroup: modellingGroupActions.setCurrentGroup,
+            handleUpdateModellingGroups: modellingGroupActions.updateGroups,
 
             handleBeginTouchstoneFetch: touchstoneActions.beginFetch,
             handleUpdateTouchstones: touchstoneActions.update,

@@ -5,12 +5,11 @@ import { Disease, ModellingGroup } from "../../shared/models/Generated";
 import { emptyLookup, getFromLookup, ILoadable, makeLookup } from "./Loadable";
 import { diseaseActions } from "../actions/DiseaseActions";
 import { RemoteContent } from "../../shared/models/RemoteContent";
-import { responsibilityStore } from "./ResponsibilityStore";
-import { modellingGroupActions } from "../actions/ModellingGroupActions";
 import { DiseaseSource } from "../sources/DiseaseSource";
-import { ModellingGroupSource } from "../sources/ModellingGroupSource";
 import { doNothing } from "../../shared/Helpers";
 import StoreModel = AltJS.StoreModel;
+import {modellingGroupActions} from "../../shared/actions/ModellingGroupActions";
+import {ModellingGroupSource} from "../../shared/sources/ModellingGroupSource";
 
 export interface MainState extends RemoteContent {
     diseases: ILoadable<Disease>;
@@ -24,7 +23,7 @@ interface Interface extends AltJS.AltStore<MainState> {
     getGroupById(id: string): ModellingGroup;
 
     fetchDiseases(): Promise<Disease[]>;
-    fetchModellingGroups(): Promise<ModellingGroup[]>;
+    fetchGroups(): Promise<ModellingGroup[]>;
 
     isLoading(): boolean;
 }
@@ -46,7 +45,7 @@ class MainStore extends AbstractStore<MainState, Interface> {
         super();
         this.bindListeners({
             handleDiseases: diseaseActions.update,
-            handleModellingGroups: modellingGroupActions.update,
+            handleModellingGroups: modellingGroupActions.updateGroups,
         });
         this.registerAsync(new DiseaseSource());
         this.registerAsync(new ModellingGroupSource());
@@ -55,7 +54,7 @@ class MainStore extends AbstractStore<MainState, Interface> {
             getGroupById: id => getFromLookup(this.modellingGroups, id),
             load: () => {
                 this.getInstance().fetchDiseases().catch(doNothing);
-                this.getInstance().fetchModellingGroups().catch(doNothing);
+                this.getInstance().fetchGroups().catch(doNothing);
             }
         })
     }
