@@ -1,8 +1,9 @@
-import { Source } from "../../shared/sources/Source";
-import { ModellingGroup, ModellingGroupDetails } from "../../shared/models/Generated";
-import { GroupState } from "../stores/GroupStore";
+import { Source } from "./Source";
+import { ModellingGroup, ModellingGroupDetails } from "../models/Generated";
 import SourceModel = AltJS.SourceModel;
 import { modellingGroupActions } from "../actions/ModellingGroupActions";
+import {RemoteContent} from "../models/RemoteContent";
+import {ILookup} from "../models/Lookup";
 
 export class ModellingGroupSource extends Source<GroupState> {
     fetchGroups: () => SourceModel<ModellingGroup[]>;
@@ -19,4 +20,11 @@ export class ModellingGroupSource extends Source<GroupState> {
             loading: modellingGroupActions.beginFetchDetails
         });
     }
+}
+
+
+export interface GroupState extends RemoteContent {
+    groups: ModellingGroup[];
+    groupDetails: ILookup<ModellingGroupDetails>;
+    currentGroupId: string;
 }

@@ -2,17 +2,11 @@ import * as AltJS from "alt";
 import { ModellingGroup, ModellingGroupDetails } from "../../shared/models/Generated";
 import { alt } from "../../shared/alt";
 import { AbstractStore } from "../../shared/stores/AbstractStore";
-import { modellingGroupActions } from "../actions/ModellingGroupActions";
+import { modellingGroupActions } from "../../shared/actions/ModellingGroupActions";
 import { RemoteContent } from "../../shared/models/RemoteContent";
-import { ModellingGroupSource } from "../sources/ModellingGroupSource";
+import {GroupState, ModellingGroupSource} from "../../shared/sources/ModellingGroupSource";
 import { ILookup } from "../../shared/models/Lookup";
 import StoreModel = AltJS.StoreModel;
-
-export interface GroupState extends RemoteContent {
-    groups: ModellingGroup[];
-    groupDetails: ILookup<ModellingGroupDetails>;
-    currentGroupId: string;
-}
 
 interface Interface extends AltJS.AltStore<GroupState> {
     fetchGroups(): Promise<ModellingGroup[]>;

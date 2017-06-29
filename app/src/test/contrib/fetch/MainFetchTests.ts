@@ -14,7 +14,7 @@ describe("MainStore.fetchDiseases", () => {
 
 describe("MainStore.fetchModellingGroups", () => {
     new FetchHelper<ModellingGroup[]>({
-        triggerFetch: () => mainStore.fetchModellingGroups(),
+        triggerFetch: () => mainStore.fetchGroups(),
         makePayload: () => [ mockModellingGroup(), mockModellingGroup() ],
         expectedURL: "/modelling-groups/"
     }).addTestsToMocha();
