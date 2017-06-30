@@ -9,7 +9,7 @@ import { DiseaseSource } from "../sources/DiseaseSource";
 import { doNothing } from "../../shared/Helpers";
 import StoreModel = AltJS.StoreModel;
 import {modellingGroupActions} from "../../shared/actions/ModellingGroupActions";
-import {ModellingGroupSource} from "../../shared/sources/ModellingGroupSource";
+import { GroupSourceBase } from "../../shared/sources/ModellingGroupSource";
 
 export interface MainState extends RemoteContent {
     diseases: ILoadable<Disease>;
@@ -48,7 +48,7 @@ class MainStore extends AbstractStore<MainState, Interface> {
             handleModellingGroups: modellingGroupActions.updateGroups,
         });
         this.registerAsync(new DiseaseSource());
-        this.registerAsync(new ModellingGroupSource());
+        this.registerAsync(new GroupSourceBase<MainState>());
         this.exportPublicMethods({
             getDiseaseById: id => getFromLookup(this.diseases, id),
             getGroupById: id => getFromLookup(this.modellingGroups, id),
