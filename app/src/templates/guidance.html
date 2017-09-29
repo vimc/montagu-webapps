@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Guidance</title>
+</head>
+<body>
+<h1>Further guidance for generating and uploading stochastic runs</h1>
+
+<p>We require multiple model runs for each scenario, each of which is
+    based on a random sample from the joint uncertainty distribution
+    (e.g., posterior distribution) of the input parameters. As we want to
+    compare the runs across scenarios to calculate the impact, the same
+    parameter samples should be used across all scenarios, and the runs
+    labelled to ensure we can identify them.</p>
+
+<p>
+    Please supply the parameter values for each sample in the format
+    specified in the parameter template file:
+</p>
+<ul>
+    <li>One row per parameter sample</li>
+    <li>The first column "run_id" should label the parameter set and the
+        same label used in the burden template files for each scenario
+    </li>
+    <li>The file should contain one further column for each parameter that
+        is varied in the stochastic simulations. Please adapt the column
+        headings with the parameter name.
+    </li>
+</ul>
+
+<p>
+Both the deterministic and stochastic burden templates are identical
+for all scenarios. Please generate one copy for each of your
+scenarios, filling in the required burden outputs. The stochastic
+burden templates contain a column "run_id" that should indicate which
+of the parameter sets specified in the parameter file underlies the
+particular run.
+</p>
+<p>
+In the test run we require only 20 independent simulations for each
+scenario.
+</p>
+<p>
+Montagu does not currently provide facilities for uploading stochastic
+simulations, therefore we would ask you to upload the stochastic
+burden files for each scenario as well as the parameter file to a
+dropbox folder. We will share the link to your modelling group's dropbox folder via email.</p>
+
+</body>
+</html>
