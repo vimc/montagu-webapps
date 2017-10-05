@@ -1,4 +1,4 @@
-"disease","year","age","country","country_name","cohort_size","deaths_acute","deaths_total_cirrh","deaths_hcc","cases_acute_symp","cases_acute_fulminant","dalys","prev_HBsAg"
+"disease","year","age","country","country_name","cohort_size","hepb_deaths_acute","hepb_deaths_total_cirrh","hepb_deaths_hcc","hepb_cases_acute_symp","hepb_cases_fulminant","dalys","prev_HBsAg"
 "HepB",2000,0,"PAK","Pakistan","","","","","","","",""
 "HepB",2001,0,"PAK","Pakistan","","","","","","","",""
 "HepB",2002,0,"PAK","Pakistan","","","","","","","",""
