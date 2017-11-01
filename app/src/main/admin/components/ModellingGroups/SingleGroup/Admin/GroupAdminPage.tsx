@@ -16,10 +16,11 @@ interface PageProps {
 
 export class GroupAdminPage extends AdminPageWithHeader<PageProps> {
     load() {
-        super.load();
         groupStore.fetchGroups().catch(doNothing).then(() => {
             modellingGroupActions.setCurrentGroup(this.props.location.params.groupId);
-            groupStore.fetchGroupDetails().catch(doNothing);
+            groupStore.fetchGroupDetails().catch(doNothing).then(() => {
+                super.load();
+            });
         });
         userStore.fetchUsers().catch(doNothing);
     }

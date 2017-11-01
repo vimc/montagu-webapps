@@ -17,11 +17,11 @@ interface LocationProps {
 
 export class ResponsibilityOverviewPage extends ContribPageWithHeader<LocationProps> {
     load() {
-        super.load();
         modellingGroupActions.setCurrentGroup(this.props.location.params.groupId);
         responsibilityStore.fetchTouchstones().catch(doNothing).then(() => {
             touchstoneActions.setCurrentTouchstone(this.props.location.params.touchstoneId);
             responsibilityStore.fetchResponsibilities().catch(doNothing);
+            super.load();
         });
     }
 
