@@ -1,6 +1,7 @@
 import * as React from "react";
 import {ContribPageWithHeader} from "./PageWithHeader/ContribPageWithHeader";
 import {ChooseActionPage} from "./ChooseAction/ChooseActionPage";
+import {IPageWithParent} from "../../shared/models/Breadcrumb";
 
 const commonStyles = require("../../shared/styles/common.css");
 
@@ -13,8 +14,8 @@ export class TouchstoneHelp extends ContribPageWithHeader<undefined> {
         return "/help/touchstones/";
     }
 
-    parent() {
-        return new ChooseActionPage();
+    parent(): IPageWithParent {
+        return null;
     }
 
     renderPageContent() {

@@ -29,11 +29,33 @@ class ContribNavigationTests extends NavigationTests {
                     })
                 })
             },
-            {page: new DownloadDemographicsPage()},
-            {page: new LoadingPage()},
-            {page: new ResponsibilityOverviewPage()},
+            {
+                page: new DownloadDemographicsPage({
+                    location: mockLocation({
+                        groupId: "gId",
+                        touchstoneId: "tId"
+                    })
+                })
+            },
+            {page: new LoadingPage(), affectsBreadcrumbs: false},
+            {
+                page: new ResponsibilityOverviewPage({
+                    location: mockLocation({
+                        groupId: "gId",
+                        touchstoneId: "tId"
+                    })
+                })
+            },
             {page: new TouchstoneHelp()},
-            {page: new UploadBurdenEstimatesPage()}
+            {
+                page: new UploadBurdenEstimatesPage({
+                    location: mockLocation({
+                        groupId: "gId",
+                        touchstoneId: "tId",
+                        scenarioId: "sId"
+                    })
+                })
+            }
         ];
     }
 }
