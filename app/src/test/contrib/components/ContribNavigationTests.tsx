@@ -19,7 +19,7 @@ class ContribNavigationTests extends NavigationTests {
             {page: new ChooseGroupPage()},
             {page: new ContribForgottenPasswordPage()},
             {page: new ContribLoginPage(), affectsBreadcrumbs: false},
-            {page: new ContribNoRouteFoundPage(), urlCanBeNull: true},
+            {page: new ContribNoRouteFoundPage(), urlShouldBeNull: true},
             {
                 page: new DownloadCoveragePage({
                     location: mockLocation({

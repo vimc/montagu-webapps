@@ -2,13 +2,13 @@ import {expect} from "chai";
 import {Breadcrumb} from "../../../main/shared/models/Breadcrumb";
 import {PageWithHeader} from "../../../main/shared/components/PageWithHeader/PageWithHeader";
 import {checkAsync} from "../../testHelpers";
-import {getActions} from "../../actionHelpers";
+import {expectNoActions, getActions} from "../../actionHelpers";
 import {Sandbox} from "../../Sandbox";
 import {navActions} from "../../../main/shared/actions/NavActions";
 
 export interface PageNavigationExpectation {
     page: PageWithHeader<any>;
-    urlCanBeNull?: boolean;
+    urlShouldBeNull?: boolean;
     affectsBreadcrumbs?: boolean;
 }
 
@@ -21,15 +21,15 @@ export abstract class NavigationTests {
         page.load();
         checkAsync(done, () => {
             if (expectation.affectsBreadcrumbs === false) {
-                //no need to test anything
+                expectNoActions(spy);
             } else {
                 const actions = getActions(spy);
                 expect(actions).to.have.length.greaterThan(0, "There were no actions");
                 const lastAction = actions[actions.length - 1];
 
                 const crumb = lastAction.payload as Breadcrumb;
-                if (expectation.urlCanBeNull === true) {
-                    //no need to test URL
+                if (expectation.urlShouldBeNull === true) {
+                    expect(crumb.url).to.equal(null, "Expected URL to be null");
                 } else {
                     expect(crumb.url).to.not.equal(null, "URL was null");
                 }
