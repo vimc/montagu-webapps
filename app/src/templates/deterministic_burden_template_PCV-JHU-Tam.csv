@@ -1,4 +1,4 @@
-"disease","year","age","country","country_name","cohort_size","deaths_mening","deaths_pneumo","cases_mening","cases_pneumo"
+"disease","year","age","country","country_name","cohort_size","deaths_men","deaths_pneumo","cases_men","cases_pneumo"
 "PCV",2000,0,"PAK","Pakistan","","","","",""
 "PCV",2001,0,"PAK","Pakistan","","","","",""
 "PCV",2002,0,"PAK","Pakistan","","","","",""

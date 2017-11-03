@@ -1,4 +1,4 @@
-"disease","run_id","year","age","country","country_name","cohort_size","deaths_mening","deaths_pneumo","cases_mening","cases_pneumo"
+"disease","run_id","year","age","country","country_name","cohort_size","deaths_men","deaths_pneumo","cases_men","cases_pneumo"
 "Hib","",2000,0,"PAK","Pakistan","","","","",""
 "Hib","",2001,0,"PAK","Pakistan","","","","",""
 "Hib","",2002,0,"PAK","Pakistan","","","","",""
