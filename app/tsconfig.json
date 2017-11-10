@@ -12,8 +12,5 @@
   ],
   "exclude": [
     "src/webmodels"
-  ],
-  "typeRoots": [
-    "node_modules/@types"
   ]
 }

@@ -11,8 +11,5 @@
         "./src/@types/**/*",
         "./src/main/contrib/*",
         "./src/main/shared/*"
-    ],
-    "typeRoots": [
-        "node_modules/@types"
     ]
 }
