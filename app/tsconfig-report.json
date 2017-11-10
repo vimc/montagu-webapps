@@ -11,5 +11,8 @@
         "./src/@types/**/*",
         "./src/main/report/*",
         "./src/main/shared/*"
+    ],
+    "typeRoots": [
+        "node_modules/@types"
     ]
 }
