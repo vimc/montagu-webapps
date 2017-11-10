@@ -2,7 +2,6 @@ import * as React from "react";
 import {IRouter, Location} from "simple-react-router";
 import {InternalLink} from "../InternalLink";
 
-const logo = require("./logo.png");
 const styles = require('./PageWithHeader.css');
 
 export abstract class PageWithHeader<TLocationProps>
@@ -14,10 +13,13 @@ export abstract class PageWithHeader<TLocationProps>
 
     abstract renderPageContent(): JSX.Element;
 
+    abstract logoURL(): string;
+    abstract headerStyle(): any;
+
     render() {
         return <div>
-            <header className={styles.header}>
-                <a href="/"><img src={logo} height="80" alt="VIMC"/></a>
+            <header className={styles.header} style={this.headerStyle()}>
+                <a href="/"><img src={this.logoURL()} height="80" alt="VIMC"/></a>
                 <div className={styles.siteTitle}>
                     <InternalLink href="/">{this.siteTitle()}</InternalLink>
                 </div>
