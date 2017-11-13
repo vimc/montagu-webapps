@@ -1,10 +1,11 @@
 import * as React from "react";
 import { InternalLink } from "../../../../shared/components/InternalLink";
 import {User} from "../../../../shared/models/Generated";
+import {helpers} from "../../../../shared/Helpers";
 
 export class UserListItem extends React.Component<User, undefined> {
     render() {
-        const url = `/users/${ this.props.username }/`;
+        const url = `/users/${ helpers.dotsToHyphens(this.props.username) }/`;
         return <tr>
                     <td><InternalLink href={ url }>{ this.props.username}
                         </InternalLink>
