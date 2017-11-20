@@ -90,7 +90,7 @@ export class InputGuidance extends PageWithHeaderAndNav<undefined> {
             <p>
             <strong>Q. What is the source of the demographic data provided via Montagu?</strong>
             <br>
-                A. The demographic data used in these model runs is based on UNWPP estimates.
+                A. The demographic data used in these model runs is based on the 2017 UNWPP (Revision of UN World Population Prospects).
             </p>
             <p>
             <strong>Q. Is there any documentation for the demographic data sources?</strong>
