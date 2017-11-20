@@ -95,7 +95,7 @@ export class InputGuidance extends PageWithHeaderAndNav<undefined> {
             <p>
             <strong>Q. Is there any documentation for the demographic data sources?</strong>
             <br>
-                A. The documentation for the UNWPP data can be found at https://esa.un.org/unpd/wpp/. We also have additional descriptions for how we created data for the following:
+                A. The documentation for the UNWPP data can be found at <a href="https://esa.un.org/unpd/wpp/">https://esa.un.org/unpd/wpp/</a>. We also have additional descriptions for how we created data for the following:
                 <ul>
                     <li>
                         Kosovo
