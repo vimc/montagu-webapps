@@ -6,7 +6,7 @@ import {  mockResponsibility, mockScenario } from "../../../../mocks/mockModels"
 import { setupMainStore } from "../../../../mocks/mocks";
 import { BurdenEstimateSet } from "../../../../../main/shared/models/Generated";
 import { Sandbox } from "../../../../Sandbox";
-import {UploadForm} from "../../../../../main/contrib/components/Responsibilities/ModelRunParameters/UploadForm";
+import {UploadForm} from "../../../../../main/shared/components/UploadForm";
 
 const messageStyles = require("../../../../../main/shared/styles/messages.css");
 
