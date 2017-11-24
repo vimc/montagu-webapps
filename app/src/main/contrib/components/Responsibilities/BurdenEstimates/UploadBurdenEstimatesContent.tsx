@@ -5,7 +5,7 @@ import { RemoteContent } from "../../../../shared/models/RemoteContent";
 import { RemoteContentComponent } from "../../../../shared/components/RemoteContentComponent/RemoteContentComponent";
 import { responsibilityStore } from "../../../stores/ResponsibilityStore";
 import {UploadEstimatesForm} from "./UploadEstimatesForm";
-import {UploadModelRunParametersForm} from "../ModelRunParameters/UploadForm";
+import {UploadModelRunParametersForm} from "../ModelRunParameters/UploadModelRunParametersComponent";
 
 const commonStyles = require("../../../../shared/styles/common.css");
 

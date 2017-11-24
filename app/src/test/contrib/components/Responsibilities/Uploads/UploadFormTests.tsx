@@ -1,11 +1,8 @@
 import * as React from "react";
 import { expect } from "chai";
 import { shallow, ShallowWrapper } from "enzyme";
-import {  mockResponsibility, mockScenario } from "../../../../mocks/mockModels";
-import { setupMainStore } from "../../../../mocks/mocks";
-import { BurdenEstimateSet } from "../../../../../main/shared/models/Generated";
 import { Sandbox } from "../../../../Sandbox";
-import {UploadForm} from "../../../../../main/contrib/components/Responsibilities/ModelRunParameters/UploadForm";
+import {UploadForm} from "../../../../../main/shared/components/UploadForm";
 
 const buttonStyles = require("../../../../../main/shared/styles/buttons.css");
 

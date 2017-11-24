@@ -8,7 +8,6 @@ import {responsibilityStore} from "../../../stores/ResponsibilityStore";
 import {ResponsibilityList} from "./List/ResponsibilityList";
 import {connectToStores} from "../../../../shared/alt";
 import {ButtonLink} from "../../../../shared/components/ButtonLink";
-import {UploadModelRunParametersForm} from "../ModelRunParameters/UploadForm";
 
 const commonStyles = require("../../../../shared/styles/common.css");
 const messageStyles = require("../../../../shared/styles/messages.css");

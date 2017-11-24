@@ -1,7 +1,7 @@
 import * as React from "react";
 import {BurdenEstimateSet} from "../../../../shared/models/Generated";
 import {settings} from "../../../../shared/Settings";
-import {UploadForm} from "../ModelRunParameters/UploadForm";
+import {UploadForm} from "../../../../shared/components/UploadForm";
 
 const messageStyles = require("../../../../shared/styles/messages.css");
 
