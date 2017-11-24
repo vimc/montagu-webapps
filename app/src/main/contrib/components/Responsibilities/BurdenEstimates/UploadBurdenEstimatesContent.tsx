@@ -4,9 +4,8 @@ import { ModellingGroup, Responsibility, Scenario, Touchstone } from "../../../.
 import { RemoteContent } from "../../../../shared/models/RemoteContent";
 import { RemoteContentComponent } from "../../../../shared/components/RemoteContentComponent/RemoteContentComponent";
 import { responsibilityStore } from "../../../stores/ResponsibilityStore";
-import { UploadForm } from "./UploadForm";
-import { TemplateLink } from "../Overview/List/TemplateLinks";
-import { estimateTokenActions } from "../../../actions/EstimateActions";
+import {UploadEstimatesForm} from "./UploadEstimatesForm";
+import {UploadModelRunParametersForm} from "../ModelRunParameters/UploadForm";
 
 const commonStyles = require("../../../../shared/styles/common.css");
 
@@ -78,8 +77,13 @@ export class UploadBurdenEstimatesContentComponent extends RemoteContentComponen
                 </tbody>
             </table>
 
-            <div className={commonStyles.gapAbove}>
-                <UploadForm groupId={data.group.id}
+            <div className={commonStyles.largeSectionTitle}>Upload model run parameters</div>
+            <div className="mt-2">
+                <UploadModelRunParametersForm groupId={data.group.id} scenarioId={data.scenario.id}/>
+            </div>
+
+            <div className="mt-2">
+                <UploadEstimatesForm groupId={data.group.id}
                             token={data.estimatesToken}
                             canUpload={canUploadBurdenEstimate}
                             currentEstimateSet={data.responsibility.current_estimate_set}
