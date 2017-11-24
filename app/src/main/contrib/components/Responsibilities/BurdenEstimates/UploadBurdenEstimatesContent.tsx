@@ -16,6 +16,7 @@ export interface UploadBurdenEstimatesContentComponentProps extends RemoteConten
         group: ModellingGroup;
         responsibilitySetStatus: string;
         estimatesToken: string;
+        parametersToken: string;
         responsibility: Responsibility;
     };
 }
@@ -39,6 +40,7 @@ export class UploadBurdenEstimatesContentComponent extends RemoteContentComponen
                     group: state.currentModellingGroup,
                     responsibility: r,
                     estimatesToken: state.estimatesOneTimeToken,
+                    parametersToken: state.parametersOneTimeToken,
                     responsibilitySetStatus: responsibilityStore.getCurrentResponsibilitySet().status
                 }
             };
@@ -78,10 +80,6 @@ export class UploadBurdenEstimatesContentComponent extends RemoteContentComponen
             </table>
 
             <div className={commonStyles.largeSectionTitle}>Upload model run parameters</div>
-            <div className="mt-2">
-                <UploadModelRunParametersForm groupId={data.group.id} scenarioId={data.scenario.id}/>
-            </div>
-
             <div className="mt-2">
                 <UploadEstimatesForm groupId={data.group.id}
                             token={data.estimatesToken}
