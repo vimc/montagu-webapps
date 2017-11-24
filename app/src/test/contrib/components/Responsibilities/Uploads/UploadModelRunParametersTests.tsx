@@ -39,12 +39,15 @@ describe('UploadEstimatesForm', () => {
         expect(form.prop("fieldNames")).to.have.same.members(["description"])
     });
 
-
     it("passes through choose model run parameter set text to UploadForm", () => {
         setUpComponent();
 
         const form = rendered.find(UploadForm);
         expect(form.prop("uploadText")).to.eq("Choose a model run parameter set")
     });
+
+    it("gets token from store", () => {
+
+    })
 
 });

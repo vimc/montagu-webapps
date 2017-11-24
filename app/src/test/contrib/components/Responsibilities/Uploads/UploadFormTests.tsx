@@ -11,11 +11,12 @@ describe('UploadForm', () => {
     const sandbox = new Sandbox();
 
     function setUpComponent(canUpload: boolean,
-                            token: string = "TOKEN") {
+                            token: string = "TOKEN",
+                            fieldNames: string[] = []) {
 
         rendered = shallow(<UploadForm
             token={token}
-            fieldNames={[]}
+            fieldNames={fieldNames}
             uploadText="Upload text"
             disabledText="Disabled text"
             canUpload={canUpload}/>);
@@ -42,6 +43,14 @@ describe('UploadForm', () => {
         const chooseFileButton = rendered.find(`.${buttonStyles.button}`).first();
         expect(chooseFileButton.text()).to.eq("Upload text");
         expect(chooseFileButton.hasClass(buttonStyles.disabled)).to.eq(false);
+    });
+
+    it("displays provided fields", () => {
+        setUpComponent(true, "TOKEN", ["field1", "field2"]);
+
+        const inputs = rendered.find(`input[type="text"]`);
+        const first = inputs.first();
+        expect(first.prop("name")).to.eq("field1");
     });
 
 });
