@@ -12,10 +12,16 @@ export interface UploadState {
 
 export interface UploadProps {
     canUpload: boolean;
-    fieldNames: string[];
+    fields: Field[];
     token: string;
     uploadText: string;
     disabledText: string;
+}
+
+export interface Field {
+    name: string;
+    type: string;
+    label: string;
 }
 
 export class UploadForm extends React.Component<UploadProps, UploadState> {
@@ -36,8 +42,8 @@ export class UploadForm extends React.Component<UploadProps, UploadState> {
     }
 
     renderFields() {
-        return this.props.fieldNames.map(item =>
-            <div className="form-group"><input type="text" name={item} placeholder={item}/></div>
+        return this.props.fields.map(f =>
+            <div className="form-group"><label>{f.label}</label><input type={f.type} name={f.name}/></div>
         )
     }
 
@@ -53,7 +59,7 @@ export class UploadForm extends React.Component<UploadProps, UploadState> {
                            disabled={!this.props.canUpload}/>
                     <div className={`${buttonStyles.button} ${commonStyles.mt5} ${commonStyles.mb5}
                         ${!this.props.canUpload ? buttonStyles.disabled : ""}`}>
-                        {this.props.canUpload ? this.props.uploadText: this.props.disabledText}
+                        {this.props.canUpload ? this.props.uploadText : this.props.disabledText}
                     </div>
                     <div
                         className={`${commonStyles.mr10}`}>{this.state.fileSelected ? "File selected: " + this.state.fileName : ""}</div>

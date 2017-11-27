@@ -1,8 +1,8 @@
 import * as React from "react";
-import { expect } from "chai";
-import { shallow, ShallowWrapper } from "enzyme";
-import { Sandbox } from "../../../../Sandbox";
-import {UploadForm} from "../../../../../main/shared/components/UploadForm";
+import {expect} from "chai";
+import {shallow, ShallowWrapper} from "enzyme";
+import {Sandbox} from "../../../../Sandbox";
+import {Field, UploadForm} from "../../../../../main/shared/components/UploadForm";
 
 const buttonStyles = require("../../../../../main/shared/styles/buttons.css");
 
@@ -12,11 +12,11 @@ describe('UploadForm', () => {
 
     function setUpComponent(canUpload: boolean,
                             token: string = "TOKEN",
-                            fieldNames: string[] = []) {
+                            fields: Field[] = []) {
 
         rendered = shallow(<UploadForm
             token={token}
-            fieldNames={fieldNames}
+            fields={fields}
             uploadText="Upload text"
             disabledText="Disabled text"
             canUpload={canUpload}/>);
@@ -46,7 +46,11 @@ describe('UploadForm', () => {
     });
 
     it("displays provided fields", () => {
-        setUpComponent(true, "TOKEN", ["field1", "field2"]);
+        setUpComponent(true, "TOKEN", [{name: "field1", type: "text", label: "field1"}, {
+            name: "field2",
+            type: "text",
+            label: "field2"
+        }]);
 
         const inputs = rendered.find(`input[type="text"]`);
         const first = inputs.first();

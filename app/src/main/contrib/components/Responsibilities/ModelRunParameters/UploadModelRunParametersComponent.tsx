@@ -13,7 +13,7 @@ export class UploadModelRunParametersForm extends React.Component<UploadModelRun
             token={"faketoken"}
             uploadText="Choose a model run parameter set"
             canUpload={true}
-            fieldNames={["description"]}
+            fields={[{name: "description", label: "A descriptive name to identify this set", type: "text"}]}
             disabledText="No model run parameter sets can be added"/>;
     }
 }

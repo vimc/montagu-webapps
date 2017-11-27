@@ -79,7 +79,6 @@ export class UploadBurdenEstimatesContentComponent extends RemoteContentComponen
                 </tbody>
             </table>
 
-            <div className={commonStyles.largeSectionTitle}>Upload model run parameters</div>
             <div className="mt-2">
                 <UploadEstimatesForm groupId={data.group.id}
                             token={data.estimatesToken}
