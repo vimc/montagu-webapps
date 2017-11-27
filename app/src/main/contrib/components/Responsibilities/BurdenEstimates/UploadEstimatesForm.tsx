@@ -37,7 +37,7 @@ export class UploadEstimatesForm extends React.Component<UploadEstimatesFormProp
         return <div>
             <div className={messageStyles.info}>{lastUploadedText} <br/> {helperText}</div>
             <UploadForm canUpload={this.props.canUpload}
-                        fieldNames={[]}
+                        fields={[]}
                         token={this.props.token}
                         uploadText={uploadText}
                         disabledText={disabledText}/>

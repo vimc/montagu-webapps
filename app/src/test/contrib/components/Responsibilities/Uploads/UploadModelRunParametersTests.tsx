@@ -7,7 +7,7 @@ import { Sandbox } from "../../../../Sandbox";
 import {UploadForm} from "../../../../../main/shared/components/UploadForm";
 import {UploadModelRunParametersForm} from "../../../../../main/contrib/components/Responsibilities/ModelRunParameters/UploadModelRunParametersComponent";
 
-describe('UploadEstimatesForm', () => {
+describe('UploadModelRunParametersForm', () => {
     let rendered: ShallowWrapper<any, any>;
     const sandbox = new Sandbox();
 
@@ -36,7 +36,7 @@ describe('UploadEstimatesForm', () => {
         setUpComponent();
 
         const form = rendered.find(UploadForm);
-        expect(form.prop("fieldNames")).to.have.same.members(["description"])
+        const descriptionField = form.prop("fields").first();
     });
 
     it("passes through choose model run parameter set text to UploadForm", () => {
