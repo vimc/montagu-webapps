@@ -251,7 +251,7 @@ class ContributionPortalIntegrationTests extends IntegrationTestSuite {
 
             setTouchstoneAndGroup(touchstoneId, groupId);
 
-            const promise = responsibilityStore.fetchOneTimeParametersToken("yf", "/redirect/back");
+            const promise = responsibilityStore.fetchOneTimeParametersToken("/redirect/back");
 
             checkPromise(done, promise, token => {
                 const decoded = jwt_decode(token);
@@ -266,7 +266,6 @@ class ContributionPortalIntegrationTests extends IntegrationTestSuite {
                 const payload = QueryString.parse(decoded.payload);
 
                 expect(payload).to.eql(JSON.parse(`{
-                    ":disease": "yf",
                     ":touchstone-id": "${touchstoneId}",
                     ":group-id": "${groupId}"
                 }`));

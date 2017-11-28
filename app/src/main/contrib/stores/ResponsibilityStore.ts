@@ -56,7 +56,7 @@ interface ResponsibilityStoreInterface extends AltJS.AltStore<ResponsibilityStat
 
     _fetchOneTimeEstimatesToken(): Promise<string>;
 
-    fetchOneTimeParametersToken(disease: string, redirectPath: string): Promise<string>;
+    fetchOneTimeParametersToken(redirectPath: string): Promise<string>;
 
     _fetchOneTimeParametersToken(): Promise<string>;
 
@@ -130,9 +130,8 @@ class ResponsibilityStore extends AbstractStore<ResponsibilityState, Responsibil
                 this.redirectPath = redirectPath;
                 return this.getInstance()._fetchOneTimeEstimatesToken();
             },
-            fetchOneTimeParametersToken: (disease: string, redirectPath: string) => {
+            fetchOneTimeParametersToken: (redirectPath: string) => {
                 this.redirectPath = redirectPath;
-                this.currentDiseaseId = disease;
                 return this.getInstance()._fetchOneTimeParametersToken();
             }
         });

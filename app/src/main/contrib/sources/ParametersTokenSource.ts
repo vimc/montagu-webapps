@@ -16,7 +16,7 @@ export class ModelParametersTokenSource extends Source<ResponsibilityState> {
                 queryString = "?redirectUrl=" + encodeURI(settings.montaguUrl() + state.redirectPath);
             }
             return `/modelling-groups/${state.currentModellingGroup.id}/model-run-parameters/`
-                + `${state.currentTouchstone.id}/${state.currentDiseaseId}/get_onetime_link/${queryString}`;
+                + `${state.currentTouchstone.id}/get_onetime_link/${queryString}`;
         }, {
             success: modelParameterActions.update,
             loading: modelParameterActions.beginFetch,
