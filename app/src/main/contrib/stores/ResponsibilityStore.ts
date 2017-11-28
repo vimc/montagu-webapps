@@ -32,7 +32,6 @@ export interface ResponsibilityState extends RemoteContent, HasFormatState {
 
     responsibilitySets: ExtendedResponsibilitySet[];
     currentResponsibility: ExtendedResponsibility;
-
     coverageOneTimeToken: string;
     estimatesOneTimeToken: string;
 
