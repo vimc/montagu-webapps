@@ -46,15 +46,24 @@ describe('UploadForm', () => {
     });
 
     it("displays provided fields", () => {
-        setUpComponent(true, "TOKEN", [{name: "field1", type: "text", label: "field1"}, {
-            name: "field2",
-            type: "text",
-            label: "field2"
-        }]);
+        setUpComponent(true, "TOKEN", [
+            {
+                name: "field1",
+                type: "text",
+                label: "field1"
+            }, {
+                name: "field2",
+                type: "number",
+                label: "field2"
+            }]);
 
-        const inputs = rendered.find(`input[type="text"]`);
-        const first = inputs.first();
-        expect(first.prop("name")).to.eq("field1");
+        let inputs = rendered.find(`input[type="text"]`);
+        const textInput = inputs.first();
+        expect(textInput.prop("name")).to.eq("field1");
+
+        inputs = rendered.find(`input[type="number"]`);
+        const numericalInput = inputs.first();
+        expect(numericalInput.prop("name")).to.eq("field2");
     });
 
 });
