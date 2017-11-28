@@ -5,7 +5,6 @@ import { RemoteContent } from "../../../../shared/models/RemoteContent";
 import { RemoteContentComponent } from "../../../../shared/components/RemoteContentComponent/RemoteContentComponent";
 import { responsibilityStore } from "../../../stores/ResponsibilityStore";
 import {UploadEstimatesForm} from "./UploadEstimatesForm";
-import {UploadModelRunParametersForm} from "../ModelRunParameters/UploadModelRunParametersComponent";
 
 const commonStyles = require("../../../../shared/styles/common.css");
 
@@ -16,7 +15,6 @@ export interface UploadBurdenEstimatesContentComponentProps extends RemoteConten
         group: ModellingGroup;
         responsibilitySetStatus: string;
         estimatesToken: string;
-        parametersToken: string;
         responsibility: Responsibility;
     };
 }
@@ -40,7 +38,6 @@ export class UploadBurdenEstimatesContentComponent extends RemoteContentComponen
                     group: state.currentModellingGroup,
                     responsibility: r,
                     estimatesToken: state.estimatesOneTimeToken,
-                    parametersToken: state.parametersOneTimeToken,
                     responsibilitySetStatus: responsibilityStore.getCurrentResponsibilitySet().status
                 }
             };
