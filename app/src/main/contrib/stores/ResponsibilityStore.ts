@@ -67,10 +67,8 @@ class ResponsibilityStore extends AbstractStore<ResponsibilityState, Responsibil
 
     responsibilitySets: ExtendedResponsibilitySet[];
     currentResponsibility: ExtendedResponsibility;
-
     coverageOneTimeToken: string;
     estimatesOneTimeToken: string;
-    parametersOneTimeToken: string;
 
     currentModellingGroup: ModellingGroup;
     currentDiseaseId: string;
@@ -215,7 +213,6 @@ class ResponsibilityStore extends AbstractStore<ResponsibilityState, Responsibil
     handleUpdateEstimatesToken(token: string) {
         this.estimatesOneTimeToken = token;
     }
-
 
     handleFilterByDisease(diseaseId: string) {
         this.currentDiseaseId = diseaseId;
