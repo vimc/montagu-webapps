@@ -1,42 +1,25 @@
 import * as React from "react";
-import { expect } from "chai";
-import { UploadForm } from "../../../../../main/contrib/components/Responsibilities/BurdenEstimates/UploadForm";
-import { shallow, ShallowWrapper } from "enzyme";
-import {  mockResponsibility, mockScenario } from "../../../../mocks/mockModels";
-import { setupMainStore } from "../../../../mocks/mocks";
-import { BurdenEstimateSet } from "../../../../../main/shared/models/Generated";
-import { Sandbox } from "../../../../Sandbox";
+import {expect} from "chai";
+import {shallow, ShallowWrapper} from "enzyme";
+import {Sandbox} from "../../../../Sandbox";
+import {Field, UploadForm} from "../../../../../main/shared/components/UploadForm";
 
 const buttonStyles = require("../../../../../main/shared/styles/buttons.css");
-const messageStyles = require("../../../../../main/shared/styles/messages.css");
 
 describe('UploadForm', () => {
     let rendered: ShallowWrapper<any, any>;
     const sandbox = new Sandbox();
 
     function setUpComponent(canUpload: boolean,
-                            burdenEstimateSet?: BurdenEstimateSet,
-                            token: string = "TOKEN") {
-        setupMainStore({
-            diseases: [
-                { id: "disease-id", name: "Disease name" }
-            ]
-        });
-
-        const responsibility = mockResponsibility({
-            status: "empty",
-            current_estimate_set: burdenEstimateSet
-        }, mockScenario({
-            id: "scenario-1",
-            description: "Description",
-        }));
+                            token: string = "TOKEN",
+                            fields: Field[] = []) {
 
         rendered = shallow(<UploadForm
             token={token}
-            canUpload={canUpload}
-            groupId={"group-1"}
-            scenarioId={responsibility.scenario.id}
-            currentEstimateSet={responsibility.current_estimate_set}/>);
+            fields={fields}
+            uploadText="Upload text"
+            disabledText="Disabled text"
+            canUpload={canUpload}/>);
     }
 
     afterEach(() => sandbox.restore());
@@ -44,12 +27,12 @@ describe('UploadForm', () => {
     it("disables the choose file button if canUpload is false", () => {
         setUpComponent(false);
         const chooseFileButton = rendered.find(`.${buttonStyles.button}`).first();
-        expect(chooseFileButton.text()).to.eq("No more burden estimates can be uploaded");
+        expect(chooseFileButton.text()).to.eq("Disabled text");
         expect(chooseFileButton.hasClass(buttonStyles.disabled)).to.eq(true);
     });
 
     it("disables the choose file button if token is null", () => {
-        setUpComponent(true, null, null);
+        setUpComponent(true, null);
         const uploadButton = rendered.find(`button`).first();
         expect(uploadButton.prop("disabled")).to.eq(true);
     });
@@ -58,26 +41,29 @@ describe('UploadForm', () => {
         setUpComponent(true);
 
         const chooseFileButton = rendered.find(`.${buttonStyles.button}`).first();
-        expect(chooseFileButton.text()).to.eq("Choose a new burden estimate set");
+        expect(chooseFileButton.text()).to.eq("Upload text");
         expect(chooseFileButton.hasClass(buttonStyles.disabled)).to.eq(false);
     });
 
-    it("shows helper message if canUpload is false", () => {
-        setUpComponent(false);
+    it("displays provided fields", () => {
+        setUpComponent(true, "TOKEN", [
+            {
+                name: "field1",
+                type: "text",
+                label: "field1"
+            }, {
+                name: "field2",
+                type: "number",
+                label: "field2"
+            }]);
 
-        const helperText = rendered.find(`.${messageStyles.info} p`).text();
-        expect(helperText).to.eq("The burden estimates uploaded by your modelling group have been reviewed" +
-            " and approved. " +
-            "You cannot upload any new estimates. If you need to upload new estimates (e.g. for corrections) please" +
-            " contact us here.")
-    });
+        let inputs = rendered.find(`input[type="text"]`);
+        const textInput = inputs.first();
+        expect(textInput.prop("name")).to.eq("field1");
 
-
-    it("does not show helper message if canUpload is true", () => {
-        setUpComponent(true);
-
-        const helperBlock= rendered.find(`.${messageStyles.info} p`);
-        expect(helperBlock.length).to.eq(0)
+        inputs = rendered.find(`input[type="number"]`);
+        const numericalInput = inputs.first();
+        expect(numericalInput.prop("name")).to.eq("field2");
     });
 
 });
