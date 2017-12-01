@@ -1,7 +1,7 @@
 import * as React from "react";
 import { connectToStores } from "../../../../shared/alt";
 import { AdminPageWithHeader } from "../../AdminPageWithHeader";
-import { doNothing } from "../../../../shared/Helpers";
+import {doNothing, helpers} from "../../../../shared/Helpers";
 import {UserTitle, UserTitleProps} from "./UserTitle";
 import {UserDetailsContent} from "./UserDetailsContent";
 import {userActions} from "../../../actions/UserActions";
@@ -16,7 +16,7 @@ export interface UserDetailsPageProps {
 export class ViewUserDetailsPage extends AdminPageWithHeader<UserDetailsPageProps> {
     load() {
         userStore.fetchUsers().catch(doNothing).then(() => {
-            userActions.setCurrentUser(this.props.location.params.username);
+            userActions.setCurrentUser(helpers.hyphensToDots(this.props.location.params.username));
             super.load();
         });
     }

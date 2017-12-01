@@ -36,5 +36,13 @@ export const helpers = {
             obj[key] = value;
         });
         return obj;
+    },
+
+    dotsToHyphens(name: string): string {
+        return name && name.replace(/\./g, "-")
+    },
+
+    hyphensToDots(name: string): string {
+        return name && name.replace(/-/g, ".")
     }
 };

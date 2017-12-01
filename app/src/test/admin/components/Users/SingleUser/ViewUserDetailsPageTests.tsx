@@ -13,21 +13,20 @@ import { alt } from "../../../../../main/shared/alt";
 import { mockUser } from "../../../../mocks/mockModels";
 import {addNavigationTests} from "../../../../shared/NavigationTests";
 import {mockFetcherForMultipleResponses} from "../../../../mocks/mockMultipleEndpoints";
-import {successResult} from "../../../../mocks/mockRemote";
 import {mockUsersEndpoint} from "../../../../mocks/mockEndpoints";
 
 describe("ViewUserDetailsPage", () => {
     const sandbox = new Sandbox();
     afterEach(() => sandbox.restore());
 
-    const location = mockLocation<UserDetailsPageProps>({ username: "testuser" });
+    const location = mockLocation<UserDetailsPageProps>({ username: "test.user" });
 
     it("triggers fetch on load", (done: DoneCallback) => {
         alt.bootstrap(JSON.stringify({
             UserStore: {
-                currentUsername: "testuser",
+                currentUsername: "test.user",
                 usersLookup: {
-                    "testuser": mockUser(),
+                    "test.user": mockUser(),
                 },
                 rolesLookup: {
                 }
@@ -42,7 +41,7 @@ describe("ViewUserDetailsPage", () => {
         checkAsync(done, (afterWait) => {
             expect(fetchUsers.called).to.equal(true, "Expected userStore.fetchUsers to be triggered");
             afterWait(done, () => {
-                expectOneAction(dispatchSpy, { action: "UserActions.setCurrentUser", payload: "testuser" });
+                expectOneAction(dispatchSpy, { action: "UserActions.setCurrentUser", payload: "test.user" });
              });
         });
     });
