@@ -1,0 +1,13 @@
+.message {
+    font-size: 16pt;
+}
+
+.errorMessage {
+    // composes: message;
+    color: red;
+}
+
+.info {
+    background-color: #fcf8e3;
+    padding: 5px;
+}
