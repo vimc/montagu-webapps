@@ -8,7 +8,8 @@ import {ContribPageWithHeader} from "../../PageWithHeader/ContribPageWithHeader"
 import {IPageWithParent} from "../../../../shared/models/Breadcrumb";
 import {ResponsibilityOverviewPage} from "../Overview/ResponsibilityOverviewPage";
 import {ModelRunParametersContent} from "./ModelRunParametersContent";
-import {modelParameterActions} from "../../../actions/ModelParameterActions";
+import {modelParameterActions} from "../../../actions/RunParameterActions";
+import {runParametersStore} from "../../../stores/RunParametersStore";
 
 export interface ModelRunParametersProps {
     groupId: string;
@@ -17,24 +18,24 @@ export interface ModelRunParametersProps {
 
 export class ModelRunParametersPage extends ContribPageWithHeader<ModelRunParametersProps> {
     load() {
-
         modelParameterActions.clearUsedToken();
         modellingGroupActions.setCurrentGroup(this.props.location.params.groupId);
         responsibilityStore.fetchTouchstones().catch(doNothing).then(() => {
             touchstoneActions.setCurrentTouchstone(this.props.location.params.touchstoneId);
             responsibilityStore.fetchResponsibilities().catch(doNothing);
-            responsibilityStore.fetchOneTimeParametersToken(this.props.location.pathname).catch(doNothing);
+            runParametersStore.fetchParameterSets().catch(doNothing);
+            runParametersStore.fetchOneTimeParametersToken(this.props.location.pathname).catch(doNothing);
             super.load();
         });
 
     }
 
     name() {
-        return "Upload model run parameters";
+        return "Model run parameters";
     }
 
     title() {
-        return <DownloadDataTitle title="Upload model run parameters"/>
+        return <DownloadDataTitle title="Model run parameters"/>
     }
 
     urlFragment(): string {

@@ -1,10 +1,11 @@
 import * as React from "react";
 import {connectToStores} from "../../../../shared/alt";
-import {ModellingGroup, Touchstone} from "../../../../shared/models/Generated";
+import {ModellingGroup, ModelRunParameterSet, Touchstone} from "../../../../shared/models/Generated";
 import {RemoteContent} from "../../../../shared/models/RemoteContent";
 import {RemoteContentComponent} from "../../../../shared/components/RemoteContentComponent/RemoteContentComponent";
 import {responsibilityStore} from "../../../stores/ResponsibilityStore";
 import {UploadModelRunParametersForm} from "./UploadModelRunParametersForm";
+import {ModelRunParameterSetsList} from "./ModelRunParameterSetsList";
 
 export interface ModelRunParametersContentComponentProps extends RemoteContent {
     touchstone: Touchstone;
@@ -50,6 +51,7 @@ export class ModelRunParametersContentComponent extends RemoteContentComponent<M
                                           diseases={props.diseases}
                                           touchstoneId={props.touchstone.id}
             />
+            <ModelRunParameterSetsList />
         </div>;
     }
 }
