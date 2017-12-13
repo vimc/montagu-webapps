@@ -6,6 +6,8 @@ import {RemoteContentComponent} from "../../../../shared/components/RemoteConten
 import {responsibilityStore} from "../../../stores/ResponsibilityStore";
 import {UploadModelRunParametersForm} from "./UploadModelRunParametersForm";
 import {ModelRunParameterSetsList} from "./ModelRunParameterSetsList";
+import {runParametersStore} from "../../../stores/RunParametersStore";
+import {run} from "tslint/lib/runner";
 
 export interface ModelRunParametersContentComponentProps extends RemoteContent {
     touchstone: Touchstone;
@@ -17,18 +19,19 @@ export interface ModelRunParametersContentComponentProps extends RemoteContent {
 export class ModelRunParametersContentComponent extends RemoteContentComponent<ModelRunParametersContentComponentProps, undefined> {
 
     static getStores() {
-        return [responsibilityStore];
+        return [responsibilityStore, runParametersStore];
     }
 
     static getPropsFromStores(): ModelRunParametersContentComponentProps {
         const state = responsibilityStore.getState();
+        const parametersState = runParametersStore.getState();
 
-        if (state.parametersOneTimeToken != null) {
+        if (parametersState.oneTimeToken != null) {
             return {
                 ready: state.ready,
                 touchstone: state.currentTouchstone,
                 group: state.currentModellingGroup,
-                parametersToken: state.parametersOneTimeToken,
+                parametersToken: parametersState.oneTimeToken,
                 diseases: Array.from(new Set([].concat.apply([],
                     state.responsibilitySets.map((set) => set.responsibilities.map(r => r.scenario.disease)))))
             };
@@ -46,12 +49,14 @@ export class ModelRunParametersContentComponent extends RemoteContentComponent<M
     renderContent(props: ModelRunParametersContentComponentProps) {
 
         return <div className="mt-2">
+            <div className="sectionTitle">All parameter sets for {props.touchstone.description}</div>
+            <ModelRunParameterSetsList />
+            <div className="sectionTitle">Upload a new parameter set</div>
             <UploadModelRunParametersForm groupId={props.group.id}
                                           token={props.parametersToken}
                                           diseases={props.diseases}
                                           touchstoneId={props.touchstone.id}
             />
-            <ModelRunParameterSetsList />
         </div>;
     }
 }

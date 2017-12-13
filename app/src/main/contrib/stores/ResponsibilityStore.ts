@@ -33,7 +33,6 @@ export interface ResponsibilityState extends RemoteContent, HasFormatState {
     currentResponsibility: ExtendedResponsibility;
     coverageOneTimeToken: string;
     estimatesOneTimeToken: string;
-    parametersOneTimeToken: string;
 
     currentModellingGroup: ModellingGroup;
     currentDiseaseId: string;
@@ -70,7 +69,6 @@ class ResponsibilityStore extends AbstractStore<ResponsibilityState, Responsibil
     currentResponsibility: ExtendedResponsibility;
     coverageOneTimeToken: string;
     estimatesOneTimeToken: string;
-    parametersOneTimeToken: string;
 
     currentModellingGroup: ModellingGroup;
     currentDiseaseId: string;
@@ -152,7 +150,6 @@ class ResponsibilityStore extends AbstractStore<ResponsibilityState, Responsibil
 
             coverageOneTimeToken: null,
             estimatesOneTimeToken: null,
-            parametersOneTimeToken: null,
 
             selectedFormat: "long",
             redirectPath: null,
