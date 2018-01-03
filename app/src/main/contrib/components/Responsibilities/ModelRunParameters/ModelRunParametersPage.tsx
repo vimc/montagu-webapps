@@ -48,7 +48,6 @@ export class ModelRunParametersPage extends ContribPageWithHeader<ModelRunParame
 
     renderPageContent() {
         return <div className="mt-2">
-            <ModelRunParameterSetsList />
             <ModelRunParameterUploadSection />
         </div>;
     }
