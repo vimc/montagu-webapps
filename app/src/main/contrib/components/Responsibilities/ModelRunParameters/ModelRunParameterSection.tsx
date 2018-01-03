@@ -1,7 +1,7 @@
 import {ModelRunParameterSet} from "../../../../shared/models/Generated";
 import * as React from "react";
 import {UploadFileForm} from "../../../../shared/components/UploadFileForm";
-import {Collapse} from 'reactstrap';
+import {Collapse, Alert} from 'reactstrap';
 
 interface Props {
     parametersToken: string;
@@ -29,7 +29,17 @@ export class ModelRunParameterSection extends React.Component<Props, State> {
     }
 
     render(): JSX.Element {
+
+        let alertText = `You have not uploaded any model run parameter sets for ${this.props.disease}`;
+
+        if (this.props.sets.length > 0) {
+            const lastUploaded = this.props.sets[0];
+            alertText = `You last uploaded a model run parameter set on ${lastUploaded.uploaded_on}`
+        }
+
         return <div>
+            <h2 className={"sectionTitle"}>Disease: {this.props.disease}</h2>
+            <Alert color={"warning"}>{alertText}</Alert>
             <button onClick={this.toggle.bind(this)} className={this.props.sets.length > 0 ? "" : "d-none"}>Upload a new parameter set
                 <span className={this.state.isOpen ? "arrowUp" : "arrowDown"}></span>
             </button>
