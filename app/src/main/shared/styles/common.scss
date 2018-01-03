@@ -20,7 +20,7 @@ table {
 }
 
 hr {
-    border-style: dashed;
+    border-bottom: 1px dashed $body-color !important;
 }
 
 fieldset {

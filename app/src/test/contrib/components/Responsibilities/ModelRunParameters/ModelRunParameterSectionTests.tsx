@@ -51,5 +51,5 @@ describe('ModelRunParameterSection', () => {
         const input = rendered.find('input[name="description"][type="hidden"]');
         expect(input).to.have.lengthOf(1);
     });
-    
+
 });

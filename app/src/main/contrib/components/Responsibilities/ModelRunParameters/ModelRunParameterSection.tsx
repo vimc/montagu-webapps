@@ -44,7 +44,8 @@ export class ModelRunParameterSection extends React.Component<Props, State> {
         }
 
         return <div>
-            <h2 className={"sectionTitle"}>Disease: {this.props.disease}</h2>
+            <h2 className="sectionTitle mb-0">Disease: {this.props.disease}</h2>
+            <hr className="mt-1"/>
             <Alert color="warning">{alertText}</Alert>
 
             <Form url={this.props.url} submitText={"Upload"}
@@ -55,7 +56,6 @@ export class ModelRunParameterSection extends React.Component<Props, State> {
                 <input type={"hidden"} name={"disease"} value={this.props.disease}/>
                 <CustomFileInput required={true} key={this.state.fileInputKey.toISOString()}>Choose file</CustomFileInput>
             </Form>
-            <hr/>
         </div>
     }
 }
