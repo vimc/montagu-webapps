@@ -33,23 +33,25 @@ export class Form extends React.Component<FormProps, FormState> {
         }
     }
 
-    submitForm() {
+    submitForm(form: HTMLFormElement) {
 
         const self = this;
 
+        const data = this.props.data ? JSON.stringify(this.props.data) : new FormData(form);
+
         return fetcher.fetcher.fetch(this.props.url, {
             method: "POST",
-            body: JSON.stringify(this.props.data)
+            body: data
         }).then((response: Response) => {
             return apiResponse(response)
                 .then((result: Result) => {
-                        self.resultCallback(result)
+                        self.resultCallback(form, result)
                     }
                 );
         });
     }
 
-    resultCallback(result: Result) {
+    resultCallback(form: HTMLFormElement, result: Result) {
         const success = result.status == "success";
         this.setState({
             hasSuccess: success,
@@ -58,7 +60,7 @@ export class Form extends React.Component<FormProps, FormState> {
         });
 
         if (success) {
-            this.props.successCallback(result)
+            this.props.successCallback(result);
         }
     }
 
@@ -76,7 +78,7 @@ export class Form extends React.Component<FormProps, FormState> {
                 disabled: true
             });
 
-            this.submitForm()
+            this.submitForm(form)
         }
     }
 
@@ -86,7 +88,7 @@ export class Form extends React.Component<FormProps, FormState> {
         const alertMessage = hasError ? this.state.errors[0].message : this.props.successMessage;
 
         return <div>
-            <form className={`mt-4 ${this.state.validated ? "was-validated" : ""}`} onSubmit={this.onSubmit.bind(this)}
+            <form encType="multipart/form-data" className={`mt-4 ${this.state.validated ? "was-validated" : ""}`} onSubmit={this.onSubmit.bind(this)}
                   noValidate>
                 {this.props.children}
                 <div className="mt-4">

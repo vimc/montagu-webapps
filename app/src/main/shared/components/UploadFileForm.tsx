@@ -62,7 +62,8 @@ export class UploadFileForm extends React.Component<UploadFileProps, UploadFileS
                         <div className="button mt-2">
                             {this.props.uploadText}
                         </div>
-                        <div className="mr-5">{this.state.fileSelected ? "File selected: " + this.state.fileName : ""}</div>
+                        <div
+                            className="mr-5">{this.state.fileSelected ? "File selected: " + this.state.fileName : ""}</div>
                     </label>
                 </div>
                 <Alert hasSuccess={this.state.hasSuccess} hasError={hasError} message={alertMessage}/>
