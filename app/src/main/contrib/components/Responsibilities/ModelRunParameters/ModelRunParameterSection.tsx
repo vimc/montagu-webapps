@@ -24,12 +24,6 @@ export class ModelRunParameterSection extends React.Component<Props, State> {
         }
     }
 
-    toggle() {
-        this.setState((prevState: State) => {
-            return {isOpen: !prevState.isOpen}
-        })
-    }
-
     render(): JSX.Element {
 
         let alertText = `You have not uploaded any model run parameter sets for ${this.props.disease}`;
@@ -44,21 +38,17 @@ export class ModelRunParameterSection extends React.Component<Props, State> {
         return <div>
             <h2 className={"sectionTitle"}>Disease: {this.props.disease}</h2>
             <Alert color="warning">{alertText}</Alert>
-            <button onClick={this.toggle.bind(this)} className={hasSets ? "" : "d-none"}>Upload a new parameter set
-                <span className={this.state.isOpen ? "arrowUp" : "arrowDown"}></span>
-            </button>
 
-            <Collapse isOpen={this.state.isOpen}>
-                <Form url={this.props.url} submitText={"Upload"}
-                      successMessage={"Success! You have uploaded a new model run parameter set"}
-                      successCallback={() => {}}
-                      data={null}>
-                    <input type={"hidden"} name={"description"} value={""}/>
-                    <input type={"hidden"} name={"disease"} value={this.props.disease}/>
-                    <CustomFileInput required={true}>Choose file</CustomFileInput>
-                </Form>
-            </Collapse>
-            <hr />
+            <Form url={this.props.url} submitText={"Upload"}
+                  successMessage={"Success! You have uploaded a new model run parameter set"}
+                  successCallback={() => {
+                  }}
+                  data={null}>
+                <input type={"hidden"} name={"description"} value={""}/>
+                <input type={"hidden"} name={"disease"} value={this.props.disease}/>
+                <CustomFileInput required={true}>Choose file</CustomFileInput>
+            </Form>
+            <hr/>
         </div>
     }
 }
