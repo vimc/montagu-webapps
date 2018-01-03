@@ -8,6 +8,7 @@ interface AlertProps {
     hasError: boolean;
     hasSuccess: boolean;
     message: string;
+    cssClass?: string;
 }
 
 export class Alert extends React.Component<AlertProps, AlertState> {
@@ -35,7 +36,7 @@ export class Alert extends React.Component<AlertProps, AlertState> {
     render() {
         const cssClass = this.props.hasError ? "alert alert-danger" : "alert alert-success";
         if (this.state.show) {
-            return <div className={cssClass}>
+            return <div className={`${cssClass} ${this.props.cssClass}`}>
                 <button type="button" style={{"outline": "none"}} className="close"
                         onClick={this.closeAlert.bind(this)}>
                     <span>&times;</span>

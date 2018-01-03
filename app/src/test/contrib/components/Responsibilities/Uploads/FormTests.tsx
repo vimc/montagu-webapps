@@ -1,13 +1,12 @@
 import * as React from "react";
 import {expect} from "chai";
-import {mount, shallow} from "enzyme";
+import {mount} from "enzyme";
 import {Sandbox} from "../../../../Sandbox";
 import {Alert} from "../../../../../main/shared/components/Alert";
 import {Form} from "../../../../../main/shared/components/Form";
 import {Result} from "../../../../../main/shared/models/Generated";
-import {mockFetcherResponse, mockResponse} from "../../../../mocks/mockRemote";
+import {mockFetcherResponse} from "../../../../mocks/mockRemote";
 import {checkAsync} from "../../../../testHelpers";
-import {FormEvent} from "react";
 
 describe("FormComponent", () => {
     const sandbox = new Sandbox();
@@ -67,7 +66,8 @@ describe("FormComponent", () => {
         expect(spy.calledWith({
             hasSuccess: true,
             errors: [],
-            disabled: false
+            disabled: false,
+            validated: false
         })).to.eq(true);
     });
 
@@ -78,7 +78,7 @@ describe("FormComponent", () => {
         sandbox.setStub(form, "setState");
 
         const spy = sandbox.setStub(form, "resultCallback");
-        form.submitForm();
+        form.submitForm(null);
 
         checkAsync(done, (afterWait) => {
             afterWait(done, () => {
@@ -121,7 +121,8 @@ describe("FormComponent", () => {
         expect(spy.calledWith({
             hasSuccess: false,
             errors: errors,
-            disabled: false
+            disabled: false,
+            validated: false
         })).to.eq(true);
     });
 
@@ -174,7 +175,10 @@ describe("FormComponent", () => {
             }
         } as any);
 
-        expect(spy.calledWith({validated: true})).to.eq(true);
+        expect(spy.calledWith({
+            validated: true, errors: [],
+            hasSuccess: false
+        })).to.eq(true);
 
     });
 

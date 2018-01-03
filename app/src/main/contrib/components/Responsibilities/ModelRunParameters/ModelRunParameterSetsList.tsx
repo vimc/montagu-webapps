@@ -7,7 +7,7 @@ import * as React from "react";
 import {longTimestamp} from "../../../../shared/Helpers";
 import {responsibilityStore} from "../../../stores/ResponsibilityStore";
 
-interface Props extends RemoteContent {
+interface Props {
     sets: ModelRunParameterSet[];
     touchstone: Touchstone;
 }

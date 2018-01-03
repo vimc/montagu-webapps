@@ -12,16 +12,25 @@ interface Props {
 }
 
 interface State {
-    isOpen: boolean;
+    fileInputKey: Date;
 }
 
 export class ModelRunParameterSection extends React.Component<Props, State> {
 
-    constructor(props: Props) {
+    constructor() {
         super();
         this.state = {
-            isOpen: props.sets.length == 0
+            fileInputKey: new Date()
         }
+    }
+
+    onSuccess(){
+        console.log("success");
+        this.setState({
+            // this is to trick React into re-rendering the file input when the form has been successfully submitted
+            // see https://github.com/erikras/redux-form/issues/769
+            fileInputKey: new Date()
+        })
     }
 
     render(): JSX.Element {
@@ -41,12 +50,11 @@ export class ModelRunParameterSection extends React.Component<Props, State> {
 
             <Form url={this.props.url} submitText={"Upload"}
                   successMessage={"Success! You have uploaded a new model run parameter set"}
-                  successCallback={() => {
-                  }}
+                  successCallback={this.onSuccess.bind(this)}
                   data={null}>
                 <input type={"hidden"} name={"description"} value={""}/>
                 <input type={"hidden"} name={"disease"} value={this.props.disease}/>
-                <CustomFileInput required={true}>Choose file</CustomFileInput>
+                <CustomFileInput required={true} key={this.state.fileInputKey.toISOString()}>Choose file</CustomFileInput>
             </Form>
             <hr/>
         </div>
