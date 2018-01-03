@@ -54,7 +54,7 @@ export class ModelRunParameterUploadSectionComponent
         return <div>
             {
                 this.props.diseases.map(d => <ModelRunParameterSection key={d}
-                    disease={d} sets={props.sets.filter(set => set)} parametersToken={props.parametersToken}/>)
+                    disease={d} sets={props.sets.filter(set => set.disease == d)} parametersToken={props.parametersToken}/>)
             }
         </div>;
     }
