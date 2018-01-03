@@ -9,8 +9,10 @@ import {IPageWithParent} from "../../../../shared/models/Breadcrumb";
 import {ResponsibilityOverviewPage} from "../Overview/ResponsibilityOverviewPage";
 import {runParametersStore} from "../../../stores/RunParametersStore";
 import {runParameterActions} from "../../../actions/RunParameterActions";
-import {ModelRunParameterSetsList} from "./ModelRunParameterSetsList";
 import {ModelRunParameterUploadSection} from "./ModelRunParameterUploadSection";
+import {InternalLink} from "../../../../shared/components/InternalLink";
+
+const stochasticParams = require('../Overview/List/stochastic_template_params.csv');
 
 export interface ModelRunParametersProps {
     groupId: string;
@@ -47,8 +49,19 @@ export class ModelRunParametersPage extends ContribPageWithHeader<ModelRunParame
     }
 
     renderPageContent() {
+        const guidanceOutputsUrl = `/help/model-outputs/`;
+
         return <div className="mt-2">
-            <ModelRunParameterUploadSection />
-        </div>;
+            <p>
+                <InternalLink href={guidanceOutputsUrl}>
+                    Guidance on creating and uploading model run parameter sets
+                </InternalLink>
+            </p>
+            <p>
+                <a key={"params"}
+                   href={stochasticParams}>Parameters template</a>
+            </p>
+            <ModelRunParameterUploadSection/>
+        </div>
     }
 }

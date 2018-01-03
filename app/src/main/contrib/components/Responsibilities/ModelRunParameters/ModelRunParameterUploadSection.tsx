@@ -6,6 +6,7 @@ import {runParametersStore} from "../../../stores/RunParametersStore";
 import {connectToStores} from "../../../../shared/alt";
 import * as React from "react";
 import {ModelRunParameterSection} from "./ModelRunParameterSection";
+import {mockModelRunParameterSet} from "../../../../../test/mocks/mockModels";
 
 export interface Props extends RemoteContent {
     touchstone: Touchstone;
@@ -51,6 +52,7 @@ export class ModelRunParameterUploadSectionComponent
 
     renderContent(props: Props): JSX.Element {
         this.props.diseases.push("Hib");
+        this.props.sets.push(mockModelRunParameterSet(), mockModelRunParameterSet({disease: "YF"}));
         return <div>
             {
                 this.props.diseases.map(d => <ModelRunParameterSection key={d}
