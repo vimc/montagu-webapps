@@ -35,7 +35,7 @@ export class ModelRunParameterUploadSectionComponent
                 parametersToken: runParameterState.oneTimeToken,
                 sets: runParameterState.parameterSets,
                 diseases: Array.from(new Set([].concat.apply([],
-                    state.responsibilitySets.map((set) => set.responsibilities.map(r => r.scenario.disease)))))
+                    state.responsibilitySets.map(set => set.responsibilities.map(r => r.scenario.disease)))))
             };
         } else {
             return {
@@ -50,10 +50,11 @@ export class ModelRunParameterUploadSectionComponent
     }
 
     renderContent(props: Props): JSX.Element {
+        this.props.diseases.push("Hib");
         return <div>
             {
                 this.props.diseases.map(d => <ModelRunParameterSection key={d}
-                    disease={d} sets={props.sets} parametersToken={props.parametersToken}/>)
+                    disease={d} sets={props.sets.filter(set => set)} parametersToken={props.parametersToken}/>)
             }
         </div>;
     }
