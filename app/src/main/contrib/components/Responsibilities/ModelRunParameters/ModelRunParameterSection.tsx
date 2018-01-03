@@ -25,7 +25,6 @@ export class ModelRunParameterSection extends React.Component<Props, State> {
     }
 
     onSuccess(){
-        console.log("success");
         this.setState({
             // this is to trick React into re-rendering the file input when the form has been successfully submitted
             // see https://github.com/erikras/redux-form/issues/769

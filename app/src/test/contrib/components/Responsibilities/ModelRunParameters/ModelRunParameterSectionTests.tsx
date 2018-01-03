@@ -3,11 +3,10 @@ import {expect} from "chai";
 import {shallow, ShallowWrapper} from "enzyme";
 import {Sandbox} from "../../../../Sandbox";
 import {mockFetcher} from "../../../../mocks/mockRemote";
-import {UploadFileForm} from "../../../../../main/shared/components/UploadFileForm";
 import {ModelRunParameterSection} from "../../../../../main/contrib/components/Responsibilities/ModelRunParameters/ModelRunParameterSection";
 import {Form} from "../../../../../main/shared/components/Form";
 
-describe('UploadModelRunParametersForm', () => {
+describe('ModelRunParameterSection', () => {
     let rendered: ShallowWrapper<any, any>;
     const sandbox = new Sandbox();
 
@@ -30,12 +29,12 @@ describe('UploadModelRunParametersForm', () => {
     it("populates hidden disease input", () => {
 
         rendered = shallow(<ModelRunParameterSection
-            url={"token"}
+            url={"url"}
             sets={[]}
             disease={"d1"}
         />);
 
-        const input = rendered.find('input[name="disease"]');
+        const input = rendered.find('input[name="disease"][type="hidden"]');
         expect(input).to.have.lengthOf(1);
         expect(input.prop("value")).to.eql("d1");
 
@@ -44,13 +43,13 @@ describe('UploadModelRunParametersForm', () => {
     it("populate hidden description input", () => {
 
         rendered = shallow(<ModelRunParameterSection
-            url={"token"}
+            url={"url"}
             sets={[]}
             disease={"d1"}
         />);
 
-        const input = rendered.find('input[name="description"]');
+        const input = rendered.find('input[name="description"][type="hidden"]');
         expect(input).to.have.lengthOf(1);
     });
-
+    
 });
