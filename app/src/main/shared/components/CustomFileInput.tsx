@@ -22,15 +22,18 @@ export class CustomFileInput extends React.Component<Props, State> {
     }
 
     handleChange(e: React.MouseEvent<HTMLInputElement>) {
+        const target = e.target as HTMLInputElement;
         this.setState({
-            fileName: (e.target as HTMLInputElement).value.replace("C:\\fakepath\\", ""),
-            fileSelected: true
+            fileName: target.value.replace("C:\\fakepath\\", ""),
+            fileSelected: typeof target.value != "undefined"
         });
     }
 
     render() {
-        return <div className="form-group"><label className="customFileUpload">
-            <input name="file" type="file" className="form-control" onChange={this.handleChange.bind(this)} required={this.props.required}/>
+
+        return <div className="form-group mb-0"><label className="customFileUpload">
+            <input name="file"
+                   type="file" className="form-control" onChange={this.handleChange.bind(this)} required={this.props.required}/>
             <div className="button mt-2">
                 {this.props.children}
             </div>

@@ -45,18 +45,19 @@ export class Form extends React.Component<FormProps, FormState> {
         }).then((response: Response) => {
             return apiResponse(response)
                 .then((result: Result) => {
-                        self.resultCallback(form, result)
+                        self.resultCallback(result)
                     }
                 );
         });
     }
 
-    resultCallback(form: HTMLFormElement, result: Result) {
+    resultCallback(result: Result) {
         const success = result.status == "success";
         this.setState({
             hasSuccess: success,
             errors: result.errors,
-            disabled: false
+            disabled: false,
+            validated: false
         });
 
         if (success) {
@@ -69,7 +70,9 @@ export class Form extends React.Component<FormProps, FormState> {
         const form = e.target as HTMLFormElement;
 
         this.setState({
-            validated: true
+            validated: true,
+            errors: [],
+            hasSuccess: false
         });
 
         if (form.checkValidity() === true) {
@@ -88,12 +91,11 @@ export class Form extends React.Component<FormProps, FormState> {
         const alertMessage = hasError ? this.state.errors[0].message : this.props.successMessage;
 
         return <div>
-            <form encType="multipart/form-data" className={`mt-4 ${this.state.validated ? "was-validated" : ""}`} onSubmit={this.onSubmit.bind(this)}
+            <form encType="multipart/form-data" className={`mt-4 ${this.state.validated ? "was-validated" : ""}`}
+                  onSubmit={this.onSubmit.bind(this)}
                   noValidate>
                 {this.props.children}
-                <div className="mt-4">
-                    <Alert hasSuccess={this.state.hasSuccess} hasError={hasError} message={alertMessage}/>
-                </div>
+                <Alert cssClass="mt-4" hasSuccess={this.state.hasSuccess} hasError={hasError} message={alertMessage}/>
                 <button type="submit" className="mt-2"
                         disabled={this.state.disabled}>{this.props.submitText}
                 </button>
