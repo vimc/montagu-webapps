@@ -53,10 +53,12 @@ export class ModelRunParameterUploadSectionComponent
     renderContent(props: Props): JSX.Element {
         this.props.diseases.push("Hib");
         this.props.sets.push(mockModelRunParameterSet(), mockModelRunParameterSet({disease: "YF"}));
+
+        const url = `/modelling-groups/${this.props.group.id}/model-run-parameters/${this.props.touchstone.id}/`;
         return <div>
             {
-                this.props.diseases.map(d => <ModelRunParameterSection key={d}
-                    disease={d} sets={props.sets.filter(set => set.disease == d)} parametersToken={props.parametersToken}/>)
+                this.props.diseases.map(d => <ModelRunParameterSection key={d} url={url}
+                    disease={d} sets={props.sets.filter(set => set.disease == d)} />)
             }
         </div>;
     }
