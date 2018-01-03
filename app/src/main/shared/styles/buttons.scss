@@ -22,17 +22,15 @@ button:disabled, .button.disabled {
 }
 
 .arrowDown:before {
-
     content: "\25be";
     float:right;
-    color: #ffffff;
+    color: inherit;
 }
 
 .arrowUp:before {
-
     content: "\25b4";
     float:right;
-    color: #ffffff;
+    color: inherit;
 }
 
 .arrowUp:after, .arrowDown:after
