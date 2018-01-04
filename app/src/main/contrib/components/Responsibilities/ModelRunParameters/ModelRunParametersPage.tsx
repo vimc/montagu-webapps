@@ -41,7 +41,7 @@ export class ModelRunParametersPage extends ContribPageWithHeader<ModelRunParame
     }
 
     urlFragment(): string {
-        return 'model-run-parameters';
+        return 'parameters';
     }
 
     parent(): IPageWithParent {
