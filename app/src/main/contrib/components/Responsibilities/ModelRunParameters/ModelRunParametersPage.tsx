@@ -54,12 +54,12 @@ export class ModelRunParametersPage extends ContribPageWithHeader<ModelRunParame
         return <div className="mt-2">
             <p>
                 <InternalLink href={guidanceOutputsUrl}>
-                    Guidance on creating and uploading model run parameter sets
+                    Guidance on creating and uploading parameter sets
                 </InternalLink>
             </p>
             <p>
                 <a key={"params"}
-                   href={stochasticParams}>Parameters template</a>
+                   href={stochasticParams}>Download stochastic parameters template</a>
             </p>
             <ModelRunParameterUploadSection/>
         </div>

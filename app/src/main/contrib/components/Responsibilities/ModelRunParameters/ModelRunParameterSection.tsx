@@ -35,13 +35,13 @@ export class ModelRunParameterSection extends React.Component<Props, State> {
 
     render(): JSX.Element {
 
-        let alertContent = <span>You have not uploaded any model run parameter sets for {this.props.disease}</span>
+        let alertContent = <span>You have not uploaded any parameter sets for {this.props.disease}</span>
 
         const hasSets = this.props.sets.length > 0;
 
         if (hasSets) {
             const lastUploaded = this.props.sets[0];
-            const alertText = `You last uploaded a model run parameter set on 
+            const alertText = `You last uploaded a parameter set on 
             ${longestTimestamp(new Date(lastUploaded.uploaded_on))}`;
 
             const downloadCertificateLink = <button className="float-right">Download parameter certificate</button>;
@@ -56,7 +56,7 @@ export class ModelRunParameterSection extends React.Component<Props, State> {
             <Alert color="warning">{alertContent}</Alert>
             <h4>Upload a new set of parameters:</h4>
             <Form url={this.props.url} submitText={"Upload"}
-                  successMessage={"Success! You have uploaded a new model run parameter set"}
+                  successMessage={"Success! You have uploaded a new parameter set"}
                   successCallback={this.onSuccess.bind(this)}
                   data={null}>
                 <input type={"hidden"} name={"description"} value={""}/>
