@@ -91,7 +91,7 @@ export class Form extends React.Component<FormProps, FormState> {
         const alertMessage = hasError ? this.state.errors[0].message : this.props.successMessage;
 
         return <div>
-            <form encType="multipart/form-data" className={`mt-4 ${this.state.validated ? "was-validated" : ""}`}
+            <form encType="multipart/form-data" className={this.state.validated ? "was-validated" : ""}
                   onSubmit={this.onSubmit.bind(this)}
                   noValidate>
                 {this.props.children}
