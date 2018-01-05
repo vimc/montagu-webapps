@@ -59,7 +59,7 @@ export class UploadFileForm extends React.Component<UploadFileProps, UploadFileS
                 <div className="form-group">
                     <label className="customFileUpload">
                         <input name="file" type="file" onChange={this.handleChange.bind(this)}/>
-                        <div className="button mt-2 mb-2">
+                        <div className="button mt-2">
                             {this.props.uploadText}
                         </div>
                         <div
