@@ -10,9 +10,7 @@ export class PageArticle extends React.Component<ArticleProps, undefined> {
 
     render() {
         return <article className="page container">
-            { !this.props.hideTitle &&
-            <div className="page__title">{ this.props.title }</div>
-            }
+
             <div className="page__content">{ this.props.children }</div>
         </article>
     }
