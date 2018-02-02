@@ -60,7 +60,7 @@ export class MainMenu extends ReportingPageWithHeader<any> {
                     </div>
 
                     <div className="col-12 col-lg-6">
-                        <div className="m-5">
+                        <div className="mb-3 mr-5 ml-5 mt-3">
                         <h4 className="mb-3">Modified update 2017 of future impact with impact metrics v12 (2015)</h4>
                         <img src={testimage} className="img-fluid"/>
                         </div>
