@@ -25,6 +25,34 @@
         margin:0 0.5em;
         display:inline-block;
     }
+
+    .card-header {
+        color: white !important;
+        background-color: darkslategrey !important;
+    }
+
+    .circle {
+        background-color: floralwhite;
+        border-radius: 50%;
+        left: 0;
+        top: 0;
+        z-index: -1;
+    }
+
+    .list-unstyled > li {
+        list-style-type: none;
+        position: relative;
+        padding-left: 15px;
+    }
+
+    .list-unstyled > li:before {
+        content: "\25BA \0020";
+        font-size: 6px;
+        position: absolute;
+        top: 5px;
+        left: -10px;
+    }
+
 </style>
 <div id="react"></div>
 
