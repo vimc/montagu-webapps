@@ -9,9 +9,9 @@ interface ArticleProps {
 export class PageArticle extends React.Component<ArticleProps, undefined> {
 
     render() {
-        return <article className="page container">
+        return <article className="page container-fluid pt-5">
 
-            <div className="page__content">{ this.props.children }</div>
+            <div className="page__content pt-5">{ this.props.children }</div>
         </article>
     }
 }
