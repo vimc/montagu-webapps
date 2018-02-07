@@ -3,8 +3,6 @@ import {ReportingPageWithHeader} from "../ReportingPageWithHeader";
 import {reportStore} from "../../stores/ReportStore";
 import {IPageWithParent} from "../../../shared/models/Breadcrumb";
 import {Page} from "../../../shared/components/PageWithHeader/Page";
-import {Button} from "reactstrap";
-import {Collapse} from "reactstrap";
 import {Card} from "reactstrap";
 
 const Typeahead = require('react-bootstrap-typeahead').Typeahead;
@@ -90,57 +88,60 @@ export class MainMenu extends ReportingPageWithHeader<any> {
                 <div className="row">
 
                     <div className="col-12 col-lg-6">
-                        <div className="row">
+                        <h2>Search</h2>
+                        <div className="m-2">
+                             <Typeahead minLength={2} options={["DALYs Guidance",
+                                "coverage data from 201708test-1",
+                                "coverage data from 201708test-2",
+                                "burden estimate template tables",
+                                "Create scenario-specific burden estimate templates",
+                                "open call burden estimate templates",
+                                "Discussion and methods regarding child mortality rates",
+                                "Methods for creating Kosovo demographic data",
+                                "Methods for creating Marshsall Islands demographic data"
+                            ]}/>
+                            <p>
+                                <a href="#">View all</a>
+                            </p>
+                        </div>
+                    </div>
 
-                            <div className="col-12 col-lg-6">
-                                <div className="" style={{marginTop: "22px"}}>
-                                    <h2>Search</h2>
-                                    <Typeahead minLength={2} options={["DALYs Guidance",
-                                        "coverage data from 201708test-1",
-                                        "coverage data from 201708test-2",
-                                        "burden estimate template tables",
-                                        "Create scenario-specific burden estimate templates",
-                                        "open call burden estimate templates",
-                                        "Discussion and methods regarding child mortality rates",
-                                        "Methods for creating Kosovo demographic data",
-                                        "Methods for creating Marshsall Islands demographic data"
-                                    ]}/>
-                                    <a href="#">View all</a>
-                                </div>
-                            </div>
-
-                            <div className="col-12 col-sm-6 col-lg-4 mt-3">
-                                <div className="">
-                                    <h2 className="display-4">Browse</h2>
-                                    <Card>
-                                    <div className="card-body">
+                    <div className="col-12 col-lg-6">
+                        <div className="">
+                            <h2>Browse</h2>
+                            <Card>
+                                <div className="card-body">
+                                    <div className={"row"}>
+                                        <div className={"col-6"}>
                                         <ul className="nav nav-pills flex-column">
-                                            <li className="nav-item">
-                                                <a className="nav-link active" href="#">Recently viewed</a>
+                                            <li className="list-group">
+                                                <a className="list-group-item active" href="#">Recently viewed</a>
                                             </li>
                                             <li className="nav-item">
-                                                <a className="nav-link" href="#">Popular</a>
+                                                <a className="list-group-item" href="#">Popular</a>
                                             </li>
                                             <li className="nav-item">
-                                                <a className="nav-link" href="#">Guidance</a>
+                                                <a className="list-group-item" href="#">Example category</a>
                                             </li>
                                             <li className="nav-item">
-                                                <a className="nav-link disabled" href="#">Modified updates</a>
-                                            </li>
-                                            <li className="nav-item">
-                                                <a className="nav-link disabled" href="#">Another Category</a>
+                                                <a className="list-group-item" href="#">Another example Category</a>
                                             </li>
                                         </ul>
-                                        <ul className="list-group list-group-flush">
-                                            <li className="list-group-item"><a href="#">DALYs Guidance</a></li>
-                                            <li className="list-group-item"><a href="#">Small countries guidance</a></li>
-                                            <li className="list-group-item"><a href="#">Coverage guidance</a></li>
-                                        </ul>
+                                        </div>
+                                        <div className="tab-content col-6">
+                                            <div className="tab-pane fade show active">
+                                                <ul className="list-group list-group-flush">
+                                                    <li className="list-group-item"><a href="#">DALYs Guidance</a></li>
+                                                    <li className="list-group-item"><a href="#">Small countries
+                                                        guidance</a></li>
+                                                    <li className="list-group-item"><a href="#">Coverage guidance</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
                                     </div>
-                                    </Card>
                                 </div>
-                            </div>
-
+                            </Card>
                         </div>
                     </div>
                 </div>
@@ -177,6 +178,7 @@ export class MainMenu extends ReportingPageWithHeader<any> {
 
                     <div className="col-12 pr-0">
                         <h2>Featured report</h2>
+                        <p className={"muted small"}>20180205-100037-38487ecc/</p>
                         <div className="border border-dark rounded-0" style={{height: "100%"}}>
                             <div className="mb-3 mr-5 ml-5 mt-3">
                                 <h4 className="mb-3">Impact of measles campaigns 2018 - 2020 under low coverage
