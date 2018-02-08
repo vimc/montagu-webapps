@@ -4,6 +4,7 @@ import {reportStore} from "../../stores/ReportStore";
 import {IPageWithParent} from "../../../shared/models/Breadcrumb";
 import {Page} from "../../../shared/components/PageWithHeader/Page";
 import {Card} from "reactstrap";
+import Badge from "reactstrap/lib/Badge";
 
 const Typeahead = require('react-bootstrap-typeahead').Typeahead;
 
@@ -60,53 +61,6 @@ export class MainMenu extends ReportingPageWithHeader<any> {
     };
 
     render(): JSX.Element {
-        // return <Page page={this}>
-        //     <div className="container">
-        //
-        //         <h2 className="mb-2">Viewing all reports</h2>
-        //         <div className="row">
-        //             <div className="col-4">
-        //                 Search: <input className="form-control" type="text">
-        //
-        //             </input>
-        //             </div>
-        //             <div className="col-4">
-        //                 Sort by: <select className="form-control">
-        //                 <option>Date created</option>
-        //                 <option>Date published</option>
-        //                 <option>Name</option>
-        //                 <option>Most viewed</option>
-        //             </select>
-        //             </div>
-        //         </div>
-        //         <div className="row mt-5">
-        //             <div className="col-8">
-        //                 <ul className="list-unstyled ml-4">
-        //                     <li><a href="/reports/201710gavi-coverage-estimates/20180205-100037-38487ecc/">201710gavi-coverage-estimates</a>
-        //                         <p className="small text-muted">Published: 12th Oct 2017</p>
-        //                 </li><li>
-        //                     <a href="/reports/guidance-201710-DALYs/20171124-110346-15208cac/">DALYs Guidance</a>
-        //                     <p className="small text-muted">Published: 12th Oct 2017</p></li>
-        //                     <li><a href="/reports/internal-2017-201708test-1-coverage/20170829-155605-aec5f8fb/">coverage data from 201708test-1</a>     <p className="small text-muted">Published: 12th Oct 2017</p></li>
-        //                     <li><a href="/reports/internal-2017-201708test-2-coverage/20171115-100248-7ad5e28b/">coverage data from 201708test-2</a>     <p className="small text-muted">Published: 12th Oct 2017</p></li>
-        //                     <li><a href="/reports/internal-2017-burden-estimates-template/20180117-165238-676f3fb0/">burden estimate template tables</a>     <p className="small text-muted">Published: 12th Oct 2017</p></li>
-        //                     <li><a href="/reports/internal-2017-burden-estimates-template-hepb-scenario-specific/20180117-171841-e0127653/">Create scenario-specific burden estimate templates</a>     <p className="small text-muted">Published: 12th Oct 2017</p></li>
-        //                     <li><a href="/reports/internal-2017-burden-estimates-template-open-call/20180104-163609-dca5e213/">open call burden estimate templates</a>     <p className="small text-muted">Published: 12th Oct 2017</p></li>
-        //                     <li><a href="/reports/internal-2017-demography-childmortality/20171114-152328-da1957c2/">Discussion and methods regarding child mortality rates.</a>     <p className="small text-muted">Published: 12th Oct 2017</p></li>
-        //                     <li><a href="/reports/internal-2017-demography-kosovo/20171109-204911-45436ef8/">Methods for creating Kosovo demographic data</a>     <p className="small text-muted">Published: 12th Oct 2017</p></li>
-        //                     <li><a href="/reports/internal-2017-demography-marshall/20171109-205347-89919a97/">Methods for creating Marshsall Islands demographic data</a>     <p className="small text-muted">Published: 12th Oct 2017</p></li>
-        //                     <li><a href="/reports/internal-2017-demography-over80/20171114-094012-ed43d81c/">Methods and results for over-80 demographics pre-1990</a>     <p className="small text-muted">Published: 12th Oct 2017</p></li>
-        //                     <li><a href="/reports/internal-2017-demography-tuvalu/20171109-205800-aa3a35c2/">Methods for creating Tuvalu demographic data</a></li>
-        //                     <li><a href="/reports/internal-2017-modup-201210-201510/20171024-092346-210cff84/">internal-2017-modup-201210-201510</a></li>
-        //                     <li><a href="/reports/internal-2017-modup-201210-201607/20180109-160958-f46f849c/">internal-2017-modup-201210-201607</a></li>
-        //                     <li><a href="/reports/internal-2017-modup-method2/20171027-125517-42e14317/">internal-2017-modup-method2</a></li>
-        //                     <li><a href="/reports/internal-2017-modup2-201510gavi-201303gavi/20180112-144941-ad94d715/">Modified update (method 2) for 201510-201303</a></li>
-        //                     <li><a href="/reports/internal-2017-modup2-201510gavi-201510gavi/20180125-172527-33f86da5/">Modified update (method 2) for 201510-201510</a></li>
-        //                 </ul>
-        //             </div>
-        //         </div>
-        //     </div>
-        // </Page>
         return <Page page={this}>
 
             <div className="container">
@@ -115,71 +69,17 @@ export class MainMenu extends ReportingPageWithHeader<any> {
 
                     <div className="col-12 col-lg-6">
                         <h2>Search</h2>
+                        <p>Tags: <a href="#" color={"light"} className="mr-2 badge badge-info">Category 1</a>
+                            <a href="#"className="mr-2 badge badge-info" color={"light"}>Category 2</a>
+                            <a href="#" color={"light"} className="mr-2 badge badge-info">Category 3</a>
+                            <a href="#" className="mr-2 badge badge-info" color={"light"}>Category 4</a>
+                            <a href="#" color={"light"} className="mr-2 badge badge-info">Category 5</a>
+                            <a href="#" className="mr-2 badge badge-info" color={"light"}>Category 6</a>
+                        </p>
+                        <p>Choose a tag to filter by, or just start typing:</p>
                         <div className="mt-2 mr-5">
                             <input className="form-control form-control-lg" type="text"
                                    onChange={this.showResults.bind(this)}/>
-                        </div>
-                    </div>
-
-                    <div className="col-12 col-lg-6">
-                        <div className="">
-                            <h2>Browse</h2>
-                            <Card>
-                                <div className="card-body">
-                                    <div className={"row"}>
-                                        <div className={"col-6"}>
-                                            <ul className="nav nav-pills flex-column">
-                                                <li className="list-group">
-                                                    <a className="list-group-item active" href="#">Recently viewed</a>
-                                                </li>
-                                                <li className="nav-item">
-                                                    <a className="list-group-item" href="#">Popular</a>
-                                                </li>
-                                                <li className="nav-item">
-                                                    <a className="list-group-item" href="#">Example category</a>
-                                                </li>
-                                                <li className="nav-item">
-                                                    <a className="list-group-item" href="#">Another example Category</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div className="tab-content col-6">
-                                            <div className="tab-pane fade show active"
-                                                 style={{"overflow-y": "scroll", maxHeight: "400px"}}>
-                                                <ul className="list-group list-group-flush">
-                                                    <li className="list-group-item"><a href="#">A report</a>
-                                                        <p className={"text-muted small"}>20180205-100037-38487ecc/</p>
-                                                    </li>
-                                                    <li className="list-group-item"><a href="#">Another report</a>
-                                                        <p className={"text-muted small"}>20180205-100037-38487ecc/</p>
-                                                    </li>
-                                                    <li className="list-group-item"><a href="#">Something</a>
-                                                        <p className={"text-muted small"}>20180205-100037-38487ecc/</p>
-                                                    </li>
-                                                    <li className="list-group-item"><a href="#">A report</a>
-                                                        <p className={"text-muted small"}>20180205-100037-38487ecc/</p>
-                                                    </li>
-                                                    <li className="list-group-item"><a href="#">Another report</a>
-                                                        <p className={"text-muted small"}>20180205-100037-38487ecc/</p>
-                                                    </li>
-                                                    <li className="list-group-item"><a href="#">Something</a>
-                                                        <p className={"text-muted small"}>20180205-100037-38487ecc/</p>
-                                                    </li>
-                                                    <li className="list-group-item"><a href="#">A report</a>
-                                                        <p className={"text-muted small"}>20180205-100037-38487ecc/</p>
-                                                    </li>
-                                                    <li className="list-group-item"><a href="#">Another report</a>
-                                                        <p className={"text-muted small"}>20180205-100037-38487ecc/</p>
-                                                    </li>
-                                                    <li className="list-group-item"><a href="#">Something</a>
-                                                        <p className={"text-muted small"}>20180205-100037-38487ecc/</p>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </Card>
                         </div>
                     </div>
                 </div>
@@ -197,6 +97,7 @@ export class MainMenu extends ReportingPageWithHeader<any> {
                             <option>Date created</option>
                             <option>Date published</option>
                             <option>Name</option>
+                            <option>Last viewed</option>
                             <option>Most viewed</option>
                         </select>
                         </div>
@@ -206,71 +107,73 @@ export class MainMenu extends ReportingPageWithHeader<any> {
                             <li>
                                 <a href="/reports/guidance-201710-DALYs/20171124-110346-15208cac/">A report you're
                                     allowed to see</a>
-                                <span className="small badge-info badge float-right ml-1">created: 28th Sep 2017</span>
+                                <span className="small ml-1 badge-light badge float-right">created: 28th Sep 2017</span>
                                 <span className="small badge-primary badge float-right">Published: 12th Oct 2017</span>
+
                                 <p className="small text-muted">20180205-100037-38487ecc</p>
                             </li>
                             <li className="clearfix"><a
                                 href="/reports/internal-2017-201708test-1-coverage/20170829-155605-aec5f8fb/">B
                                 report you're allowed to see</a>
-                                <span className="small ml-1 badge-info badge float-right">created: 28th Sep 2017</span>
-                                <span className="small badge-primary badge float-right">Published: 12th Oct 2017</span>
+                                <span className="small ml-1 badge-light badge float-right">created: 28th Sep 2017</span>
                                 <p className="small text-muted">20180205-100037-38487ecc</p>
                             </li>
                             <li className="clearfix"><a
                                 href="/reports/internal-2017-201708test-2-coverage/20171115-100248-7ad5e28b/">C
                                 report you're allowed to see</a>
-                                <span className="small ml-1 badge-info badge float-right">created: 28th Sep 2017</span>
+                                <span className="small ml-1 badge-light badge float-right">created: 28th Sep 2017</span>
                                 <span className="small  badge-primary badge float-right">Published: 12th Oct 2017</span>
+
                                 <p className="small text-muted">20180205-100037-38487ecc</p>
                             </li>
                             <li className="clearfix"><a
                                 href="/reports/internal-2017-burden-estimates-template/20180117-165238-676f3fb0/">
                                 D report you're allowed to see</a>
-                                <span className="small ml-1 badge-info badge float-right">created: 28th Sep 2017</span>
-                                <span className="small   badge-primary badge float-right">Published: 12th Oct 2017</span>
+                                <span className="small ml-1 badge-light badge float-right">created: 28th Sep 2017</span>
                                 <p className="small text-muted">20180205-100037-38487ecc</p>
                             </li>
                             <li className="clearfix"><a
                                 href="/reports/201710gavi-coverage-estimates/20180205-100037-38487ecc/">Some report
                                 you're allowed to see</a>
-                                <span className="small ml-1 badge-info badge float-right">created: 28th Sep 2017</span>
-                                <span className="small  badge-primary badge float-right">Published: 12th Oct 2017</span>
+                                <span className="small ml-1 badge-light badge float-right">created: 28th Sep 2017</span>
                                 <p className="small text-muted">20180205-100037-38487ecc</p>
                             </li>
                             <li>
                                 <a href="/reports/guidance-201710-DALYs/20171124-110346-15208cac/">A report you're
                                     allowed to see</a>
-                                <span className="small badge-info badge float-right ml-1">created: 28th Sep 2017</span>
+                                <span className="small ml-1 badge-light badge float-right">created: 28th Sep 2017</span>
                                 <span className="small badge-primary badge float-right">Published: 12th Oct 2017</span>
                                 <p className="small text-muted">20180205-100037-38487ecc</p>
                             </li>
                             <li className="clearfix"><a
                                 href="/reports/internal-2017-201708test-1-coverage/20170829-155605-aec5f8fb/">B
                                 report you're allowed to see</a>
-                                <span className="small ml-1 badge-info badge float-right">created: 28th Sep 2017</span>
-                                <span className="small badge-primary badge float-right">Published: 12th Oct 2017</span>
+                                <span className="small ml-1 badge-light badge float-right">created: 28th Sep 2017</span>
                                 <p className="small text-muted">20180205-100037-38487ecc</p>
                             </li>
                             <li className="clearfix"><a
                                 href="/reports/internal-2017-201708test-2-coverage/20171115-100248-7ad5e28b/">C
                                 report you're allowed to see</a>
-                                <span className="small ml-1 badge-info badge float-right">created: 28th Sep 2017</span>
-                                <span className="small  badge-primary badge float-right">Published: 12th Oct 2017</span>
+
+                                <span className="small ml-1 badge-light badge float-right">created: 28th Sep 2017</span>
+                                <span className="small badge-primary badge float-right">Published: 12th Oct 2017</span>
                                 <p className="small text-muted">20180205-100037-38487ecc</p>
                             </li>
                             <li className="clearfix"><a
                                 href="/reports/internal-2017-burden-estimates-template/20180117-165238-676f3fb0/">
                                 D report you're allowed to see</a>
-                                <span className="small ml-1 badge-info badge float-right">created: 28th Sep 2017</span>
-                                <span className="small   badge-primary badge float-right">Published: 12th Oct 2017</span>
+
+                                <span className="small ml-1 badge-light badge float-right">created: 28th Sep 2017</span>
+                                <span className="small badge-primary badge float-right">Published: 12th Oct 2017</span>
                                 <p className="small text-muted">20180205-100037-38487ecc</p>
                             </li>
                             <li className="clearfix"><a
                                 href="/reports/201710gavi-coverage-estimates/20180205-100037-38487ecc/">Some report
                                 you're allowed to see</a>
-                                <span className="small ml-1 badge-info badge float-right">created: 28th Sep 2017</span>
-                                <span className="small  badge-primary badge float-right">Published: 12th Oct 2017</span>
+
+                                <span className="small ml-1 badge-light badge float-right">created: 28th Sep 2017</span>
+                                <span className="small badge-primary badge float-right">Published: 12th Oct 2017</span>
+
                                 <p className="small text-muted">20180205-100037-38487ecc</p>
                             </li>
 
