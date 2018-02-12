@@ -2,7 +2,7 @@ import * as React from "react";
 import { InternalLink } from "../InternalLink";
 import {NavBar} from "../NavBar/NavBar";
 
-import * as logo from "./green-logo-2.png";
+import * as logo from "./green-logo-dark.png";
 
 interface HeaderProps {
     siteTitle: string;
