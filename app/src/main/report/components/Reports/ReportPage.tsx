@@ -9,11 +9,18 @@ import {MainMenu} from "../MainMenu/MainMenu";
 import {ReportPageTitle} from "./ReportPageTitle";
 import {Page} from "../../../shared/components/PageWithHeader/Page";
 import {Version} from "../../../shared/models/reports/Report";
+import Card from "reactstrap/lib/Card";
 
 export interface ReportPageProps {
     report: string;
     version: string;
 }
+
+const imgSrc = require("./fig1.png");
+
+const imgSrc2 = require("./fig2.png");
+
+const imgSrc3 = require("./fig3.png");
 
 export class ReportPage extends ReportingPageWithHeader<ReportPageProps> {
     constructor(props: PageProperties<ReportPageProps>) {
@@ -21,6 +28,7 @@ export class ReportPage extends ReportingPageWithHeader<ReportPageProps> {
         this.changeVersion = this.changeVersion.bind(this);
         this.state = {
             main: true,
+            changelog: false,
             published: false
         }
     }
@@ -72,9 +80,18 @@ export class ReportPage extends ReportingPageWithHeader<ReportPageProps> {
 
     nav() {
         this.setState({
-            main: false
+            main: false,
+            changelog: false
         })
     }
+
+    changelog() {
+        this.setState({
+            main: false,
+            changelog: true
+        })
+    }
+
 
     render(): JSX.Element {
         return <Page page={this}>
@@ -102,30 +119,22 @@ export class ReportPage extends ReportingPageWithHeader<ReportPageProps> {
                                     <a className={this.state.main ? "nav-link active" : "nav-link"} href="#">Report</a>
                                 </li>
                                 <li className="nav-item" onClick={this.nav.bind(this)}>
-                                    <a className={!this.state.main ? "nav-link active" : "nav-link"} href="#">Inputs</a>
+                                    <a className={!this.state.main && !this.state.changelog ? "nav-link active" : "nav-link"}
+                                       href="#">Downloads</a>
                                 </li>
-                                <li className="nav-item">
-                                    <a className="nav-link" href="#">Outputs</a>
-                                </li>
-                                <li className="nav-item">
-                                    <a className="d-block font-weight-bold" href="#" style={{
-                                        color: "inherit", padding: "0.5rem 1rem"
-                                    }}>
-                                        Download all
-                                    </a>
+                                <li className={"nav-item"}
+                                    onClick={this.changelog.bind(this)}>
+                                    <a className={this.state.changelog ? "nav-link active" : "nav-link"} href="#">Changelog</a>
                                 </li>
                             </ul>
 
                             <hr/>
                             <div className="col-12">
                                 <label className="font-weight-bold" htmlFor="report-version-switcher">Version</label>
-                                <select className="form-control form-control-sm" id="report-version-switcher">
+                                <select className="form-control form-control-sm mb-3" id="report-version-switcher">
                                     <option value="20170226-233438-db34dc39">Sun Feb 26 2017, 23:34</option>
                                     <option value="20170224-000213-afd20506">Fri Feb 24 2017, 00:02</option>
                                 </select>
-                                <div className="mt-3 font-weight-bold">Version notes</div>
-                                <p style={{fontSize: "14px"}}>
-                                    Updated introduction to give more details</p>
 
                                 <div className={`toggle btn btn-secondary ${this.state.published ? "" : "d-none"}`}
                                      onClick={this.toggle.bind(this)}
@@ -149,46 +158,170 @@ export class ReportPage extends ReportingPageWithHeader<ReportPageProps> {
                         </nav>
                     </div>
                     <div className="col-12 col-md-8 pl-md-5 pt-5 pt-sm-0">
-                        {this.state.main ?
+                        {this.state.main && !this.state.changelog ?
                             <ReportDetails onChangeVersion={this.changeVersion}/>
-                            : <div>
-                                <h6 className="font-weight-bold">External resources</h6>
-                                <ul className="list-unstyled ml-3">
-                                    <li><a href="#">child-mortality.Rmd</a></li>
-                                    <li><a href="#">cm2017.csv</a></li>
-                                </ul>
-                                <h6 className="font-weight-bold">Data</h6>
-                                <ul className={"list-unstyled ml-3"}>
-                                    <li>db_data
-                                        <div>
-                                            <a href={"#"} className="mr-2">csv</a>/<a className="ml-2"
-                                                                                      href={"#"}>rds</a>
+                            : !this.state.main && !this.state.changelog ?
+                                <div>
+
+                                    <Card className={"mb-3"}>
+                                        <div className={"card-header dark arrow-down"}>
+                                            Global Cumulative Sum of Future Deaths Averted, Estimated Actual
+                                            benchmarked against projected LTSG.
                                         </div>
-                                    </li>
-                                    <li>db_stat_data
-                                        <div>
-                                            <a href={"#"} className="mr-2">csv</a>/<a className="ml-2"
-                                                                                      href={"#"}>rds</a>
+                                        <div className={"card-body d-none"}>
+                                            <img src={imgSrc}/>
+                                            <h6 className={"font-weight-bold"}>Download</h6>
+                                            <ul>
+                                                <li>
+                                                    <a href="#">
+                                                        figure1_modelversion2012.png
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">
+                                                        figure1_modelversion2012_data.csv
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">
+                                                        figure1_modelversion2012_meta_data.csv
+                                                    </a>
+                                                </li>
+                                            </ul>
                                         </div>
-                                    </li>
-                                    <li>db_source
-                                        <div>
-                                            <a href={"#"} className="mr-2">csv</a>/<a className="ml-2"
-                                                                                      href={"#"}>rds</a>
+                                    </Card>
+
+                                    <Card className={"mb-3"}>
+                                        <div className={"card-header dark arrow-down"}>
+                                            Vaccination impact in top 10 countries, using Estimated Actual coverage
+                                            data.
                                         </div>
-                                    </li>
-                                    <li>db_dataset
-                                        <div>
-                                            <a href={"#"} className="mr-2">csv</a>/<a className="ml-2"
-                                                                                      href={"#"}>rds</a>
+                                        <div className={"card-body d-none"}>
+                                            <img src={imgSrc2}/>
+                                            <h6 className={"font-weight-bold"}>Download</h6>
+                                            <ul>
+                                                <li>
+                                                    <a href="#">
+                                                        figure2_modelversion2012.png
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">
+                                                        figure2_modelversion2012_data.csv
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">
+                                                        figure2_modelversion2012_meta_data.csv
+                                                    </a>
+                                                </li>
+                                            </ul>
                                         </div>
-                                    </li>
-                                </ul>
-                            </div>
+                                    </Card>
+
+                                    <Card className={"mb-3"}>
+                                        <div className={"card-header dark arrow-up"}>
+                                            Global Future Deaths Averted by antigen, Estimated Actual benchmarked
+                                            against projected LTSG.
+                                        </div>
+                                        <div className={"card-body"}>
+                                            <img src={imgSrc3}/>
+                                            <h6 className={"font-weight-bold"}>Download</h6>
+                                            <ul>
+                                                <li>
+                                                    <a href="#">
+                                                        figure3_modelversion2012.png
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">
+                                                        figure3_modelversion2012_data.csv
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">
+                                                        figure3_modelversion2012_meta_data.csv
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </Card>
+
+                                    <div className={"card mb-5"}>
+                                        <div className={"card-header arrow-down"}>
+                                            Sources
+                                        </div>
+                                        <div className={"card-body d-none"}>
+                                            <h6 className="font-weight-bold">External resources</h6>
+                                            <ul className="">
+                                                <li><a href="#">child-mortality.Rmd</a></li>
+                                                <li><a href="#">cm2017.csv</a></li>
+                                            </ul>
+                                            <h6 className="font-weight-bold">Data</h6>
+                                            <ul className={""}>
+                                                <li>db_data
+                                                    <div>
+                                                        <a href={"#"} className="mr-2">csv</a>/<a className="ml-2"
+                                                                                                  href={"#"}>rds</a>
+                                                    </div>
+                                                </li>
+                                                <li>db_stat_data
+                                                    <div>
+                                                        <a href={"#"} className="mr-2">csv</a>/<a className="ml-2"
+                                                                                                  href={"#"}>rds</a>
+                                                    </div>
+                                                </li>
+                                                <li>db_source
+                                                    <div>
+                                                        <a href={"#"} className="mr-2">csv</a>/<a className="ml-2"
+                                                                                                  href={"#"}>rds</a>
+                                                    </div>
+                                                </li>
+                                                <li>db_dataset
+                                                    <div>
+                                                        <a href={"#"} className="mr-2">csv</a>/<a className="ml-2"
+                                                                                                  href={"#"}>rds</a>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div> :
+                                <div>
+                                    <Card>
+                                        <div className={"card-body"}>
+                                            <ul className={"list-group list-group-flush ml-3"}>
+                                                <li className={"list-group-item"}>
+                                                    <label className="font-weight-bold">Tue Feb 14th 2017, 14:22</label>
+                                                    <p>Update intro to make it more accurate</p>
+                                                </li>
+                                                <li className={"list-group-item"}>
+                                                    <label className="font-weight-bold">Mon Feb 13th 2017, 18:46</label>
+                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                                                        eiusmod
+                                                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+                                                        minim
+                                                        veniam, quis nostrud exercitation ullamco laboris nisi ut
+                                                        aliquip ex ea
+                                                        commodo consequat. Duis aute irure dolor in reprehenderit in
+                                                        voluptate
+                                                        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
+                                                        sint
+                                                        occaecat cupidatat non proident, sunt in culpa qui officia
+                                                        deserunt
+                                                        mollit anim id est laborum. </p>
+                                                </li>
+                                                <li className={"list-group-item"}>
+                                                    <label className="font-weight-bold">Fri Feb 10th 2017,
+                                                        10:03 </label>
+                                                    <p>First version</p>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </Card>
+                                </div>
                         }
                     </div>
-
-
                 </div>
             </div>
         </Page>;
