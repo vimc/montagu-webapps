@@ -15,13 +15,12 @@ describe("AdminApp", () => {
                 errors: ["a", "b"],
                 infos: ["c", "d"]
             },
-            AdminAuthStore: { loggedIn: true }
         }));
 
-        const expected: AdminAppProps = {
+        const expected: Partial<AdminAppProps> = {
             errors: ["a", "b"],
             infos: ["c", "d"],
-            loggedIn: true
+            // loggedIn: true
         };
         expect(AdminAppComponent.getPropsFromStores()).to.eql(expected);
     });
