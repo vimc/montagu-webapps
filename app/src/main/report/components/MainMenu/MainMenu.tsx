@@ -47,7 +47,7 @@ export class MainMenu extends ReportingPageWithHeader<any> {
         if (e.target.value.length > 2)
             this.setState({
                 showResults: true
-            })
+            });
         else
             this.setState({
                 showResults: false
@@ -64,7 +64,7 @@ export class MainMenu extends ReportingPageWithHeader<any> {
     render(): JSX.Element {
         return <Page page={this}>
 
-            <div className="container">
+            <div className="container pt-5">
 
                 <div className="row">
 
@@ -110,8 +110,8 @@ export class MainMenu extends ReportingPageWithHeader<any> {
                                 <div>
                                 <a href="/reports/guidance-201710-DALYs/20171124-110346-15208cac/">A report you're
                                     allowed to see</a>  <span className="ml-1 small badge-info badge">category 2</span>
-                                    <span className="small ml-1 float-right badge-secondary badge">updated: 28th Sep 2017</span>
-                                    <span className="small ml-1 float-right badge-published badge">published: 12th Oct 2017</span>
+                                    <span className="small ml-1 float-right badge-secondary badge d-none d-sm-block">updated: 28th Sep 2017</span>
+                                    <span className="small ml-1 float-right badge-published badge d-none d-sm-block">published: 12th Oct 2017</span>
                                 </div>
                                 <div className="small text-muted">20180205-100037-38487ecc</div>
 
@@ -123,8 +123,8 @@ export class MainMenu extends ReportingPageWithHeader<any> {
                                 href="/reports/internal-2017-201708test-1-coverage/20170829-155605-aec5f8fb/">B
                                 report you're allowed to see</a> <span className="ml-1 small badge-info badge">category 1</span>
 
-                                    <span className="small ml-1 float-right badge-secondary badge">updated: 28th Sep 2017</span>
-                                    <span className="small ml-1 float-right badge-published badge">published: 12th Oct 2017</span>
+                                    <span className="small ml-1 float-right badge-secondary badge d-none d-sm-block">updated: 28th Sep 2017</span>
+                                    <span className="small ml-1 float-right badge-published badge d-none d-sm-block">published: 12th Oct 2017</span>
                                 </div>
                                 <div className="small text-muted">20180205-100037-38487ecc</div>
                             </li>
@@ -133,8 +133,8 @@ export class MainMenu extends ReportingPageWithHeader<any> {
                                 <div><a
                                 href="/reports/internal-2017-201708test-2-coverage/20171115-100248-7ad5e28b/">C
                                     report you're allowed to see</a>
-                                    <span className="small ml-1 float-right badge-secondary badge">updated: 28th Sep 2017</span>
-                                    <span className="small ml-1 float-right badge-published badge">published: 12th Oct 2017</span></div>
+                                    <span className="small ml-1 float-right badge-secondary badge d-none d-sm-block">updated: 28th Sep 2017</span>
+                                    <span className="small ml-1 float-right badge-published badge d-none d-sm-block">published: 12th Oct 2017</span></div>
                                 <div className="small text-muted">20180205-100037-38487ecc</div>
 
                             </li>                                                 
@@ -142,8 +142,8 @@ export class MainMenu extends ReportingPageWithHeader<any> {
                                 href="/reports/internal-2017-burden-estimates-template/20180117-165238-676f3fb0/">
                                 D report you're allowed to see</a>
                                 <span className="ml-1 small badge-info badge">category 2</span>
-                                <span className="small ml-1 float-right badge-secondary badge">updated: 28th Sep 2017</span>
-                                <span className="small ml-1 float-right badge-published badge">published: 12th Oct 2017</span>
+                                <span className="small ml-1 float-right badge-secondary badge d-none d-sm-block">updated: 28th Sep 2017</span>
+                                <span className="small ml-1 float-right badge-published badge d-none d-sm-block">published: 12th Oct 2017</span>
                             </div>
                                 <div className="small text-muted">20180205-100037-38487ecc</div>
 
@@ -153,15 +153,15 @@ export class MainMenu extends ReportingPageWithHeader<any> {
                                 href="/reports/201710gavi-coverage-estimates/20180205-100037-38487ecc/">Some report
                                 you're allowed to see</a> <span className="ml-1 small badge-info badge">category 1</span>
 
-                                    <span className="small ml-1 float-right badge-secondary badge">updated: 28th Sep 2017</span>
-                                    <span className="small ml-1 float-right badge-published badge">published: 12th Oct 2017</span>
+                                    <span className="small ml-1 float-right badge-secondary badge d-none d-sm-block">updated: 28th Sep 2017</span>
+                                    <span className="small ml-1 float-right badge-published badge d-none d-sm-block">published: 12th Oct 2017</span>
                                 </div>
                                 <div className="small text-muted">20180205-100037-38487ecc</div>
                             </li>
                             <li className={"mb-3"}>
                                 <a href="/reports/guidance-201710-DALYs/20171124-110346-15208cac/">A report you're
-                                    allowed to see</a><span className="small ml-1 float-right badge-secondary badge">updated: 28th Sep 2017</span>
-                                <span className="small ml-1 float-right badge-published badge">published: 12th Oct 2017</span>
+                                    allowed to see</a><span className="small ml-1 float-right badge-secondary badge d-none d-sm-block">updated: 28th Sep 2017</span>
+                                <span className="small ml-1 float-right badge-published badge d-none d-sm-block">published: 12th Oct 2017</span>
                                 <div className="small text-muted">20180205-100037-38487ecc</div>
 
                             </li>
@@ -169,7 +169,7 @@ export class MainMenu extends ReportingPageWithHeader<any> {
                                 <div><a
                                 href="/reports/internal-2017-201708test-1-coverage/20170829-155605-aec5f8fb/">B
                                     report you're allowed to see</a> <span className="ml-1 small badge-info badge">category 3</span>
-                                    <span className="small ml-1 float-right badge-secondary badge">updated: 28th Sep 2017</span></div>
+                                    <span className="small ml-1 float-right badge-secondary badge d-none d-sm-block">updated: 28th Sep 2017</span></div>
                                 <div className="small text-muted">20180205-100037-38487ecc</div>
 
                             </li>
@@ -177,7 +177,7 @@ export class MainMenu extends ReportingPageWithHeader<any> {
                                 <div><a
                                 href="/reports/internal-2017-201708test-2-coverage/20171115-100248-7ad5e28b/">C
                                 report you're allowed to see</a>
-                                    <span className="small ml-1 float-right badge-secondary badge">updated: 28th Sep 2017</span>
+                                    <span className="small ml-1 float-right badge-secondary badge d-none d-sm-block">updated: 28th Sep 2017</span>
                                 </div>
                                 <div className="small text-muted">20180205-100037-38487ecc</div>
 
@@ -186,8 +186,8 @@ export class MainMenu extends ReportingPageWithHeader<any> {
                                 <div><a
                                 href="/reports/internal-2017-burden-estimates-template/20180117-165238-676f3fb0/">
                                     D report you're allowed to see</a> <span className="ml-1 small badge-info badge">category 1</span>
-                                    <span className="small ml-1  float-right badge-secondary badge">updated: 28th Sep 2017</span>
-                                    <span className="small ml-1 float-right badge-published badge">published: 12th Oct 2017</span></div>
+                                    <span className="small ml-1  float-right badge-secondary badge d-none d-sm-block">updated: 28th Sep 2017</span>
+                                    <span className="small ml-1 float-right badge-published badge d-none d-sm-block">published: 12th Oct 2017</span></div>
                                 <div className="small text-muted">20180205-100037-38487ecc</div>
 
                             </li>
@@ -195,7 +195,7 @@ export class MainMenu extends ReportingPageWithHeader<any> {
                                 <div><a
                                 href="/reports/201710gavi-coverage-estimates/20180205-100037-38487ecc/">Some report
                                     you're allowed to see</a> <span className="ml-1 small badge-info badge">category 2</span>
-                                    <span className="small ml-1  float-right badge-secondary badge">updated: 28th Sep 2017</span></div>
+                                    <span className="small ml-1  float-right badge-secondary badge d-none d-sm-block">updated: 28th Sep 2017</span></div>
                                 <div className="small text-muted">20180205-100037-38487ecc</div>
 
                             </li>
@@ -206,36 +206,6 @@ export class MainMenu extends ReportingPageWithHeader<any> {
                     <hr style={{marginTop: "50px", marginBottom: "10px", borderBottom: "0", borderStyle: "solid !important"}}/>
                 </div>
                 <div className="row">
-                    {/*<div className="col-12 col-sm-6 col-lg-4 mt-3">*/}
-                    {/*<div className="">*/}
-                    {/*<div className="card-body">*/}
-                    {/*<h5 className="card-title">Categories</h5>*/}
-                    {/*<Card>*/}
-                    {/*<div className="card-header arrow-up">Guidance</div>*/}
-                    {/*<Collapse isOpen={true}>*/}
-                    {/*<div className="card-body p-1">*/}
-                    {/*<ul className="list-group list-group-flush">*/}
-                    {/*<li className="list-group-item"><a href="#">DALYs Guidance</a></li>*/}
-                    {/*<li className="list-group-item"><a href="#">Small countries guidance</a></li>*/}
-                    {/*<li className="list-group-item"><a href="#">Coverage guidance</a></li>*/}
-                    {/*</ul>*/}
-                    {/*</div>*/}
-                    {/*</Collapse>*/}
-                    {/*</Card>*/}
-                    {/*<Card>*/}
-                    {/*<div className="card-header arrow-down">Modified update</div>*/}
-                    {/*<Collapse isOpen={false}>*/}
-                    {/*</Collapse>*/}
-                    {/*</Card>*/}
-                    {/*<Card>*/}
-                    {/*<div className="card-header arrow-down">Some other category</div>*/}
-                    {/*<Collapse isOpen={false}>*/}
-                    {/*</Collapse>*/}
-                    {/*</Card>*/}
-                    {/*</div>*/}
-                    {/*</div>*/}
-                    {/*</div>*/}
-
                     <div className="col-12 mt-3">
                         <h4>Featured report</h4>
                         <div className="border border-dark rounded-0" style={{height: "100%"}}>

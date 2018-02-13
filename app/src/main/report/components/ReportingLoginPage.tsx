@@ -28,7 +28,9 @@ export class ReportingLoginPage extends ReportingPageWithHeader<undefined> {
 
     render(): JSX.Element {
         return <Page page={this}>
+            <div className={"container"}>
             <LoginForm />
+            </div>
         </Page>;
     }
 }

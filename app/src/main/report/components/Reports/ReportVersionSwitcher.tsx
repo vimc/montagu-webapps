@@ -30,19 +30,20 @@ export class ReportVersionSwitcher extends React.Component<Props, undefined> {
             </option>
         });
         return <div className="row versionSwitcher">
-            <div className="col-12 col-md-6">
-                <label
-                    htmlFor="report-version-switcher"
-                    className="mt-0 sectionTitle">
-                    Report version
+            <div className="col-12">
+                <label className={"font-weight-bold"}
+                    htmlFor="report-version-switcher">
+                    Version
                 </label>
                 <select
                     onChange={this.onSelect}
                     value={this.props.currentVersion}
-                    className="form-control"
+                    className="form-control form-control-sm col-lg-4"
                     id="report-version-switcher">
                     {items}
                 </select>
+                <div className={"mt-3 font-weight-bold"}>Version notes</div>
+                <p>Updated introduction to give more details</p>
             </div>
         </div>;
     }
