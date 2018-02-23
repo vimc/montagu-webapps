@@ -7,6 +7,7 @@ import {
 } from "../actionTypes/ReportsActionsTypes";
 import {GlobalState} from "../../shared/reducers/GlobalState";
 import {Report} from "../../shared/models/Generated";
+import {SearchTag} from "../components/MainMenu/Search";
 
 export const reportsActions = {
 
@@ -26,6 +27,14 @@ export const reportsActions = {
             data: report
         }
     },
+
+    filterReports(tag: SearchTag) {
+        return {
+            type: ReportTypeKeys.FILTER,
+            data: tag
+        }
+    },
+
     publishReport(name: string, version: string) {
         //TODO actually publish report
         return {

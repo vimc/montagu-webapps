@@ -10,6 +10,10 @@ export class ReportListItem extends React.Component<Report, undefined> {
             name = this.props.display_name;
         }
 
-        return <li><InternalLink href={url}>{name}</InternalLink></li>;
+        return <li><InternalLink href={url}>{name}</InternalLink>
+            <p className={"small text-muted"}>
+                {this.props.latest_version}
+            </p>
+        </li>;
     }
 }

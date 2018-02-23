@@ -1,8 +1,9 @@
 import * as React from "react";
-import { ReportingPageWithHeader } from "../ReportingPageWithHeader";
+import {ReportingPageWithHeader} from "../ReportingPageWithHeader";
 import {ReportList} from "../Reports/ReportList";
 import {IPageWithParent} from "../../../shared/models/Breadcrumb";
-import {ReportingPage} from "../ReportingPage";
+import {ReportingPageHeader} from "../ReportingPageHeader";
+import {Search} from "./Search";
 
 export class MainMenu extends ReportingPageWithHeader<undefined> {
 
@@ -22,9 +23,22 @@ export class MainMenu extends ReportingPageWithHeader<undefined> {
         return null;
     }
 
-    render() :JSX.Element {
-        return <ReportingPage page={this}>
-            <ReportList />
-        </ReportingPage>;
+    render(): JSX.Element {
+        return <div>
+            <ReportingPageHeader siteTitle={this.siteTitle()}/>
+            <div className={"container"}>
+                <div className="row mt-5 mb-4">
+                    <div className="col-6">
+                        <Search/>
+                    </div>
+                </div>
+                <hr/>
+                <div className={"row mt-5"}>
+                    <div className={"col-12"}>
+                        <ReportList/>
+                    </div>
+                </div>
+            </div>
+        </div>;
     }
 }

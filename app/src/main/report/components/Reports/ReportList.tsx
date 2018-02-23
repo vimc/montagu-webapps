@@ -37,8 +37,8 @@ export class ReportListComponent extends React.Component<ReportProps, undefined>
 
 export const mapStateToProps = (state: ReportAppState): Partial<ReportProps> => {
     return {
-        reports: state.reports.reports,
-        ready: state.reports.reports && state.reports.reports.length > 0
+        reports: state.reports.filteredReports,
+        ready: !!state.reports.filteredReports
     }
 };
 

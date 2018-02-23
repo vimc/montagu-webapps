@@ -1,5 +1,6 @@
-import { Report } from "../../shared/models/Generated";
+import {Report} from "../../shared/models/Generated";
 import {Version} from "../../shared/models/reports/Report";
+import {SearchTag} from "../components/MainMenu/Search";
 
 export enum ReportTypeKeys {
     REPORTS_FETCHED = "REPORTS_FETCHED",
@@ -7,7 +8,8 @@ export enum ReportTypeKeys {
     SET_CURRENT_REPORT = "SET_CURRENT_REPORT",
     REPORT_VERSION_DETAILS_FETCHED = "REPORT_VERSION_DETAILS_FETCHED",
     REPORT_PUBLISHED = "REPORT_PUBLISHED",
-    REPORT_UNPUBLISHED = "REPORT_UNPUBLISHED"
+    REPORT_UNPUBLISHED = "REPORT_UNPUBLISHED",
+    FILTER = "FILTER"
 }
 
 export interface ReportsFetched {
@@ -22,7 +24,7 @@ export interface SetCurrentReport {
 
 export interface ReportVersionsFetched {
     type: ReportTypeKeys.REPORT_VERSIONS_FETCHED;
-    data: Version[];
+    data: string[];
 }
 
 export interface ReportVersionDetailssFetched {
@@ -40,7 +42,12 @@ export interface ReportUnpublished {
     data: BasicReport;
 }
 
-export interface BasicReport{
+export interface FilterReports {
+    type: ReportTypeKeys.FILTER;
+    data: SearchTag;
+}
+
+export interface BasicReport {
     name: string;
     version: string;
 }
@@ -52,3 +59,4 @@ export type ReportsActionsTypes =
     | ReportVersionDetailssFetched
     | ReportPublished
     | ReportUnpublished
+    | FilterReports
