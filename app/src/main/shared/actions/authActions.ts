@@ -11,7 +11,7 @@ import { AuthState } from "../reducers/authReducer";
 import { makeNotification, Notification } from "../actions/NotificationActions";
 import { localStorageHandler } from "../services/localStorageHandler";
 import {
-    AuthActionsTypes, Authenticated, AuthenticationError, AuthTypeKeys,
+    Authenticated, AuthenticationError, AuthTypeKeys,
     Unauthenticated
 } from "../actionTypes/AuthTypes";
 import {GlobalState} from "../reducers/GlobalState";
@@ -98,10 +98,21 @@ export const authActions = {
     logOut() {
         return (dispatch: Dispatch<any>, getState: () => GlobalState) => {
             localStorageHandler.remove("accessToken");
-            (new AuthService(dispatch, getState)).clearShinyCookie();
+            (new AuthService(dispatch, getState))
+                .clearAllCache()
+                .clearShinyCookie();
             dispatch({
                 type: AuthTypeKeys.UNAUTHENTICATED,
             } as Unauthenticated);
+        }
+    },
+
+    forgotPassword(email: string) {
+        return async (dispatch: Dispatch<any>, getState: () => GlobalState) => {
+            const result = await (new AuthService(dispatch, getState)).forgotPassword(email);
+            if (result) {
+                return notificationActions.notify(makeNotification("Thank you. If we have an account registered for this email address you will receive a reset password link", "info"));
+            }
         }
     }
 };

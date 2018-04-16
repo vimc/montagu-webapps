@@ -1,6 +1,7 @@
 $success: #28a75e;
 @import "../shared/styles/variables";
 @import "../../../node_modules/bootstrap-toggle/css/bootstrap-toggle.css";
+@import "../../../node_modules/react-day-picker/lib/style.css";
 
 $table-border-color: $gray-700;
 $published-color: #868ED3;
@@ -21,4 +22,11 @@ $montagu-breadcrumb-color: $success;
     padding-right: 5px;
     font-weight: normal;
   }
+}
+@import "./styles/reportsFilter";
+
+.download-icon {
+  vertical-align: sub;
+  margin-left: 5px;
+  margin-right: 5px;
 }

@@ -1,4 +1,6 @@
 import * as React from "react";
+import { createMemoryHistory } from 'history';
+
 import { expectIsEqual, IntegrationTestSuite } from "./IntegrationTest";
 import { AdminFetcher } from "../main/admin/sources/AdminFetcher";
 import { groupStore } from "../main/admin/stores/GroupStore";
@@ -18,7 +20,7 @@ class AdminIntegrationTests extends IntegrationTestSuite {
     }
 
     createStore() {
-        return createAdminStore();
+        return createAdminStore(createMemoryHistory());
     }
 
 
@@ -38,6 +40,14 @@ class AdminIntegrationTests extends IntegrationTestSuite {
 
         it("can clear shiny cookie", (done: DoneCallback) => {
             (new AuthService(this.store.dispatch, this.store.getState)).clearShinyCookie()
+                .then(result => {
+                    expect(result).to.be.eq("OK");
+                    done();
+                })
+        });
+
+        it("forgot password", (done: DoneCallback) => {
+            (new AuthService(this.store.dispatch, this.store.getState)).forgotPassword("test@test.com")
                 .then(result => {
                     expect(result).to.be.eq("OK");
                     done();
@@ -88,8 +98,8 @@ class AdminIntegrationTests extends IntegrationTestSuite {
                     name: "Bob Jones",
                     email: "bob@example.com",
                     roles: [
-                        { name: "user-manager", scope_prefix: null, scope_id: null },
                         { name: "member", scope_prefix: "modelling-group", scope_id: "some-group" },
+                        { name: "user-manager", scope_prefix: null, scope_id: null }
                     ],
                     last_logged_in: "2017-01-01T08:36:23Z"
                 });
@@ -110,12 +120,14 @@ function addGroups(db: Client): Promise<QueryResult> {
             
             INSERT INTO model (id, modelling_group, description, citation, is_current) VALUES ('model', 'g1', 'A model', 'Citation', true);
             
-            INSERT INTO app_user (username) VALUES ('bob');        
+            INSERT INTO app_user (username) VALUES ('bob'); 
+            INSERT INTO user_group (id, name) VALUES ('bob', 'bob');
+            INSERT INTO user_group_membership (username, user_group) VALUES ('bob', 'bob');        
             
             --See VIMC-359 for why this is group members rather than admins    
             SELECT id INTO role_id FROM role WHERE name = 'member' AND scope_prefix = 'modelling-group';
             
-            INSERT INTO user_role (username, role, scope_id) VALUES ('bob', role_id, 'g1');
+            INSERT INTO user_group_role (user_group, role, scope_id) VALUES ('bob', role_id, 'g1');
         END $$;
     `);
 }
@@ -128,11 +140,14 @@ function addUsers(db: Client): Promise<QueryResult> {
         BEGIN
             INSERT INTO app_user (username, name, email, last_logged_in)
             VALUES ('bob', 'Bob Jones', 'bob@example.com', '2017-01-01T08:36:23');
+             
+            INSERT INTO user_group (id, name) VALUES ('bob', 'bob');
+            INSERT INTO user_group_membership (username, user_group) VALUES ('bob', 'bob');           
             
             SELECT id INTO simple_role_id FROM role WHERE name = 'user-manager' AND scope_prefix IS NULL;
             SELECT id INTO scoped_role_id FROM role WHERE name = 'member' AND scope_prefix = 'modelling-group';
-            INSERT INTO user_role (username, role, scope_id) VALUES ('bob', simple_role_id, '');
-            INSERT INTO user_role (username, role, scope_id) VALUES ('bob', scoped_role_id, 'some-group');
+            INSERT INTO user_group_role (user_group, role, scope_id) VALUES ('bob', simple_role_id, '');
+            INSERT INTO user_group_role (user_group, role, scope_id) VALUES ('bob', scoped_role_id, 'some-group');
        END $$;
     `);
 }

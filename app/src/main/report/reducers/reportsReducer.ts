@@ -1,6 +1,6 @@
 import {
     ReportPublished,
-    ReportsActionsTypes,
+    ReportsAction, ReportsFilterFields, ReportsFilterPublishTypes, ReportsSortingFields,
     ReportTypeKeys,
     ReportUnpublished
 } from "../actionTypes/ReportsActionsTypes";
@@ -10,28 +10,40 @@ import {SearchTag} from "../components/MainMenu/Search";
 
 export interface ReportsState {
     reports: Report[];
+    reportsSortBy: ReportsSortingFields;
+    reportsFilter: ReportsFilterFields;
+    reportsSearchTag: SearchTag;
     versions: string[];
     currentReport: string;
     versionDetails: Version;
-    filteredReports: Report[];
     tags: SearchTag[];
 }
 
 export const reportsInitialState: ReportsState = {
-    reports: [],
-    filteredReports: [],
-    versions: [],
+    reports: null,
+    reportsSortBy: ReportsSortingFields.name,
+    reportsFilter: {
+        published: ReportsFilterPublishTypes.all,
+        timeFrom: null,
+        timeUntil: null
+    },
+    versions: null,
     currentReport: null,
     versionDetails: null,
+    reportsSearchTag: null,
     tags: []
 };
 
-export const reportsReducer = (state = reportsInitialState, action: ReportsActionsTypes): ReportsState => {
+export const reportsReducer = (state = reportsInitialState, action: ReportsAction) : ReportsState => {
     switch (action.type) {
-        case ReportTypeKeys.FILTER:
-            return filterReports(state, action.data);
+        case ReportTypeKeys.SEARCH:
+            return {...state, reportsSearchTag: action.data };
         case ReportTypeKeys.REPORTS_FETCHED:
-            return initReports(state, action.data);
+            return { ...state, reports: action.data };
+        case ReportTypeKeys.SORT_REPORTS:
+            return { ...state, reportsSortBy: action.data};
+        case ReportTypeKeys.FILTER_REPORTS:
+            return { ...state, reportsFilter: Object.assign({}, state.reportsFilter, action.data)};
         case ReportTypeKeys.REPORT_VERSIONS_FETCHED:
             return {...state, versions: action.data};
         case ReportTypeKeys.SET_CURRENT_REPORT:
@@ -50,27 +62,3 @@ export const reportsReducer = (state = reportsInitialState, action: ReportsActio
             return state;
     }
 };
-
-function filterReports(state: ReportsState, tag: SearchTag): ReportsState {
-
-    const filteredReports = state.filteredReports.filter(r =>
-        r[tag.field] && r[tag.field].indexOf(tag.value) > -1
-    );
-
-    return {...state, filteredReports: filteredReports};
-}
-
-function initReports(state: ReportsState, reports: Report[]): ReportsState {
-
-    const nameTags = reports.map(r => new SearchTag("name", r.name));
-    const displayNameTags = reports.filter(r => r.display_name).map(r => new SearchTag("display_name", r.display_name));
-    const versionTags = reports.map(r => new SearchTag("latest_version", r.latest_version));
-
-    return {
-        ...state,
-        reports: reports,
-        filteredReports: reports,
-        tags: nameTags.concat(displayNameTags).concat(versionTags)
-    };
-}
-
