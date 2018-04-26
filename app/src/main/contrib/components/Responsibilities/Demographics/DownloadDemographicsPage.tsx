@@ -3,7 +3,7 @@ import { Action, Dispatch } from "redux";
 import { compose} from "recompose";
 import { connect } from 'react-redux';
 
-import { DownloadDataTitle } from "../DownloadDataTitle";
+import { ResponsibilitiesPageTitle } from "../PageTitle";
 import { DownloadDemographicsContent } from "./DownloadDemographicsContent";
 import {ResponsibilityOverviewPageComponent} from "../Overview/ResponsibilityOverviewPage";
 import {PageBreadcrumb, PageProperties} from "../../../../shared/components/PageWithHeader/PageWithHeader";
@@ -30,9 +30,9 @@ export class DownloadDemographicsPageComponent extends React.Component<PagePrope
     }
 
     title(): JSX.Element {
-        return <DownloadDataTitle
+        return <ResponsibilitiesPageTitle
             title="Download demographic data sets"
-        />
+        />;
     }
 
     render(): JSX.Element {
