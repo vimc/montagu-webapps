@@ -9,6 +9,7 @@ import {
 import {responsibilitiesActionCreators} from "../responsibilitiesActionCreators";
 import {coverageActionCreators} from "../coverageActionCreators";
 import {ContribAppState} from "../../reducers/contribAppReducers";
+import {userActionCreators} from "../userActionCreators";
 
 export const downloadCoveragePageActionCreators = {
     onLoad(props: DownloadCoveragePageLocationProps) {

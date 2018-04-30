@@ -18,6 +18,8 @@ import {ResponsibilitiesService} from "../../../../main/contrib/services/Respons
 import {DiseasesTypes} from "../../../../main/contrib/actionTypes/DiseasesTypes";
 import {ResponsibilitiesTypes} from "../../../../main/contrib/actionTypes/ResponsibilitiesTypes";
 import {ExtendedResponsibilitySet} from "../../../../main/contrib/models/ResponsibilitySet";
+import {UserService} from "../../../../main/contrib/services/UserService";
+import {UserActionType} from "../../../../main/contrib/actionTypes/UserActionTypes";
 
 describe("Responsibility Overview Page actions tests", () => {
     const sandbox = new Sandbox();

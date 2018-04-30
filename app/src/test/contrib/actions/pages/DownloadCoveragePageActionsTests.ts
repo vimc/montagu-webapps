@@ -21,6 +21,8 @@ import {downloadCoveragePageActionCreators} from "../../../../main/contrib/actio
 import {CoverageService} from "../../../../main/contrib/services/CoverageService";
 import {ScenarioAndCoverageSets} from "../../../../main/shared/models/Generated";
 import {CoverageTypes} from "../../../../main/contrib/actionTypes/CoverageTypes";
+import {UserService} from "../../../../main/contrib/services/UserService";
+import {UserActionType} from "../../../../main/contrib/actionTypes/UserActionTypes";
 
 describe("Download Coverage Page actions tests", () => {
     const sandbox = new Sandbox();
