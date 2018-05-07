@@ -1,30 +1,31 @@
 import * as React from "react";
-import { AdminPageWithHeader } from "./AdminPageWithHeader";
+import { compose } from "recompose";
+
 import { NoRouteFound } from "../../shared/components/NoRouteFound";
-import {IPageWithParent} from "../../shared/models/Breadcrumb";
-import {MainMenu} from "./MainMenu/MainMenu";
-import { Page } from "../../shared/components/PageWithHeader/Page";
+import {MainMenuComponent} from "./MainMenu/MainMenu";
+import {PageBreadcrumb, PageProperties} from "../../shared/components/PageWithHeader/PageWithHeader";
+import {BreadcrumbInitializer} from "../../shared/components/Breadcrumbs/BreadcrumbsInitializer";
+import {PageArticle} from "../../shared/components/PageWithHeader/PageArticle";
 
-export class AdminNoRouteFoundPage extends AdminPageWithHeader<undefined> {
-    name(): string {
-        return NoRouteFound.title();
+export class AdminNoRouteFoundPageComponent extends React.Component<PageProperties<undefined>> {
+    componentDidMount(){
+        this.props.createBreadcrumbs(MainMenuComponent.breadcrumb());
     }
 
-    urlFragment(): string {
-        return null;
-    }
-
-    url(): string {
-        return null;
-    }
-
-    parent(): IPageWithParent {
-        return new MainMenu();
+    static breadcrumb() : PageBreadcrumb {
+        return {
+            name: NoRouteFound.title(),
+            urlFragment: null,
+            parent: MainMenuComponent.breadcrumb()
+        }
     }
 
     render(): JSX.Element {
-        return <Page page={this}>
+        return <PageArticle title={NoRouteFound.title()}>
             {NoRouteFound.render()}
-        </Page>;
+        </PageArticle>;
     }
 }
+
+export const AdminNoRouteFoundPage = compose(BreadcrumbInitializer)(AdminNoRouteFoundPageComponent) as
+    React.ComponentClass<Partial<PageProperties<undefined>>>;

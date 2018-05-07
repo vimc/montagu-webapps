@@ -8,7 +8,6 @@ import {ModellingGroupsListPageComponent} from "../../List/ModellingGroupsListPa
 import { PageArticle } from "../../../../../shared/components/PageWithHeader/PageArticle";
 import {PageBreadcrumb, PageProperties} from "../../../../../shared/components/PageWithHeader/PageWithHeader";
 import {AdminAppState} from "../../../../reducers/adminAppReducers";
-import {AdminPageHeader} from "../../../AdminPageHeader";
 import {modellingGroupDetailsPageActionCreators} from "../../../../actions/pages/modellingGroupDetailsPageActionCreators";
 
 export interface ModellingGroupDetailsPageLocationProps {
@@ -33,12 +32,9 @@ export class ModellingGroupDetailsPageComponent extends React.Component<Modellin
     }
 
     render() :JSX.Element {
-        return <div>
-            <AdminPageHeader/>
-            <PageArticle title={this.props.groupDescription}>
-                <ModellingGroupDetailsContent />
-            </PageArticle>
-        </div>;
+        return <PageArticle title={this.props.groupDescription}>
+            <ModellingGroupDetailsContent />
+        </PageArticle>;
     }
 }
 

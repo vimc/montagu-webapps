@@ -6,9 +6,8 @@ import { Dispatch } from "redux";
 import { ModellingGroupsListContent } from "./ModellingGroupsListContent";
 import {PageBreadcrumb, PageProperties} from "../../../../shared/components/PageWithHeader/PageWithHeader";
 import {PageArticle} from "../../../../shared/components/PageWithHeader/PageArticle";
-import {AdminPageHeader} from "../../AdminPageHeader";
 import {AdminAppState} from "../../../reducers/adminAppReducers";
-import {MainMenuNew} from "../../MainMenu/MainMenuNew";
+import {MainMenuComponent} from "../../MainMenu/MainMenu";
 import {modellingGroupsListPageActionCreators} from "../../../actions/pages/modellingGroupsListPageActionCreators";
 
 export class ModellingGroupsListPageComponent extends React.Component<PageProperties<undefined>> {
@@ -22,17 +21,14 @@ export class ModellingGroupsListPageComponent extends React.Component<PageProper
         return {
             name: ModellingGroupsListPageComponent.title,
             urlFragment: "modelling-groups/",
-            parent: MainMenuNew.breadcrumb()
+            parent: MainMenuComponent.breadcrumb()
         }
     }
 
     render() :JSX.Element {
-        return <div>
-            <AdminPageHeader/>
-            <PageArticle title={ModellingGroupsListPageComponent.title}>
-                <ModellingGroupsListContent />
-            </PageArticle>
-        </div>;
+        return <PageArticle title={ModellingGroupsListPageComponent.title}>
+            <ModellingGroupsListContent />
+        </PageArticle>;
     }
 }
 

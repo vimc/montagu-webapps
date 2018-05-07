@@ -1,28 +1,33 @@
 import * as React from "react";
-import { AdminPageWithHeader } from "./AdminPageWithHeader";
-import { ForgottenPasswordForm } from "../../shared/components/Login/ForgottenPasswordForm";
-import {IPageWithParent} from "../../shared/models/Breadcrumb";
-import {MainMenu} from "./MainMenu/MainMenu";
-import { Page } from "../../shared/components/PageWithHeader/Page";
+import { compose } from "recompose";
+
+import {ForgottenPasswordForm} from "../../shared/components/Login/ForgottenPasswordForm";
+import {MainMenuComponent} from "./MainMenu/MainMenu";
+import {PageArticle} from "../../shared/components/PageWithHeader/PageArticle";
+import {PageBreadcrumb, PageProperties} from "../../shared/components/PageWithHeader/PageWithHeader";
+import {BreadcrumbInitializer} from "../../shared/components/Breadcrumbs/BreadcrumbsInitializer";
 
 const pageTitle = "Forgotten your password?";
 
-export class AdminForgottenPasswordPage extends AdminPageWithHeader<undefined> {
-    name(): string {
-        return pageTitle;
+export class AdminForgottenPasswordPageComponent extends React.Component<PageProperties<undefined>> {
+    componentDidMount(){
+        this.props.createBreadcrumbs(AdminForgottenPasswordPageComponent.breadcrumb());
     }
 
-    urlFragment(): string {
-        return "forgotten-password/";
-    }
-
-    parent(): IPageWithParent {
-        return new MainMenu();
+    static breadcrumb() : PageBreadcrumb {
+        return {
+            name: pageTitle,
+            urlFragment: "forgotten-password/",
+            parent: MainMenuComponent.breadcrumb()
+        }
     }
 
     render(): JSX.Element {
-        return <Page page={this}>
+        return <PageArticle title={pageTitle}>
             <ForgottenPasswordForm />
-        </Page>;
+        </PageArticle>;
     }
 }
+
+export const AdminForgottenPasswordPage = compose(BreadcrumbInitializer)(AdminForgottenPasswordPageComponent) as
+    React.ComponentClass<Partial<PageProperties<undefined>>>;

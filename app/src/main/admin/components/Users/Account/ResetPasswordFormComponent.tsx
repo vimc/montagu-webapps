@@ -1,3 +1,8 @@
+
+
+
+/*
+
 import { ReformProps } from "alt-reform";
 import { ValidationError } from "../../../../shared/components/Login/ValidationError";
 import * as React from "react";
@@ -21,3 +26,4 @@ export class ResetPasswordFormComponent extends React.Component<ReformProps, und
         </form>;
     }
 }
+*/

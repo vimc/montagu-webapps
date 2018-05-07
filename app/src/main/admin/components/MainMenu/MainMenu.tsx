@@ -1,26 +1,27 @@
 import * as React from "react";
-import { AdminPageWithHeader } from "../AdminPageWithHeader";
+
+import {PageArticle} from "../../../shared/components/PageWithHeader/PageArticle";
+import {PageBreadcrumb, PageProperties} from "../../../shared/components/PageWithHeader/PageWithHeader";
 import { ButtonLink } from "../../../shared/components/ButtonLink";
-import {IPageWithParent} from "../../../shared/models/Breadcrumb";
-import { Page } from "../../../shared/components/PageWithHeader/Page";
+import {compose} from "recompose";
+import {BreadcrumbInitializer} from "../../../shared/components/Breadcrumbs/BreadcrumbsInitializer";
 
 const menuStyles = require("./MainMenu.css");
 
-export class MainMenu extends AdminPageWithHeader<undefined> {
-    name(): string {
-        return "Main menu";
-    }
+export class MainMenuComponent extends React.Component<PageProperties<undefined>> {
 
-    urlFragment(): string {
-        return "/";
-    }
+    static title: string = "Main menu";
 
-    parent(): IPageWithParent {
-        return null;
+    static breadcrumb() : PageBreadcrumb {
+        return {
+            name: MainMenuComponent.title,
+            urlFragment: "/",
+            parent: null
+        }
     }
 
     render() :JSX.Element {
-        return <Page page={this}>
+        return <PageArticle title={MainMenuComponent.title}>
             <div>
                 Please select which area of Montagu you would like to manage:
                 <ol className={ menuStyles.menu }>
@@ -35,6 +36,9 @@ export class MainMenu extends AdminPageWithHeader<undefined> {
                     </li>
                 </ol>
             </div>
-        </Page>;
+        </PageArticle>;
     }
 }
+
+export const MainMenu = compose(BreadcrumbInitializer)(MainMenuComponent) as
+    React.ComponentClass<Partial<PageProperties<undefined>>>;

@@ -1,4 +1,39 @@
 import * as React from "react";
+import { compose } from "recompose";
+
+import {MainMenuComponent} from "../../MainMenu/MainMenu";
+import {PageArticle} from "../../../../shared/components/PageWithHeader/PageArticle";
+import {PageBreadcrumb, PageProperties} from "../../../../shared/components/PageWithHeader/PageWithHeader";
+import {BreadcrumbInitializer} from "../../../../shared/components/Breadcrumbs/BreadcrumbsInitializer";
+import { ResetPasswordForm } from "./ResetPasswordForm";
+
+export class AdminResetPasswordPageComponent extends React.Component<PageProperties<undefined>> {
+    static pageTitle:string = "Reset your password";
+
+    componentDidMount(){
+        this.props.createBreadcrumbs(AdminResetPasswordPageComponent.breadcrumb());
+    }
+
+    static breadcrumb() : PageBreadcrumb {
+        return {
+            name: AdminResetPasswordPageComponent.pageTitle,
+            urlFragment: "forgotten-password/",
+            parent: MainMenuComponent.breadcrumb()
+        }
+    }
+
+    render(): JSX.Element {
+        return <PageArticle title={AdminResetPasswordPageComponent.pageTitle}>
+            <ResetPasswordForm/>
+        </PageArticle>;
+    }
+}
+
+export const AdminResetPasswordPage = compose(BreadcrumbInitializer)(AdminResetPasswordPageComponent) as
+    React.ComponentClass<Partial<PageProperties<undefined>>>;
+
+
+/*
 import { AdminPageWithHeader } from "../../AdminPageWithHeader";
 import { accountActions } from "../../../actions/AccountActions";
 import { FormConnector } from "alt-reform";
@@ -76,3 +111,4 @@ class ResetPasswordButtonComponent extends React.Component<RequestResetButtonPro
 }
 
 const ResetPasswordButton = connectToStores(ResetPasswordButtonComponent);
+*/

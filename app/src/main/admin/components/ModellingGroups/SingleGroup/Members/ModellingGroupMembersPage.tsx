@@ -10,7 +10,6 @@ import {
     ModellingGroupDetailsPageComponent,
 } from "../Details/ModellingGroupDetailsPage";
 import { PageArticle } from "../../../../../shared/components/PageWithHeader/PageArticle";
-import {AdminPageHeader} from "../../../AdminPageHeader";
 import {modellingGroupMembersPageActionCreators} from "../../../../actions/pages/modellingGroupMembersPageActionCreators";
 
 export interface ModellingGroupMembersPageLocationProps {
@@ -37,12 +36,9 @@ export class ModellingGroupMembersPageComponent extends React.Component<Modellin
     }
 
     render() :JSX.Element {
-        return <div>
-            <AdminPageHeader/>
-            <PageArticle title={`Manage membership for ${this.props.groupDescription}`}>
-                <ModellingGroupMembersContent />
-            </PageArticle>
-        </div>;;
+        return <PageArticle title={`Manage membership for ${this.props.groupDescription}`}>
+            <ModellingGroupMembersContent />
+        </PageArticle>;
     }
 }
 
