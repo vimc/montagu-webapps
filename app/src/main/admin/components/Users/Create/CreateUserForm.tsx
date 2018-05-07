@@ -1,6 +1,6 @@
 import { FormConnector, ReformProps } from "alt-reform";
 import { CreateUserFields, createUserFormStore, suggestUsername } from "./CreateUserFormStore";
-import { ValidationError } from "../../../../shared/components/Login/ValidationError";
+import { ValidationError } from "../../../../shared/components/ReduxForm/ValidationError";
 import * as React from "react";
 
 export class CreateUserFormComponent extends React.Component<ReformProps, undefined> {

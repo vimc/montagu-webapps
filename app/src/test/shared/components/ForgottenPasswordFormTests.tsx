@@ -10,7 +10,7 @@ import { MemoryRouter as Router } from 'react-router-dom';
 
 import "../../helper";
 import { Sandbox } from "../../Sandbox";
-import { ValidationError } from "../../../main/shared/components/Login/ValidationError";
+import { ValidationError } from "../../../main/shared/components/ReduxForm/ValidationError";
 import { ForgottenPasswordFormComponent, ForgottenPasswordForm } from "../../../main/shared/components/Login/ForgottenPasswordForm";
 import {authReducer} from "../../../main/shared/reducers/authReducer";
 import {authActionCreators} from "../../../main/shared/actions/authActionCreators";

@@ -4,10 +4,9 @@ import { connect } from "react-redux";
 import { compose } from "recompose";
 import { Dispatch } from "redux";
 
-import { ValidationError } from "./ValidationError";
 import { validations } from "../../modules/reduxForm";
 import { authActionCreators } from "../../actions/authActionCreators";
-import {InputFieldProps} from "../../types";
+import {ReduxFormField} from "../ReduxForm/ReduxFormField";
 
 export interface ForgotPasswordFormProps {
     handleSubmit: (F: Function) => any;
@@ -19,15 +18,6 @@ export interface ForgotPasswordFormFields{
 }
 
 export class ForgottenPasswordFormComponent extends React.Component<ForgotPasswordFormProps, undefined> {
-    renderField(data: InputFieldProps)
-    {
-        const { input, label, type, meta: { touched,  error } } = data;
-        return <div>
-            <input {...input} placeholder={label} type={type}/>
-            <ValidationError message={ touched && error ? label + error : null } />
-        </div>;
-    }
-
     render() {
         return (
             <div>
@@ -35,7 +25,7 @@ export class ForgottenPasswordFormComponent extends React.Component<ForgotPasswo
                     <div className="fields">
                         <Field
                             name="email"
-                            component={this.renderField}
+                            component={ReduxFormField}
                             type="text"
                             label="Email address"
                             validate={[validations.required, validations.email]}
@@ -44,7 +34,7 @@ export class ForgottenPasswordFormComponent extends React.Component<ForgotPasswo
                     <button
                         type="submit"
                     >
-                        Log in
+                        Send password reset email
                     </button>
                 </form>
             </div>

@@ -12,7 +12,7 @@ import "../../../helper";
 import { authReducer } from "../../../../main/shared/reducers/authReducer";
 import { Sandbox } from "../../../Sandbox";
 import { LoginFormComponent, LoginForm } from "../../../../main/shared/components/Login/LoginForm";
-import { ValidationError } from "../../../../main/shared/components/Login/ValidationError";
+import { ValidationError } from "../../../../main/shared/components/ReduxForm/ValidationError";
 import { authActionCreators } from "../../../../main/shared/actions/authActionCreators";
 
 describe("LoginFormComponent unit testing", () => {

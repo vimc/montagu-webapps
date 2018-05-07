@@ -1,23 +1,36 @@
 import * as React from "react";
 import { compose } from "recompose";
+import * as queryString from "query-string";
+
 
 import {MainMenuComponent} from "../../MainMenu/MainMenu";
 import {PageArticle} from "../../../../shared/components/PageWithHeader/PageArticle";
 import {PageBreadcrumb, PageProperties} from "../../../../shared/components/PageWithHeader/PageWithHeader";
-import {BreadcrumbInitializer} from "../../../../shared/components/Breadcrumbs/BreadcrumbsInitializer";
+import {AdminAppState} from "../../../reducers/adminAppReducers";
+import {connect} from "react-redux";
+import {Dispatch} from "redux";
+import {resetPasswordPageActionCreators} from "../../../actions/pages/resetPasswordPageActionCreators";
 import { ResetPasswordForm } from "./ResetPasswordForm";
 
-export class AdminResetPasswordPageComponent extends React.Component<PageProperties<undefined>> {
+export interface AdminResetPasswordPageQuery {
+    token: string;
+}
+
+export interface AdminResetPasswordPageProps extends PageProperties<undefined, AdminResetPasswordPageQuery> {
+    token: string;
+}
+
+export class AdminResetPasswordPageComponent extends React.Component<AdminResetPasswordPageProps> {
     static pageTitle:string = "Reset your password";
 
     componentDidMount(){
-        this.props.createBreadcrumbs(AdminResetPasswordPageComponent.breadcrumb());
+        this.props.onLoad(undefined, queryString.parse(this.props.location.search));
     }
 
     static breadcrumb() : PageBreadcrumb {
         return {
             name: AdminResetPasswordPageComponent.pageTitle,
-            urlFragment: "forgotten-password/",
+            urlFragment: "set-password/",
             parent: MainMenuComponent.breadcrumb()
         }
     }
@@ -29,86 +42,12 @@ export class AdminResetPasswordPageComponent extends React.Component<PagePropert
     }
 }
 
-export const AdminResetPasswordPage = compose(BreadcrumbInitializer)(AdminResetPasswordPageComponent) as
-    React.ComponentClass<Partial<PageProperties<undefined>>>;
-
-
-/*
-import { AdminPageWithHeader } from "../../AdminPageWithHeader";
-import { accountActions } from "../../../actions/AccountActions";
-import { FormConnector } from "alt-reform";
-import { ResetPasswordFormComponent } from "./ResetPasswordFormComponent";
-import { resetPasswordForm } from "./ResetPasswordForm";
-import { accountStore } from "../../../stores/AccountStore";
-import { connectToStores } from "../../../../shared/alt";
-import { InternalLink } from "../../../../shared/components/InternalLink";
-import { helpers } from "../../../../shared/Helpers";
-import {IPageWithParent} from "../../../../shared/models/Breadcrumb";
-import {MainMenu} from "../../MainMenu/MainMenu";
-import { Page } from "../../../../shared/components/PageWithHeader/Page";
-
-export interface ResetPasswordPageProps {
-    token: string;
-}
-
-interface RequestResetButtonProps {
-    tokenExpired: boolean;
-}
-
-const ResetPasswordForm = FormConnector(resetPasswordForm(accountStore))(ResetPasswordFormComponent);
-
-export class ResetPasswordPage extends AdminPageWithHeader<ResetPasswordPageProps> {
-    name(): string {
-        return "Reset your password";
+export const mapDispatchToProps = (dispatch: Dispatch<AdminAppState>): Partial<AdminResetPasswordPageProps> => {
+    return {
+        onLoad: (match: undefined, query: AdminResetPasswordPageQuery) => dispatch(resetPasswordPageActionCreators.onLoad(query))
     }
+};
 
-    urlFragment(): string {
-        return "set-password/";
-    }
-
-    parent(): IPageWithParent {
-        return new MainMenu();
-    }
-
-    load(props: ResetPasswordPageProps) {
-        return this.loadParent(props).then(() => {
-            accountActions.setPasswordResetToken(helpers.queryStringAsObject().token);
-        });
-    }
-
-    render(): JSX.Element {
-        return <Page page={this}>
-            <ResetPasswordForm  />
-            <ResetPasswordButton />
-        </Page>;
-    }
-}
-
-class ResetPasswordButtonComponent extends React.Component<RequestResetButtonProps, undefined>{
-    static getStores() {
-        return [ accountStore ];
-    }
-
-    static getPropsFromStores(): RequestResetButtonProps {
-        const account = accountStore.getState();
-        return {
-            tokenExpired: account.tokenExpired
-        };
-    }
-
-    render() {
-        const forgottenPasswordLinkStyle = () => {
-            return this.props.tokenExpired ? { "display": "block" } : { "display": "none" };
-        };
-
-        return <div style={forgottenPasswordLinkStyle()}>
-            <InternalLink href="/forgotten-password/">
-                <button>Request new reset password link</button>
-            </InternalLink>
-        </div>
-
-    }
-}
-
-const ResetPasswordButton = connectToStores(ResetPasswordButtonComponent);
-*/
+export const AdminResetPasswordPage = compose(
+    connect(state => state, mapDispatchToProps)
+)(AdminResetPasswordPageComponent) as React.ComponentClass<Partial<AdminResetPasswordPageProps>>;

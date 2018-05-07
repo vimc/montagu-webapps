@@ -5,11 +5,11 @@ import { compose } from "recompose";
 import { Dispatch } from "redux";
 
 import { InternalLink } from "../InternalLink";
-import { ValidationError } from "./ValidationError";
 import { validations } from "../../modules/reduxForm";
 import { authActionCreators } from "../../actions/authActionCreators";
 import { GlobalState } from "../../reducers/GlobalState";
-import {InputFieldProps} from "../../types";
+import {ReduxFormField} from "../ReduxForm/ReduxFormField";
+import {ReduxFormValidationError} from "../ReduxForm/ReduxFormValidationError";
 
 export interface LoginFormProps {
     handleSubmit: (F: Function) => any;
@@ -23,14 +23,6 @@ export interface LoginFormFields{
 }
 
 export class LoginFormComponent extends React.Component<LoginFormProps, undefined> {
-    renderField(data: InputFieldProps) {
-        const { input, label, type, meta: { touched,  error } } = data;
-        return <div>
-            <input {...input} placeholder={label} type={type}/>
-            <ValidationError message={ touched && error ? label + error : null } />
-        </div>;
-    }
-
     render() {
         return (
             <div>
@@ -38,19 +30,19 @@ export class LoginFormComponent extends React.Component<LoginFormProps, undefine
                     <div className="fields">
                         <Field
                             name="email"
-                            component={this.renderField}
+                            component={ReduxFormField}
                             type="text"
                             label="Email address"
                             validate={[validations.required, validations.email]}
                         />
                         <Field
                             name="password"
-                            component={this.renderField}
+                            component={ReduxFormField}
                             type="password"
                             label="Password"
                             validate={[validations.required]}
                         />
-                        <ValidationError message={ this.props.errorMessage } />
+                        <ReduxFormValidationError message={ this.props.errorMessage } />
                     </div>
                     <button
                         type="submit"

@@ -1,29 +1,23 @@
 import * as React from "react";
-import { AdminPageWithHeader } from "./AdminPageWithHeader";
+import { compose } from "recompose";
+
 import { LoginForm } from "../../shared/components/Login/LoginForm";
-import {IPageWithParent} from "../../shared/models/Breadcrumb";
-import { Page } from "../../shared/components/PageWithHeader/Page";
+import {PageArticle} from "../../shared/components/PageWithHeader/PageArticle";
 
-export class AdminLoginPage extends AdminPageWithHeader<undefined> {
-    name(): string {
-        return "Log in";
-    }
+import {PageProperties} from "../../shared/components/PageWithHeader/PageWithHeader";
+import {BreadcrumbInitializer} from "../../shared/components/Breadcrumbs/BreadcrumbsInitializer";
 
-    includeInBreadcrumbs(): boolean {
-        return false;
-    }
-
-    urlFragment(): string {
-        return "/";
-    }
-
-    parent(): IPageWithParent {
-        return null;
+export class AdminLoginPageComponent extends React.Component<PageProperties<undefined>> {
+    componentDidMount(){
+        this.props.createBreadcrumbs(null);
     }
 
     render(): JSX.Element {
-        return <Page page={this}>
+        return <PageArticle title={"Log in"}>
             <LoginForm />
-        </Page>;
+        </PageArticle>;
     }
 }
+
+export const AdminLoginPage = compose(BreadcrumbInitializer)(AdminLoginPageComponent) as
+    React.ComponentClass<Partial<PageProperties<undefined>>>;

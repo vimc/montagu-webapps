@@ -13,6 +13,7 @@ import {
     Authenticated, AuthenticationError, AuthTypeKeys, Unauthenticated
 } from "../actionTypes/AuthTypes";
 import {GlobalState} from "../reducers/GlobalState";
+import {isNonEmptyArray} from "../Helpers";
 
 export const authActionCreators = {
 
@@ -109,5 +110,46 @@ export const authActionCreators = {
                 return notificationActions.notify(makeNotification("Thank you. If we have an account registered for this email address you will receive a reset password link", "info"));
             }
         }
+    },
+
+    setResetPasswordToken(token: string) {
+        return {
+            type: AuthTypeKeys.SET_RESET_PASSWORD_TOKEN,
+            data: token
+        }
+    },
+
+    setResetPasswordError(error: string) {
+        return {
+            type: AuthTypeKeys.SET_RESET_PASSWORD_ERROR,
+            error: error
+        }
+    },
+
+    setResetPasswordTokenExpired() {
+        return {
+            type: AuthTypeKeys.SET_RESET_PASSWORD_TOKEN_EXPIRED,
+        }
+    },
+
+    resetPassword(password: string) {
+        return async (dispatch: Dispatch<any>, getState: () => GlobalState) => {
+            const token = getState().auth.resetPasswordToken;
+            let result = await (new AuthService(dispatch, getState)).resetPassword(password, token);
+            if (result === "OK") {
+                notificationActions.notify(makeNotification("Your password has been set. You are now being redirected to the Montagu homepage...", "info"))
+                setTimeout(() => window.location.replace(settings.montaguUrl()), 3000);
+            } else if (result && isNonEmptyArray(result.errors)) {
+                if (result.errors[0].code == "invalid-token-used") {
+                    dispatch(this.setResetPasswordError("This password reset link has expired. Please request a new one."));
+                    dispatch(this.setResetPasswordTokenExpired());
+                } else {
+                    dispatch(this.setResetPasswordError(result.errors[0].Message));
+                }
+            } else {
+                dispatch(this.setResetPasswordError("An error occurred setting the password"));
+            }
+        }
     }
+
 };

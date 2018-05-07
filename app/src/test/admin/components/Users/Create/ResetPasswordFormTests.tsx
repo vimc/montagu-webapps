@@ -5,7 +5,7 @@ import { shallow } from "enzyme";
 import * as sinon from "sinon";
 import { Sandbox } from "../../../../Sandbox";
 import { mockFormProperties, numberOfSubmissionActions } from "../../../../mocks/mockForm";
-import { ValidationError } from "../../../../../main/shared/components/Login/ValidationError";
+import { ValidationError } from "../../../../../main/shared/components/ReduxForm/ValidationError";
 import {
     mockFetcher, mockFetcherNonJson, mockResponse, mockResult, promiseJSON,
     rejectedPromiseJSON

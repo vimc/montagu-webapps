@@ -23,4 +23,12 @@ export class AuthService extends AbstractLocalService {
     forgotPassword(email: string) {
         return this.post("/password/request-link/?email=" + encodeURI(email));
     }
+
+    resetPassword(password: string, passwordResetToken: string) {
+        return this.setOptions({exceptionOnError: false})
+            .post(
+                `/onetime_link/${passwordResetToken}/`,
+                JSON.stringify({password: password})
+            );
+    }
 }
