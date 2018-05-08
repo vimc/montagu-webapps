@@ -3,7 +3,7 @@ import { Dispatch } from "redux";
 import {AdminAppState} from "../reducers/adminAppReducers";
 import {User} from "../../shared/models/Generated";
 import {UsersService} from "../services/UsersService";
-import {AllUsersFetched, UsersTypes} from "../actionTypes/UsersTypes";
+import {AllUsersFetched, ShowCreateUser, UsersTypes} from "../actionTypes/UsersTypes";
 
 export const usersActionCreators = {
 
@@ -16,4 +16,10 @@ export const usersActionCreators = {
             } as AllUsersFetched);
         }
     },
+
+    setShowCreateUser() {
+        return {
+            type: UsersTypes.SHOW_CREATE_USER
+        } as ShowCreateUser;
+    }
 };

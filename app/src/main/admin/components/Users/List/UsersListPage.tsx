@@ -8,7 +8,7 @@ import {PageArticle} from "../../../../shared/components/PageWithHeader/PageArti
 import {AdminAppState} from "../../../reducers/adminAppReducers";
 import {MainMenuComponent} from "../../MainMenu/MainMenu";
 import {usersListPageActionCreators} from "../../../actions/pages/usersListPageActionCreators";
-// import {CreateUserSection} from "../Create/CreateUserSection";
+import {CreateUserSection} from "../Create/CreateUserSection";
 import {UsersList} from "./UsersList";
 
 export class UsersListPageComponent extends React.Component<PageProperties<undefined>> {
@@ -28,7 +28,7 @@ export class UsersListPageComponent extends React.Component<PageProperties<undef
 
     render() :JSX.Element {
         return <PageArticle title={UsersListPageComponent.title}>
-            {/*<CreateUserSection/>*/}
+            <CreateUserSection/>
             <div className="sectionTitle">All users</div>
             <UsersList/>
         </PageArticle>;
