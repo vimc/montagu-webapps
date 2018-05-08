@@ -5,7 +5,7 @@ import { shallow } from "enzyme";
 import * as sinon from "sinon";
 import { Sandbox } from "../../../../Sandbox";
 import { mockFormProperties, numberOfSubmissionActions } from "../../../../mocks/mockForm";
-import { ValidationError } from "../../../../../main/shared/components/ReduxForm/ValidationError";
+import { ReduxFormValidationError } from "../../../../../main/shared/components/ReduxForm/ReduxFormValidationError";
 import { mockFetcher, mockResponse, mockResult } from "../../../../mocks/mockRemote";
 import { userStore } from "../../../../../main/admin/stores/UserStore";
 import { mockEvent } from "../../../../mocks/mocks";

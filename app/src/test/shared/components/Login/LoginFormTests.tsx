@@ -12,7 +12,7 @@ import "../../../helper";
 import { authReducer } from "../../../../main/shared/reducers/authReducer";
 import { Sandbox } from "../../../Sandbox";
 import { LoginFormComponent, LoginForm } from "../../../../main/shared/components/Login/LoginForm";
-import { ValidationError } from "../../../../main/shared/components/ReduxForm/ValidationError";
+import { ReduxFormValidationError } from "../../../../main/shared/components/ReduxForm/ReduxFormValidationError";
 import { authActionCreators } from "../../../../main/shared/actions/authActionCreators";
 
 describe("LoginFormComponent unit testing", () => {
@@ -61,40 +61,40 @@ describe("LoginForm connected with redux-form", () => {
 
     it("validates email field while typing", () => {
         // initially validation box is empty
-        expect(formWrapper.find(ValidationError).at(0).props().message).to.equal(null);
+        expect(formWrapper.find(ReduxFormValidationError).at(0).props().message).to.equal(null);
         // this sets field as touched
         formWrapper.find('input[name="email"]').simulate('focus');
         // this triggers validation
         formWrapper.find('input[name="email"]').simulate('blur');
         // validation box will show that email is required if we touch input field and keep it empty
         // check validation block prop
-        expect(formWrapper.find(ValidationError).at(0).props().message).to.equal("Email address is required");
+        expect(formWrapper.find(ReduxFormValidationError).at(0).props().message).to.equal("Email address is required");
         // check if validation block rendered error
-        expect(formWrapper.find(ValidationError).at(0).text()).to.equal("Email address is required");
+        expect(formWrapper.find(ReduxFormValidationError).at(0).text()).to.equal("Email address is required");
         // trigger change of email field with invalid value
         formWrapper.find('input[name="email"]').simulate('change', {target: {value: 'abc'}});
-        expect(formWrapper.find(ValidationError).at(0).props().message).to.equal("Email address is invalid");
-        expect(formWrapper.find(ValidationError).at(0).text()).to.equal("Email address is invalid");
+        expect(formWrapper.find(ReduxFormValidationError).at(0).props().message).to.equal("Email address is invalid");
+        expect(formWrapper.find(ReduxFormValidationError).at(0).text()).to.equal("Email address is invalid");
         // enter right value
         formWrapper.find('input[name="email"]').simulate('change', {target: {value: 'abc@abc.com'}});
-        expect(formWrapper.find(ValidationError).at(0).props().message).to.equal(null);
+        expect(formWrapper.find(ReduxFormValidationError).at(0).props().message).to.equal(null);
     });
 
     it("validates password field while typing", () => {
         // initially validation box is empty
-        expect(formWrapper.find(ValidationError).at(1).props().message).to.equal(null);
+        expect(formWrapper.find(ReduxFormValidationError).at(1).props().message).to.equal(null);
         // this sets field as touched
         formWrapper.find('input[name="password"]').simulate('focus');
         // this triggers validation
         formWrapper.find('input[name="password"]').simulate('blur');
         // validation box will show that password is required if we touch input field and keep it empty
         // check validation block prop
-        expect(formWrapper.find(ValidationError).at(1).props().message).to.equal("Password is required");
+        expect(formWrapper.find(ReduxFormValidationError).at(1).props().message).to.equal("Password is required");
         // check if validation block rendered error
-        expect(formWrapper.find(ValidationError).at(1).text()).to.equal("Password is required");
+        expect(formWrapper.find(ReduxFormValidationError).at(1).text()).to.equal("Password is required");
         // trigger change of email field with invalid value
         formWrapper.find('input[name="password"]').simulate('change', {target: {value: 'abc'}});
-        expect(formWrapper.find(ValidationError).at(1).props().message).to.equal(null);
+        expect(formWrapper.find(ReduxFormValidationError).at(1).props().message).to.equal(null);
     });
 
     it("submits login form data", () => {
