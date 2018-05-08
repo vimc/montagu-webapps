@@ -1,28 +1,36 @@
 import * as React from "react";
+
 import { InternalLink } from "../InternalLink";
-import {NavBar} from "../NavBar/NavBar";
+import {BreadcrumbsBar} from "../Breadcrumbs/Breadcrumbs";
 import { LoggedInUserBox } from "../Login/LoggedInUserBox";
+import * as logo from "./logo.png"
 
 interface HeaderProps {
     siteTitle: string;
-    logo: any;
+    logo?: any;
 }
 
-export class PageHeader extends React.Component<HeaderProps, undefined> {
-
-    render() {
-        return <div>
-            <header className="header">
-                <a href="/"><img src={this.props.logo} className="pl-md-1 logo" height="75" alt="VIMC"/></a>
-                <div className="header__siteTitle">
-                    <InternalLink href="/">
-                        {this.props.siteTitle}
-                    </InternalLink>
-                </div>
-                <LoggedInUserBox />
-            </header>
-            <NavBar />
-        </div>
-
-    }
+const defaultProps: Partial<HeaderProps> = {
+    logo
 }
+
+const PageHeader: React.SFC<HeaderProps> = (props: HeaderProps) => {
+    return <div>
+        <header className="header">
+            <InternalLink href="/">
+                <img src={props.logo} className="pl-md-1 logo" height="75" alt="VIMC"/>
+            </InternalLink>
+            <div className="header__siteTitle">
+                <InternalLink href="/">
+                    {props.siteTitle}
+                </InternalLink>
+            </div>
+            <LoggedInUserBox />
+        </header>
+        <BreadcrumbsBar />
+    </div>;
+}
+
+PageHeader.defaultProps = defaultProps;
+
+export {PageHeader};
