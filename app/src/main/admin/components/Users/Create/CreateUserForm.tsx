@@ -12,9 +12,11 @@ import {AdminAppState} from "../../../reducers/adminAppReducers";
 import {usersActionCreators} from "../../../actions/usersActionCreators";
 
 export interface CreateUserFormProps {
-    handleSubmit: (F: Function) => any;
-    submit: (values: CreateUserFormFields) => void;
-    errorMessage?: string;
+    handleSubmit: (F: Function) => any,
+    submit: (values: CreateUserFormFields) => void,
+    errorMessage?: string,
+    dispatch: Dispatch<AdminAppState>,
+    change: any
 }
 
 export interface CreateUserFormFields{
@@ -24,6 +26,11 @@ export interface CreateUserFormFields{
 }
 
 export class CreateUserFormComponent extends React.Component<CreateUserFormProps, undefined> {
+    onNameChange(e: any) {
+        const {value} = e.target;
+        this.props.change('username', value);
+    }
+
     render() {
         return (
             <div>
@@ -35,6 +42,7 @@ export class CreateUserFormComponent extends React.Component<CreateUserFormProps
                             type="text"
                             label="Full name"
                             validate={[validations.required]}
+                            onChange={(e) => this.onNameChange(e)}
                         />
                     </div>
                     <div className="clearfix"></div>
@@ -88,58 +96,3 @@ export const CreateUserForm = compose(
     reduxForm({ form: 'createUser'}),
     connect(mapStateToProps, mapDispatchToProps),
 )(CreateUserFormComponent);
-
-
-/*
-
-export class CreateUserFormComponent extends React.Component<ReformProps, undefined> {
-    constructor() {
-        super();
-        this.changeName = this.changeName.bind(this);
-    }
-
-    changeName(e: React.ChangeEvent<HTMLInputElement>) {
-        this.props.fields.name.onChange(e);
-        this.props.change({
-            username: suggestUsername(e.target.value)
-        });
-    }
-
-    render() {
-        const fields = this.props.fields as CreateUserFields;
-        return <form className="gapAbove" onSubmit={this.props.submit}>
-            <fieldset disabled={this.props.loading}>
-                <div className="sectionTitle">Add new user</div>
-                <table className="tableForm specialColumn">
-                    <tbody>
-                    <tr>
-                        <td>Full name</td>
-                        <td><input name="name" {...fields.name} onChange={this.changeName} /></td>
-                        <td><ValidationError message={this.props.errors.name}/></td>
-                    </tr>
-                    <tr>
-                        <td>Email address</td>
-                        <td><input name="email" type="email" {...fields.email} /></td>
-                        <td><ValidationError message={this.props.errors.email}/></td>
-                    </tr>
-                    <tr>
-                        <td>Username</td>
-                        <td><input name="username" {...fields.username} /></td>
-                        <td><ValidationError message={this.props.errors.username}/></td>
-                    </tr>
-                    </tbody>
-                </table>
-                <div className="gapAbove">
-                    <ValidationError message={this.props.store.state.submitError}/>
-                </div>
-                <div className="gapAbove">
-                    <button type="submit">Save user</button>
-                </div>
-            </fieldset>
-        </form>;
-    }
-}
-
-export const CreateUserForm = FormConnector(createUserFormStore())(CreateUserFormComponent);
-
-*/
