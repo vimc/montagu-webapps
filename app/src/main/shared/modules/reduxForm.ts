@@ -7,7 +7,9 @@ export const validations = {
         : undefined),
     minLength: (min: number) => (value: string) => (value && value.length < min
         ? ` must be at least ${min} characters`
+        : undefined),
+    username: (value: string) => (value && !/^[a-z]+(\.[a-z]+)*$/.test(value)
+        ? `${name} must be in the format 'something.something'. It must be lowercase, and only consist of letters and full stops.`
         : undefined)
-
 }
 
