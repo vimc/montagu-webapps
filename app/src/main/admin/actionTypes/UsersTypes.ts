@@ -1,5 +1,4 @@
 import {User} from "../../shared/models/Generated";
-import {UserRole} from "../components/Users/SingleUser/UserRoleComponent";
 
 export enum UsersTypes {
     ALL_USERS_FETCHED = "ALL_USERS_FETCHED",
@@ -16,7 +15,7 @@ export interface AllUsersFetched {
 
 export interface AllUserRolesFetched {
     type: UsersTypes.ALL_USER_ROLES_FETCHED;
-    data: UserRole[];
+    data: string[];
 }
 
 export interface ShowCreateUser {

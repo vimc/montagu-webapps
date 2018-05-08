@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
 
 import {AdminAppState} from "../reducers/adminAppReducers";
-import {User} from "../../shared/models/Generated";
+import {User, } from "../../shared/models/Generated";
 import {UsersService} from "../services/UsersService";
 import {
     AllUserRolesFetched,
@@ -11,7 +11,6 @@ import {
     ShowCreateUser,
     UsersTypes
 } from "../actionTypes/UsersTypes";
-import {UserRole} from "../components/Users/SingleUser/UserRoleComponent";
 
 export const usersActionCreators = {
 
@@ -27,7 +26,7 @@ export const usersActionCreators = {
 
     getAllUserRoles() {
         return async (dispatch: Dispatch<AdminAppState>, getState: () => AdminAppState) => {
-            const userRoles: UserRole[] = await (new UsersService(dispatch, getState)).getAllUserRoles();
+            const userRoles: string[] = await (new UsersService(dispatch, getState)).getAllUserRoles();
             dispatch({
                 type: UsersTypes.ALL_USER_ROLES_FETCHED,
                 data: userRoles
@@ -74,5 +73,28 @@ export const usersActionCreators = {
         }
     },
 
+    addRoleToUser(username: string, role: string) {
+        return async (dispatch: Dispatch<AdminAppState>, getState: () => AdminAppState) => {
+            const result = await (new UsersService(dispatch, getState)).addRoleToUser(username, role);
 
+            if (result === "OK") {
+                dispatch(this.clearUsersListCache());
+                await dispatch(this.getAllUsers());
+                dispatch(this.setCurrentUser(username));
+            }
+        }
+    },
+
+    removeRoleFromUser(username: string, role: string, scopeId: string, scopePrefix: string) {
+        return async (dispatch: Dispatch<AdminAppState>, getState: () => AdminAppState) => {
+            const result = await (new UsersService(dispatch, getState))
+                .removeRoleFromUser(username, role, scopeId, scopePrefix);
+
+            if (result === "OK") {
+                dispatch(this.clearUsersListCache());
+                await dispatch(this.getAllUsers());
+                dispatch(this.setCurrentUser(username));
+            }
+        }
+    },
 };

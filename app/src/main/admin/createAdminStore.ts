@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 import { routerMiddleware } from 'react-router-redux';
 import {History} from "history";
 
-import reducers from '../reducers/adminAppReducers';
+import reducers from './reducers/adminAppReducers';
 
 export function createAdminStore(history: History) {
     return createStore(

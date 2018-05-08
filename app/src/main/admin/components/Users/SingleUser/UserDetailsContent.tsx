@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { compose, branch, renderComponent} from "recompose";
 
 import { User } from "../../../../shared/models/Generated";
-import { UserRole } from "./UserRoleComponent";
+import { UserRole } from "./UserRole";
 import { AddRoles } from "./AddRoles";
 import {AdminAppState} from "../../../reducers/adminAppReducers";
 import {LoadingElement} from "../../../../shared/partials/LoadingElement/LoadingElement";
