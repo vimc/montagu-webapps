@@ -4,6 +4,7 @@ export enum UsersTypes {
     ALL_USERS_FETCHED = "ALL_USERS_FETCHED",
     SHOW_CREATE_USER = "SHOW_CREATE_USER",
     SET_CREATE_USER_ERROR = "SET_CREATE_USER_ERROR",
+    SET_CURRENT_USER = "SET_CURRENT_USER"
 }
 
 export interface AllUsersFetched {
@@ -21,8 +22,14 @@ export interface SetCreateUserError {
     error: string;
 }
 
+export interface SetCurrentUser {
+    type: UsersTypes.SET_CURRENT_USER;
+    data: User;
+}
+
 export type UsersAction =
     | AllUsersFetched
     | ShowCreateUser
     | SetCreateUserError
+    | SetCurrentUser
 ;

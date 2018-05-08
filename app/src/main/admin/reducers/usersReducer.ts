@@ -5,13 +5,15 @@ import {isNonEmptyArray} from "../../shared/Helpers";
 export interface UsersState {
     users: User[],
     showCreateUser: boolean,
-    createUserError: string
+    createUserError: string,
+    currentUser: User
 }
 
 export const usersInitialState: UsersState = {
     users: [],
     showCreateUser: false,
-    createUserError: null
+    createUserError: null,
+    currentUser: null
 };
 
 export const usersReducer = (state = usersInitialState, action: UsersAction) => {
@@ -22,6 +24,8 @@ export const usersReducer = (state = usersInitialState, action: UsersAction) => 
             return {...state, showCreateUser: action.data};
         case UsersTypes.SET_CREATE_USER_ERROR:
             return {...state, createUserError: action.error};
+        case UsersTypes.SET_CURRENT_USER:
+            return {...state, currentUser: action.data};
         default:
             return state;
     }
