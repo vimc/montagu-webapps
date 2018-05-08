@@ -6,7 +6,7 @@ import {UserDetailsContent} from "./UserDetailsContent";
 import {userActions} from "../../../actions/UserActions";
 import {userStore} from "../../../stores/UserStore";
 import {IPageWithParent} from "../../../../shared/models/Breadcrumb";
-import {ViewAllUsersPage} from "../List/ViewAllUsersPage";
+import {UsersListPage} from "../List/ViewAllUsersPage";
 import { Page } from "../../../../shared/components/PageWithHeader/Page";
 
 export interface UserDetailsPageProps {
@@ -35,7 +35,7 @@ export class ViewUserDetailsPage extends AdminPageWithHeader<UserDetailsPageProp
     }
 
     parent(): IPageWithParent {
-        return new ViewAllUsersPage();
+        return new UsersListPage();
     }
 
     render(): JSX.Element {
