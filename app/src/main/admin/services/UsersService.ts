@@ -6,6 +6,11 @@ export class UsersService extends AbstractLocalService {
             .get("/users/");
     }
 
+    getAllUserRoles() {
+        return this.setOptions({cacheKey: UserCacheKeysEnum.roles})
+            .get("/users/roles/all/");
+    }
+
     clearUsersListCache() {
         return this.clearCache(
             UserCacheKeysEnum.users,
@@ -21,5 +26,6 @@ export class UsersService extends AbstractLocalService {
 };
 
 export enum UserCacheKeysEnum {
-    users = "users"
+    users = "users",
+    roles = "roles"
 };

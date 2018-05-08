@@ -4,12 +4,14 @@ import {AdminAppState} from "../reducers/adminAppReducers";
 import {User} from "../../shared/models/Generated";
 import {UsersService} from "../services/UsersService";
 import {
+    AllUserRolesFetched,
     AllUsersFetched,
     SetCreateUserError,
     SetCurrentUser,
     ShowCreateUser,
     UsersTypes
 } from "../actionTypes/UsersTypes";
+import {UserRole} from "../components/Users/SingleUser/UserRoleComponent";
 
 export const usersActionCreators = {
 
@@ -20,6 +22,16 @@ export const usersActionCreators = {
                 type: UsersTypes.ALL_USERS_FETCHED,
                 data: users
             } as AllUsersFetched);
+        }
+    },
+
+    getAllUserRoles() {
+        return async (dispatch: Dispatch<AdminAppState>, getState: () => AdminAppState) => {
+            const userRoles: UserRole[] = await (new UsersService(dispatch, getState)).getAllUserRoles();
+            dispatch({
+                type: UsersTypes.ALL_USER_ROLES_FETCHED,
+                data: userRoles
+            } as AllUserRolesFetched);
         }
     },
 
