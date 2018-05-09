@@ -2,15 +2,12 @@ import * as React from "react";
 import { createMemoryHistory } from 'history';
 
 import { expectIsEqual, IntegrationTestSuite } from "./IntegrationTest";
-import { AdminFetcher } from "../main/admin/sources/AdminFetcher";
-import { groupStore } from "../main/admin/stores/GroupStore";
 import { checkPromise } from "../test/testHelpers";
 import { expect } from "chai";
 import { Client, QueryResult } from "pg";
 import { ModellingGroup, ModellingGroupDetails, User } from "../main/shared/models/Generated";
-import { modellingGroupActions } from "../main/shared/actions/ModellingGroupActions";
-import { userStore } from "../main/admin/stores/UserStore";
-import {createAdminStore} from "../main/admin/stores/createAdminStore";
+import { modellingGroupsActionCreators } from "../main/admin/actions/modellingGroupsActionCreators";
+import {createAdminStore} from "../main/admin/createAdminStore";
 import { AuthService } from "../main/shared/services/AuthService";
 import {ModellingGroupsService} from "../main/shared/services/ModellingGroupsService";
 import {UsersService} from "../main/admin/services/UsersService";
@@ -26,8 +23,8 @@ class AdminIntegrationTests extends IntegrationTestSuite {
     }
 
 
-    makeFetcher() {
-        return new AdminFetcher();
+    makeFetcher():any {
+        return null;
     }
 
     addTestsToMocha() {

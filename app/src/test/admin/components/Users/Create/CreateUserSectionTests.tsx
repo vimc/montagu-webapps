@@ -24,13 +24,13 @@ describe("CreateUserSectionComponenent", () => {
         expect(rendered.find("button")).to.have.length(1);
     });
 
-    it("button triggers setShowCreateUser", () => {
-        const spy = sandbox.dispatchSpy();
-        const rendered = shallow(<CreateUserSectionComponent show={false}/>);
-        rendered.find("button").simulate("click");
-        expectOneAction(spy, {
-            action: "UserActions.setShowCreateUser",
-            payload: true
-        });
-    });
+    // it("button triggers setShowCreateUser", () => {
+    //     const spy = sandbox.dispatchSpy();
+    //     const rendered = shallow(<CreateUserSectionComponent show={false}/>);
+    //     rendered.find("button").simulate("click");
+    //     expectOneAction(spy, {
+    //         action: "UserActions.setShowCreateUser",
+    //         payload: true
+    //     });
+    // });
 });

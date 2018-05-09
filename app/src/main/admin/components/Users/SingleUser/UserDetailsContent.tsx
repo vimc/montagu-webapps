@@ -7,6 +7,7 @@ import { UserRole } from "./UserRole";
 import { AddRoles } from "./AddRoles";
 import {AdminAppState} from "../../../reducers/adminAppReducers";
 import {LoadingElement} from "../../../../shared/partials/LoadingElement/LoadingElement";
+import {PageProperties} from "../../../../shared/components/PageWithHeader/PageWithHeader";
 
 export interface UserDetailsRolesProps  {
     user: User;
@@ -75,4 +76,5 @@ export const mapStateToProps = (state: AdminAppState) :Partial<UserDetailsConten
 export const UserDetailsContent = compose(
     connect(mapStateToProps),
     branch((props: UserDetailsContentProps) => !props.user, renderComponent(LoadingElement))
-)(UserDetailsContentComponent);
+)(UserDetailsContentComponent) as
+    React.ComponentClass<Partial<UserDetailsRolesProps>>;;

@@ -6,7 +6,7 @@ import { createMemoryHistory } from 'history';
 
 import "../../helper";
 import { AdminRouter } from "../../../main/admin/components/AdminRouter";
-import {createAdminStore} from "../../../main/admin/stores/createAdminStore";
+import {createAdminStore} from "../../../main/admin/createAdminStore";
 import {AdminNoRouteFoundPage} from "../../../main/admin/components/AdminNoRouteFoundPage";
 import {AdminLoginPage} from "../../../main/admin/components/AdminLoginPage";
 
