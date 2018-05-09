@@ -50,15 +50,20 @@ export const usersActionCreators = {
     createUser(name: string, email: string, username: string) {
         return async (dispatch: Dispatch<AdminAppState>, getState: () => AdminAppState) => {
             const result = await (new UsersService(dispatch, getState)).createUser(name, email, username);
-            if (result.errors) {
+            if (result && result.errors) {
                 dispatch({
                     type: UsersTypes.SET_CREATE_USER_ERROR,
                     error: result.errors[0].message
                 } as SetCreateUserError);
-            } else {
+            } else if (result) {
                 dispatch(this.clearUsersListCache());
                 dispatch(this.setShowCreateUser(false));
                 await dispatch(this.getAllUsers());
+            } else {
+                dispatch({
+                    type: UsersTypes.SET_CREATE_USER_ERROR,
+                    error: "Could not create user"
+                } as SetCreateUserError);
             }
         }
     },
