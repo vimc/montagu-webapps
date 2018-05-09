@@ -21,15 +21,15 @@ export const usersInitialState: UsersState = {
 export const usersReducer = (state = usersInitialState, action: UsersAction) => {
     switch (action.type) {
         case UsersTypes.ALL_USERS_FETCHED:
-            return {...state, users: isNonEmptyArray(action.data) ? action.data : []};
+            return {...state, users: isNonEmptyArray(action.data) ? action.data : usersInitialState.users};
         case UsersTypes.ALL_USER_ROLES_FETCHED:
-            return {...state, allUserRoles: isNonEmptyArray(action.data) ? action.data : []};
+            return {...state, allUserRoles: isNonEmptyArray(action.data) ? action.data : usersInitialState.allUserRoles};
         case UsersTypes.SHOW_CREATE_USER:
-            return {...state, showCreateUser: action.data};
+            return {...state, showCreateUser: typeof action.data == "boolean" ? action.data : usersInitialState.showCreateUser};
         case UsersTypes.SET_CREATE_USER_ERROR:
-            return {...state, createUserError: action.error};
+            return {...state, createUserError: typeof action.error == "string" ? action.error : usersInitialState.createUserError};
         case UsersTypes.SET_CURRENT_USER:
-            return {...state, currentUser: action.data};
+            return {...state, currentUser: typeof action.data == "object" ? action.data : usersInitialState.currentUser};
         default:
             return state;
     }
