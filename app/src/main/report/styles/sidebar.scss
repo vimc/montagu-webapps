@@ -7,7 +7,7 @@
 }
 
 .btn-internal {
-  @include button-variant(darken($warning, 10%),  $gray-400);
+  @include button-variant($internal-color,  $gray-400);
   color: #ffffff;
 }
 

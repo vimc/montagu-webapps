@@ -8,9 +8,6 @@ import {ReportAppState} from "../../reducers/reportAppReducers";
 import { reportActionCreators } from "../../actions/reportActionCreators";
 import {ReportsListComponent, ReportsListComponentProps} from "./ReportsListComponent";
 import { LoadingElement } from "../../../shared/partials/LoadingElement/LoadingElement";
-import {reportsListSelectors} from "./reportsListSelectors";
-
-const reportsDisplayListSelector = reportsListSelectors.createDisplayListSelector();
 
 export interface ReportsListContainerProps extends ReportsListComponentProps {
     getReports: () => void;
@@ -23,10 +20,13 @@ const lifecyleProps: Partial<LifecycleMethods<ReportsListContainerProps>> = {
     }
 };
 
-export const mapStateToProps = (state: ReportAppState): Partial<ReportsListContainerProps> => {
+export const mapStateToProps = (state: ReportAppState,
+                                props: Partial<ReportsListContainerProps>): ReportsListContainerProps => {
     return {
-        reports: reportsDisplayListSelector(state),
-        ready: Array.isArray(state.reports.reports)
+        reports: state.reports.reports,
+        ready: Array.isArray(state.reports.reports),
+        isReviewer: state.auth.isReportReviewer,
+        getReports: props.getReports
     }
 };
 

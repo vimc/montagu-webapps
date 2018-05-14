@@ -14,15 +14,24 @@
   }
 }
 
-.report-time-filters {
+.report-date-filters {
+  font-size: 90%;
+
   .input-group {
     flex-wrap: nowrap !important;
   }
+
+  .date-filter{
+    width: 47%;
+  }
+
 }
 
-.report-filter-label {
-  margin-bottom: 0;
-  margin-right: 0.5em;
-  font-size: 80%;
-  font-weight: 700;
+.rt-head {
+  input {
+    padding: 0.25rem 0.5rem !important;
+    font-size: 0.875rem !important;
+    line-height: 1.5 !important;
+    border-radius: 0.2rem !important;
+  }
 }

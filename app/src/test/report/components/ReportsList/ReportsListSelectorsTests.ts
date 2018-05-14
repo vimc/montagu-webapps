@@ -20,13 +20,15 @@ describe("ReportListSelector", () => {
         expect(reportsListSelectors.getSortingPropsSelector(mockReportAppState({reports: {reportsSortBy: ReportsSortingFields.name}}))).to.eql("name");
     });
 
-    it ("selects display list with default sorting by name", () => {
-        const reports = [mockReport({name: "b"}), mockReport({name: "c"}), mockReport({name: "a"})];
+    it ("selects display list with default sorting by last updated date", () => {
+        const reports = [mockReport({name: "a", updated_on: (new Date()).toDateString()}),
+            mockReport({name: "c", updated_on: (new Date()).toDateString()}),
+            mockReport({name: "b", updated_on: (new Date()).toDateString()})];
         const selector = reportsListSelectors.createDisplayListSelector();
         const displayReports = selector(mockReportAppState({reports: {reports}}));
-        expect(displayReports[0].name).to.eql("a");
-        expect(displayReports[1].name).to.eql("b");
-        expect(displayReports[2].name).to.eql("c");
+        expect(displayReports[0].name).to.eql("b");
+        expect(displayReports[1].name).to.eql("c");
+        expect(displayReports[2].name).to.eql("a");
     });
 
     it ("selects display list with sorting by latest_version", () => {

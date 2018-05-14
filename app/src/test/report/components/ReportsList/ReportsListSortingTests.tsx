@@ -15,7 +15,7 @@ describe("ReportListSorting", () => {
     it("can render select with 3 elements", () => {
         const rendered = shallow(<ReportsListSortingComponent sort={()=>{}} sortBy={ReportsSortingFields.name} />);
         const items = rendered.find('option');
-        expect(items).to.have.length(2);
+        expect(items).to.have.length(3);
     });
 
     it("triggers sort on select change", () => {

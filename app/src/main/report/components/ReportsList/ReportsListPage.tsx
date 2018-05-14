@@ -2,8 +2,6 @@ import * as React from "react";
 import { compose } from "recompose";
 
 import {ReportsList} from "./ReportsList";
-import {ReportsListSorting} from "./ReportsListSorting";
-import {ReportsListFilter} from "./Filter/ReportsListFilter";
 import {PageArticle} from "../../../shared/components/PageWithHeader/PageArticle";
 import {PageBreadcrumb, PageProperties} from "../../../shared/components/PageWithHeader/PageWithHeader";
 import {BreadcrumbInitializer} from "../../../shared/components/Breadcrumbs/BreadcrumbsInitializer";
@@ -22,11 +20,9 @@ export class ReportsListPageComponent extends React.Component<PageProperties<und
     }
 
     render() :JSX.Element {
-        return <PageArticle title="Choose a report to view">
-            <ReportsListFilter/>
-            <ReportsListSorting/>
+        return <div className="page container pt-5">
             <ReportsList/>
-        </PageArticle>;
+        </div>
     }
 }
 

@@ -82,7 +82,7 @@ describe("SidebarAdmin", () => {
     it("gets reviewer status from app state", () => {
 
         let state = mockReportAppState({
-            auth: mockAuthState({permissions: ["*/reports.review"]}),
+            auth: mockAuthState({isReportReviewer: true}),
             reports: readyReportsState
         });
 
@@ -94,7 +94,7 @@ describe("SidebarAdmin", () => {
         expect(rendered.prop("isReviewer")).to.be.true;
 
         state = mockReportAppState({
-            auth: mockAuthState({permissions: []})
+            auth: mockAuthState({isReportReviewer: false})
         });
 
         store = createMockStore(state);
