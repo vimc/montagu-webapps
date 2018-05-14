@@ -3,6 +3,7 @@ import * as React from "react";
 import {
     ReportsFilterFields, ReportsFilterPublishTypes,
 } from "../../../actionTypes/ReportsActionsTypes";
+import {asReactEvent} from "../../../../shared/Helpers";
 
 interface ReportsListFilterProps {
     filterData: ReportsFilterFields;
@@ -14,7 +15,7 @@ export const ReportsListFilterPublished: React.StatelessComponent<ReportsListFil
         <label className={"report-filter-label"}>Show</label>
         <select
             className="form-control-sm form-control"
-            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => props.filterPublish(e.target.value as ReportsFilterPublishTypes)}
+            onChange={asReactEvent(props.filterPublish)}
             value={props.filterData.published}
         >
             <option value={ReportsFilterPublishTypes.all}>All</option>

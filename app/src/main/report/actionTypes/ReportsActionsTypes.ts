@@ -34,6 +34,7 @@ export enum ReportsFilterPublishTypes {
 }
 
 export interface ReportsFilterFields {
+    query: string;
     published?: ReportsFilterPublishTypes;
     timeFrom?: string;
     timeUntil?: string;

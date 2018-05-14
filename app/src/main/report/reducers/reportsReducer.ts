@@ -20,6 +20,7 @@ export const reportsInitialState: ReportsState = {
     reports: null,
     reportsSortBy: ReportsSortingFields.name,
     reportsFilter: {
+        query: "",
         published: ReportsFilterPublishTypes.all,
         timeFrom: null,
         timeUntil: null

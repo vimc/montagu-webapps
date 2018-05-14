@@ -1,5 +1,6 @@
 import {jwtDecoder} from "./sources/JwtDecoder";
 import {Result} from "./models/Generated";
+import * as React from "react";
 
 export function doNothing() {
 
@@ -75,3 +76,9 @@ export const helpers = {
 export const isNonEmptyArray = (arrayData: any[]) => {
     return Array.isArray(arrayData) && arrayData.length;
 }
+
+export function asReactEvent<TValue, TReactEvent extends React.ChangeEvent<any>>(event: (value: TValue) => any) {
+    return function (e: TReactEvent) {
+        event(e.target.value as TValue);
+    };
+};

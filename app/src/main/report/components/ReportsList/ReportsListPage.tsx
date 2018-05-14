@@ -22,7 +22,7 @@ export class ReportsListPageComponent extends React.Component<PageProperties<und
     }
 
     render() :JSX.Element {
-        return <PageArticle title="Choose a report to view">
+        return <PageArticle hideTitle={true}>
             <ReportsListFilter/>
             <ReportsListSorting/>
             <ReportsList/>

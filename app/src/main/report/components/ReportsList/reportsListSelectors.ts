@@ -1,18 +1,22 @@
-import { createSelector, createSelectorCreator, defaultMemoize } from "reselect";
-import { orderBy, clone } from "lodash";
+import {createSelector, createSelectorCreator, defaultMemoize} from "reselect";
+import {clone, isEqual, orderBy} from "lodash";
 import {Report} from "../../../shared/models/Generated";
 import {
-    ReportsFilterFields, ReportsFilterPublishTypes,
+    ReportsFilterFields,
+    ReportsFilterPublishTypes,
     ReportsSortingFields
 } from "../../actionTypes/ReportsActionsTypes";
 import {ReportAppState} from "../../reducers/reportAppReducers";
 import {VersionIdentifier} from "../../models/VersionIdentifier";
-import {isEqual} from 'lodash';
 
 const createDeepEqualSelector = createSelectorCreator(
     defaultMemoize,
     isEqual
 );
+
+function containsSearchTerm(haystack: string, needle: string) {
+    return haystack && haystack.toLowerCase().indexOf(needle.toLowerCase()) > -1;
+}
 
 export const reportsListSelectors = {
 
@@ -32,7 +36,7 @@ export const reportsListSelectors = {
         (new VersionIdentifier(version)).timestamp.getTime() > Date.parse(filterTime),
 
     filterReportsList(reports: Report[], filter: ReportsFilterFields) {
-        let displayList = clone(reports);
+        let displayList: Report[] = clone(reports);
         if (filter.published !== ReportsFilterPublishTypes.all) {
             displayList = displayList.filter((item: any) => filter.published === ReportsFilterPublishTypes.published
                 ? item.published
@@ -40,14 +44,20 @@ export const reportsListSelectors = {
             );
         }
         if (filter.timeFrom) {
-            displayList = displayList.filter((item: any) =>
+            displayList = displayList.filter(item =>
                 this.compareVersionAndFilterTime(item.latest_version, filter.timeFrom)
             );
         }
         if (filter.timeUntil) {
-            displayList = displayList.filter((item: any) =>
+            displayList = displayList.filter(item =>
                 !this.compareVersionAndFilterTime(item.latest_version, filter.timeUntil)
             );
+        }
+        if (filter.query) {
+            displayList = displayList.filter(item => {
+                return containsSearchTerm(item.name, filter.query)
+                    || containsSearchTerm(item.display_name, filter.query);
+            });
         }
         return displayList;
     },
@@ -68,7 +78,7 @@ export const reportsListSelectors = {
 
     createDisplayListSelector() {
         return createDeepEqualSelector(
-            [ this.getRawReportsListSelector, this.getSortingPropsSelector, this.getFilterPropsSelector],
+            [this.getRawReportsListSelector, this.getSortingPropsSelector, this.getFilterPropsSelector],
             (reports: Report[], sortBy: ReportsSortingFields, filter: ReportsFilterFields) =>
                 this.makeReportsDisplayList(reports, sortBy, filter)
         );
