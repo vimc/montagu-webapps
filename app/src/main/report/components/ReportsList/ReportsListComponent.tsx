@@ -2,28 +2,29 @@ import * as React from "react";
 import {Report} from "../../../shared/models/Generated";
 import ReactTable, {
     Column, Filter, FilterRender, ReactTableFunction, RowRenderProps,
-    TableCellRenderer
 } from 'react-table'
-import {longDate} from "../../../shared/Helpers";
-import {InternalLink} from "../../../shared/components/InternalLink";
-import {ReportLatestVersionFilter, VersionFilterValue} from "./ReportListDateFilter";
+import {ReportLatestVersionFilter} from "./ReportListDateFilter";
+import {
+    PublishStatusCell, PublishStatusFilter,
+    publishStatusFilterMethod
+} from "./ReportListColumns/PublishStatusColumn";
+import {
+    LatestVersion, latestVersionAccessorFunction, LatestVersionCell,
+    versionFilterMethod
+} from "./ReportListColumns/VersionColumn";
+import {nameAccessorFunction, NameCell} from "./ReportListColumns/NameColumn";
 
 export interface ReportsListComponentProps {
     reports: Report[]
     isReviewer: boolean;
 }
 
-interface ReportRowRenderProps extends RowRenderProps {
+export interface ReportRowRenderProps extends RowRenderProps {
     original: Report,
     value: string | LatestVersion | boolean;
 }
 
-interface LatestVersion {
-    version: string,
-    date: Date
-}
-
-interface ReportRowProps {
+export interface ReportRowProps {
     latest_version: LatestVersion,
     name: string,
     author: string,
@@ -42,34 +43,6 @@ export interface FilterProps<T> {
     onChange: ReactTableFunction
 }
 
-export const NameCell: React.StatelessComponent<ReportRowRenderProps> = (props: ReportRowRenderProps) => {
-
-    let name = props.value as string;
-    const report = props.original;
-
-    return <div>
-        <InternalLink href={`/${report.name}/${report.latest_version}/`}>
-            {name}
-        </InternalLink>
-    </div>
-};
-
-export const PublishStatusCell: React.StatelessComponent<ReportRowRenderProps> = (props: ReportRowRenderProps) => {
-    return props.value ?
-        <span className="ml-1 badge-published badge d-none d-sm-inline mr-2">published</span> :
-        <span className="ml-1 badge-internal badge d-none d-sm-inline mr-2">internal</span>
-};
-
-export const PublishStatusFilter = (props: FilterProps<string>) => {
-    return <select className="form-control"
-                   onChange={event => props.onChange(event.target.value)}
-                   value={props.filter ? props.filter.value : "all"}>
-        <option value="all">All</option>
-        <option value="published">Published</option>
-        <option value="internal">Internal</option>
-    </select>
-};
-
 export const TextFilter: FilterRender = (props: FilterProps<string> ) => {
 
     const value = props.filter ? props.filter.value : "";
@@ -77,47 +50,6 @@ export const TextFilter: FilterRender = (props: FilterProps<string> ) => {
     return <input type={"text"} className={"form-control mb-1 "} value={value}
                   placeholder="Type to filter..."
                   onChange={event => props.onChange(event.target.value)}/>
-};
-
-export const publishStatusFilterMethod = (filter: FilterGeneric<string>, row: ReportRowProps) => {
-    const published = row.published;
-    if (filter.value === "all") {
-        return true;
-    }
-    if (filter.value === "published") {
-        return published;
-    }
-    return !published;
-};
-
-export const versionFilterMethod = (filter: FilterGeneric<VersionFilterValue>, row: ReportRowProps) => {
-    const lastUpdatedDate = row.latest_version.date;
-    const lastVersionId = row.latest_version.version;
-
-    return lastUpdatedDate <= filter.value.end
-        && lastUpdatedDate >= filter.value.start &&
-        lastVersionId.indexOf(filter.value.versionId) > -1;
-}
-
-export const LatestVersionCell: React.StatelessComponent<ReportRowRenderProps> = (props: ReportRowRenderProps) => {
-    const value = props.value as LatestVersion;
-    return <div className="small">
-        <div>{value.version}</div>
-        <div>({longDate(value.date)})</div>
-    </div>
-};
-
-export const latestVersionAccessorFunction = (data: Report): LatestVersion => {
-    return {version: data.latest_version, date: new Date(data.updated_on)}
-};
-
-export const nameAccessorFunction = (data: Report) => {
-
-    let name = data.name;
-    if (data.display_name) {
-        name = data.display_name + ` (${name})`
-    }
-    return name
 };
 
 export const ReportsListComponent: React.StatelessComponent<ReportsListComponentProps>

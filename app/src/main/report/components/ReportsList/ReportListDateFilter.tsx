@@ -1,54 +1,11 @@
 import * as React from "react";
 
-import {CalendarIcon} from "./Calendar";
-import {DatePicker} from "../../../shared/components/DatePicker/DatePicker";
-import {FilterRender} from "react-table";
 import {FilterProps} from "./ReportsListComponent";
+import {ChangeEvent} from "react";
+import {DateRangePicker} from "../../../shared/components/DatePicker/DateRangePicker";
 
-interface ReportsListFilterProps {
-    filter: { start: Date, end: Date },
-    timeFromSelected: (date: Date) => void;
-    timeUntilSelected: (date: Date) => void;
-}
-
-const fromMonth = new Date("2017-03-01T00:00:00");
-const toMonth = new Date;
-
-export const ReportListDateFilter: React.StatelessComponent<ReportsListFilterProps> = (props: ReportsListFilterProps) => (
-    <div className="report-date-filters">
-        <div className="d-inline-block date-filter">
-            <div className="input-group">
-                <div className="input-group-prepend">
-                <span className="input-group-text">
-                    <CalendarIcon/>
-                </span>
-                </div>
-                <DatePicker
-                    onChange={props.timeFromSelected}
-                    value={props.filter.start ? new Date(props.filter.start) : fromMonth}
-                    fromMonth={fromMonth}
-                    toMonth={toMonth}
-                />
-            </div>
-        </div>
-        <span> to </span>
-        <div className="d-inline-block date-filter">
-            <div className="input-group picker-on-right">
-                <div className="input-group-prepend">
-                <span className="input-group-text">
-                    <CalendarIcon/>
-                </span>
-                </div>
-                <DatePicker
-                    onChange={props.timeUntilSelected}
-                    value={props.filter.end ? new Date(props.filter.end) : toMonth}
-                    fromMonth={fromMonth}
-                    toMonth={toMonth}
-                />
-            </div>
-        </div>
-    </div>
-);
+const startDate = new Date("2017-03-01T00:00:00");
+const endDate = new Date;
 
 export interface VersionFilterValue {
     start: Date,
@@ -59,27 +16,45 @@ export interface VersionFilterValue {
 export const ReportLatestVersionFilter = (props: FilterProps<VersionFilterValue>) => {
 
     const value = props.filter ? props.filter.value : {
-        start: new Date("2017-03-01T00:00:00"),
-        end: new Date(), versionId: ""
+        start: startDate,
+        end: endDate,
+        versionId: ""
+    };
+
+    const onTextChange = (event: ChangeEvent<HTMLInputElement>) => {
+        props.onChange({
+            end: value.end,
+            start: value.start,
+            versionId: event.target.value
+        })
+    };
+
+    const onStartDateChange = (date: Date) => {
+        props.onChange({
+            end: value.end,
+            start: date,
+            versionId: value.versionId
+        })
+    };
+
+    const onEndDateChange = (date: Date) => {
+        props.onChange({
+            end: date,
+            start: value.start,
+            versionId: value.versionId
+        })
     };
 
     return <div>
         <input type={"text"} className={"form-control mb-1 "}
                value={value.versionId}
                placeholder="Type to filter by id..."
-               onChange={event => props.onChange({
-                   end: value.end,
-                   start: value.start,
-                   versionId: event.target.value
-               })}/>
-        <ReportListDateFilter filter={value}
-                              timeFromSelected={(date: Date) => props.onChange({
-                                  start: date, end: value.end,
-                                  versionId: value.versionId
-                              })}
-                              timeUntilSelected={(date: Date) => props.onChange({
-                                  end: date, start: value.start,
-                                  versionId: value.versionId
-                              })}/>
+               onChange={onTextChange}/>
+
+        <DateRangePicker value={{end: value.end, start: value.start}}
+                         startDate={startDate}
+                         endDate={endDate}
+                         timeFromSelected={onStartDateChange}
+                         timeUntilSelected={onEndDateChange}/>
     </div>
-}
+};
