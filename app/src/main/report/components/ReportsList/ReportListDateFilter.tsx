@@ -50,7 +50,13 @@ export const ReportListDateFilter: React.StatelessComponent<ReportsListFilterPro
     </div>
 );
 
-export const ReportLatestVersionFilter: FilterRender = (props: FilterProps) => {
+export interface VersionFilterValue {
+    start: Date,
+    end: Date,
+    versionId: string
+}
+
+export const ReportLatestVersionFilter = (props: FilterProps<VersionFilterValue>) => {
 
     const value = props.filter ? props.filter.value : {
         start: new Date("2017-03-01T00:00:00"),

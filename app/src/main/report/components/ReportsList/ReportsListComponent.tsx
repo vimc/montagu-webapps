@@ -14,7 +14,7 @@ export interface ReportsListComponentProps {
 }
 
 interface ReportRowRenderProps extends RowRenderProps {
-    original: Report
+    original: Report,
     value: string | LatestVersion | boolean;
 }
 
@@ -33,18 +33,21 @@ interface ReportRowProps {
     [key: string]: string | boolean | LatestVersion
 }
 
-export interface FilterProps {
-    column: Column,
-    filter?: Filter,
+export interface FilterGeneric<T> extends Filter {
+    value: T
+}
+
+export interface FilterProps<T> {
+    filter?: FilterGeneric<T>,
     onChange: ReactTableFunction
 }
 
-const nameCellRenderer: TableCellRenderer = (props: ReportRowRenderProps) => {
+export const NameCell: React.StatelessComponent<ReportRowRenderProps> = (props: ReportRowRenderProps) => {
 
     let name = props.value as string;
     const report = props.original;
     if (report.display_name) {
-        name = report.display_name + ` (${report.name})`
+        name = report.display_name + ` (${name})`
     }
     return <div>
         <InternalLink href={`/${report.name}/${report.latest_version}/`}>
@@ -53,7 +56,7 @@ const nameCellRenderer: TableCellRenderer = (props: ReportRowRenderProps) => {
     </div>
 };
 
-const latestVersionCellRenderer = (props: ReportRowRenderProps) => {
+export const LatestVersionCell: React.StatelessComponent<ReportRowRenderProps> = (props: ReportRowRenderProps) => {
     const value = props.value as LatestVersion;
     return <div className="small">
         <div>{value.version}</div>
@@ -61,13 +64,13 @@ const latestVersionCellRenderer = (props: ReportRowRenderProps) => {
     </div>
 };
 
-const publishStatusCellRenderer = (props: ReportRowRenderProps) => {
+export const PublishStatusCell: React.StatelessComponent<ReportRowRenderProps> = (props: ReportRowRenderProps) => {
     return props.value ?
         <span className="ml-1 badge-published badge d-none d-sm-inline mr-2">published</span> :
         <span className="ml-1 badge-internal badge d-none d-sm-inline mr-2">internal</span>
 };
 
-const PublishStatusFilter = (props: FilterProps) => {
+export const PublishStatusFilter = (props: FilterProps<string>) => {
     return <select className="form-control"
                    onChange={event => props.onChange(event.target.value)}
                    value={props.filter ? props.filter.value : "all"}>
@@ -77,7 +80,7 @@ const PublishStatusFilter = (props: FilterProps) => {
     </select>
 };
 
-const TextFilter: FilterRender = (props: FilterProps) => {
+export const TextFilter: FilterRender = (props: FilterProps<string> ) => {
 
     const value = props.filter ? props.filter.value : "";
 
@@ -86,7 +89,7 @@ const TextFilter: FilterRender = (props: FilterProps) => {
                   onChange={event => props.onChange(event.target.value)}/>
 };
 
-const publishStatusFilterMethod = (filter: Filter, row: ReportRowProps) => {
+export const publishStatusFilterMethod = (filter: FilterGeneric<string>, row: ReportRowProps) => {
     const published = row.published;
     if (filter.value === "all") {
         return true;
@@ -97,7 +100,7 @@ const publishStatusFilterMethod = (filter: Filter, row: ReportRowProps) => {
     return !published;
 };
 
-const versionFilter = (filter: Filter, row: ReportRowProps) => {
+export const versionFilterMethod = (filter: Filter, row: ReportRowProps) => {
     const lastUpdatedDate = row.latest_version.date;
     const lastVersionId = row.latest_version.version;
 
@@ -106,7 +109,7 @@ const versionFilter = (filter: Filter, row: ReportRowProps) => {
         lastVersionId.indexOf(filter.value.versionId) > -1;
 };
 
-const latestVersionAccessorFunction = (data: Report): LatestVersion => {
+export const latestVersionAccessorFunction = (data: Report): LatestVersion => {
     return {version: data.latest_version, date: new Date(data.updated_on)}
 };
 
@@ -119,7 +122,7 @@ export const ReportsListComponent: React.StatelessComponent<ReportsListComponent
         [{
             Header: "Name",
             accessor: "name",
-            Cell: nameCellRenderer,
+            Cell: NameCell,
             Filter: TextFilter
         },
             {
@@ -127,8 +130,8 @@ export const ReportsListComponent: React.StatelessComponent<ReportsListComponent
                 id: "latest_version",
                 width: 340,
                 accessor: latestVersionAccessorFunction,
-                Cell: latestVersionCellRenderer,
-                filterMethod: versionFilter,
+                Cell: LatestVersionCell,
+                filterMethod: versionFilterMethod,
                 Filter: ReportLatestVersionFilter
             },
             {
@@ -150,7 +153,7 @@ export const ReportsListComponent: React.StatelessComponent<ReportsListComponent
             accessor: "published",
             id: "published",
             width: 110,
-            Cell: publishStatusCellRenderer,
+            Cell: PublishStatusCell,
             filterMethod: publishStatusFilterMethod,
             Filter: PublishStatusFilter
         })
