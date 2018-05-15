@@ -5,7 +5,7 @@ import {shallow} from "enzyme";
 import {mockReport} from "../../../mocks/mockModels";
 import {
     latestVersionAccessorFunction,
-    LatestVersionCell,
+    LatestVersionCell, nameAccessorFunction,
     NameCell, PublishStatusCell, PublishStatusFilter, publishStatusFilterMethod,
     ReportsListComponent, versionFilterMethod
 } from "../../../../main/report/components/ReportsList/ReportsListComponent";
@@ -29,20 +29,23 @@ describe("ReportListComponent", () => {
     describe("NameColumn", () => {
 
         it("renders name if no display name", function () {
-            const result = shallow(<NameCell original={mockReport({display_name: null})} value={"name"}/>);
-            expect(result.find(InternalLink).childAt(0).text()).to.eq("name");
+            const result = nameAccessorFunction(mockReport({name: "name", display_name: null}));
+            expect(result).to.eq("name");
         });
 
         it("renders display name if it exists, with name in brackets", function () {
-            const result = shallow(<NameCell original={mockReport({display_name: "display name"})} value={"name"}/>);
-            expect(result.find(InternalLink).childAt(0).text()).to.eq("display name (name)");
+            const result = nameAccessorFunction(mockReport({name: "name", display_name: "display name"}));
+            expect(result).to.eq("display name (name)");
         });
 
         it("renders link to report", function () {
             const result = shallow(<NameCell original={mockReport({name: "report_name", latest_version: "1234"})}
-                                             value={"name"}/>);
+                                             value={"display name"}/>);
+
+            expect(result.find(InternalLink).childAt(0).text()).to.eq("display name");
             expect(result.find(InternalLink).prop("href")).to.eq("/report_name/1234/");
         });
+
     });
 
     describe("LatestVersionColumn", () => {
