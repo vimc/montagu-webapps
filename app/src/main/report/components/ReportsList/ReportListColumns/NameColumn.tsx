@@ -3,7 +3,7 @@ import {InternalLink} from "../../../../shared/components/InternalLink";
 import {ReportRowRenderProps} from "../ReportsListComponent";
 import {Report} from "../../../../shared/models/Generated";
 
-export const NameCell: React.StatelessComponent<ReportRowRenderProps> = (props: ReportRowRenderProps) => {
+export const NameCell: React.SFC<ReportRowRenderProps> = (props: ReportRowRenderProps) => {
 
     let name = props.value as string;
     const report = props.original;
