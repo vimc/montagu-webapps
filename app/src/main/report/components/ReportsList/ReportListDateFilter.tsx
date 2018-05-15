@@ -2,6 +2,8 @@ import * as React from "react";
 
 import {CalendarIcon} from "./Calendar";
 import {DatePicker} from "../../../shared/components/DatePicker/DatePicker";
+import {FilterRender} from "react-table";
+import {FilterProps} from "./ReportsListComponent";
 
 interface ReportsListFilterProps {
     filter: { start: Date, end: Date },
@@ -47,3 +49,31 @@ export const ReportListDateFilter: React.StatelessComponent<ReportsListFilterPro
         </div>
     </div>
 );
+
+export const ReportLatestVersionFilter: FilterRender = (props: FilterProps) => {
+
+    const value = props.filter ? props.filter.value : {
+        start: new Date("2017-03-01T00:00:00"),
+        end: new Date(), versionId: ""
+    };
+
+    return <div>
+        <input type={"text"} className={"form-control mb-1 "}
+               value={value.versionId}
+               placeholder="Type to filter by id..."
+               onChange={event => props.onChange({
+                   end: value.end,
+                   start: value.start,
+                   versionId: event.target.value
+               })}/>
+        <ReportListDateFilter filter={value}
+                              timeFromSelected={(date: Date) => props.onChange({
+                                  start: date, end: value.end,
+                                  versionId: value.versionId
+                              })}
+                              timeUntilSelected={(date: Date) => props.onChange({
+                                  end: date, start: value.start,
+                                  versionId: value.versionId
+                              })}/>
+    </div>
+}
