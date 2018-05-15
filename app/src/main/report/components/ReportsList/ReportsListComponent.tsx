@@ -113,6 +113,8 @@ const latestVersionAccessorFunction = (data: Report): LatestVersion => {
 export const ReportsListComponent: React.StatelessComponent<ReportsListComponentProps>
     = (props: ReportsListComponentProps) => {
 
+    // Note: if these column headers change, you must also change ./styles/report-table.scss
+    // where the headers are hard-coded for small devices
     const columns: Column[] =
         [{
             Header: "Name",
@@ -142,7 +144,7 @@ export const ReportsListComponent: React.StatelessComponent<ReportsListComponent
 
         ];
 
-    if (props.isReviewer){
+    if (props.isReviewer) {
         columns.push({
             Header: "Status",
             accessor: "published",
@@ -154,11 +156,16 @@ export const ReportsListComponent: React.StatelessComponent<ReportsListComponent
         })
     }
 
-    return <ReactTable
-        defaultFilterMethod={(filter: Filter, row: ReportRowProps) =>
-            String(row[filter.id]).toLowerCase().indexOf(filter.value.toLowerCase()) > -1}
-        filterable
-        className="-striped -highlight"
-        data={props.reports}
-        columns={columns}/>;
+    return <div>
+        <h5 className="mb-5">
+            Click on a column heading to sort reports by that field
+        </h5>
+        <ReactTable
+            defaultFilterMethod={(filter: Filter, row: ReportRowProps) =>
+                String(row[filter.id]).toLowerCase().indexOf(filter.value.toLowerCase()) > -1}
+            filterable
+            className="-striped -highlight responsive"
+            data={props.reports}
+            columns={columns}/>
+    </div>;
 };

@@ -14,7 +14,7 @@ $montagu-breadcrumb-color: $success;
 
 @import "../shared/styles/common";
 @import "./styles/sidebar";
-@import "./styles/reportsFilter";
+@import "./styles/report-table.scss";
 
 .download-icon {
   vertical-align: sub;
@@ -30,30 +30,4 @@ $montagu-breadcrumb-color: $success;
 .badge-internal {
   background-color: $internal-color;
   color: white;
-}
-
-.list-caret {
-
-  li {
-    list-style-type: none;
-    position: relative;
-    padding-left: 15px;
-  }
-
-  li:before {
-    content: "\25BA \0020";
-    font-size: 6px;
-    position: absolute;
-    top: 5px;
-    left: -10px;
-  }
-}
-
-.badge-report {
-  font-weight: normal !important;
-  background-color: $gray-200;
-}
-
-.rt-th{
-  overflow: visible !important;
 }

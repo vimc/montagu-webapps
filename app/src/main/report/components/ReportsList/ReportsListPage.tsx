@@ -20,8 +20,12 @@ export class ReportsListPageComponent extends React.Component<PageProperties<und
     }
 
     render() :JSX.Element {
-        return <div className="page container pt-5">
-            <ReportsList/>
+        return <div className="page container-fluid pt-5">
+            <div className="row">
+                <div className="col-12 col-lg-10 offset-lg-1">
+                    <ReportsList/>
+                </div>
+            </div>
         </div>
     }
 }
