@@ -2,7 +2,6 @@ import {reportsReducer, ReportsState} from "../../../main/report/reducers/report
 import {mockReportsState} from "../../mocks/mockStates";
 import {mockReport, mockVersion} from "../../mocks/mockModels";
 import {
-    ReportsFilterPublishTypes, ReportsSortingFields,
     ReportTypeKeys
 } from "../../../main/report/actionTypes/ReportsActionsTypes";
 import {expect} from "chai";
@@ -62,40 +61,6 @@ describe('Reports reducer tests', () => {
         const versionMock = mockVersion();
         const newState: ReportsState = reportsReducer(undefined, { type: ReportTypeKeys.REPORT_VERSION_DETAILS_FETCHED, data: versionMock });
         expect(newState.versionDetails).to.eql(versionMock);
-    });
-
-    it('sorts reports list by name', () => {
-        const newState: ReportsState = reportsReducer(undefined, { type: ReportTypeKeys.SORT_REPORTS, data: ReportsSortingFields.name });
-        expect(newState.reportsSortBy).to.eql(ReportsSortingFields.name);
-    });
-
-    it('sorts reports list by latest version', () => {
-        const newState: ReportsState = reportsReducer(undefined, { type: ReportTypeKeys.SORT_REPORTS, data: ReportsSortingFields.latest_version });
-        expect(newState.reportsSortBy).to.eql(ReportsSortingFields.latest_version);
-    });
-
-    it('sets reports filter prop by published', () => {
-        const newState: ReportsState = reportsReducer(undefined, {
-            type: ReportTypeKeys.FILTER_REPORTS,
-            data: { published: ReportsFilterPublishTypes.published }
-        });
-        expect(newState.reportsFilter).to.eql({
-            published: "published",
-            timeFrom: null,
-            timeUntil: null
-        });
-    });
-
-    it('sets reports filter prop by timeFrom', () => {
-        const newState: ReportsState = reportsReducer(undefined, {
-            type: ReportTypeKeys.FILTER_REPORTS,
-            data: { timeFrom: "test_time" }
-        });
-        expect(newState.reportsFilter).to.eql({
-            published: "all",
-            timeFrom: "test_time",
-            timeUntil: null
-        });
     });
 
 });

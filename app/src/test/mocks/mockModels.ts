@@ -173,7 +173,11 @@ export function mockReport(properties?: Partial<Report>): Report {
     const template: Report = {
         name: "report",
         display_name: "display name",
-        latest_version: "e62871eydhsjkh"
+        latest_version: "e62871eydhsjkh",
+        author: "Dr Author",
+        requester: "Funder McFunderson",
+        published: false,
+        updated_on: new Date().toDateString()
     };
 
     return Object.assign(template, properties);
