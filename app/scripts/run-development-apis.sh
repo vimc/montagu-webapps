@@ -20,6 +20,12 @@ docker run --rm --network=montagu_default $image
 # Add test accounts
 $here/add-test-accounts-for-integration-tests.sh
 
+# Generate a root token for bypassing login
+echo "Root token: "
+docker run --rm \
+    -v $TOKEN_KEY_PATH:/etc/montagu/api/token_key \
+    $registry/montagu-api:$MONTAGU_API_VERSION \
+    generate-token */can-login */reports.read */reports.review
 
 # Wait for Ctrl+C
 echo "Ready to use. Press Ctrl+C to teardown."

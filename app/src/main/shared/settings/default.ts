@@ -19,5 +19,6 @@ export const settings: Settings = {
     report: {
         publicPath: "/reports",
         requiresModellingGroupMembership: false
-    }
+    },
+    rootToken: "[Fill in with value from ./scripts/run-development-apis.sh]"
 };
