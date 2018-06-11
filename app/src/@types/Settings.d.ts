@@ -11,6 +11,7 @@ interface Settings {
     admin: AdminSettings;
     contrib: ContribSettings;
     report: ReportSettings;
+    rootToken: String;
 }
 
 interface AppSpecificSettings {

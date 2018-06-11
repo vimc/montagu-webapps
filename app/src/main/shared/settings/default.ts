@@ -19,5 +19,6 @@ export const settings: Settings = {
     report: {
         publicPath: "/reports",
         requiresModellingGroupMembership: false
-    }
+    },
+    rootToken: "_ROOT_TOKEN_GOES_HERE_"
 };

@@ -1,7 +1,6 @@
 import * as React from "react";
 import { InternalLink } from "../InternalLink";
 import {NavBar} from "../NavBar/NavBar";
-import { LoggedInUserBox } from "../Login/LoggedInUserBox";
 
 interface HeaderProps {
     siteTitle: string;
@@ -19,7 +18,6 @@ export class PageHeader extends React.Component<HeaderProps, undefined> {
                         {this.props.siteTitle}
                     </InternalLink>
                 </div>
-                <LoggedInUserBox />
             </header>
             <NavBar />
         </div>

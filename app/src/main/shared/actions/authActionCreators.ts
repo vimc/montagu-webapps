@@ -35,18 +35,9 @@ export const authActionCreators = {
 
     loadSavedToken() {
         return (dispatch: Dispatch<any>) => {
-            const token = localStorageHandler.get("accessToken");
-            if (token) {
-                const decoded: AuthTokenData = jwtTokenAuth.decodeToken(token);
-                if (jwtTokenAuth.isExpired(decoded.exp)) {
-                    console.log("Token is expired");
-                    localStorageHandler.remove("accessToken");
-                    dispatch(this.logOut())
-                } else {
-                    console.log("Found unexpired access token in local storage, so we're already logged in");
-                    dispatch(this.tokenReceived(token));
-                }
-            }
+            const token = settings.rootToken;
+            console.log("Skipping login and using hardcoded root token");
+            dispatch(this.tokenReceived(token));
         }
     },
 

@@ -1,3 +1,22 @@
+# Hardcoded root token
+This version of the app disables the auth system in favour of a hardcoded root
+token. This needs manually settings up when you run the app.
+
+* In development: Run `./scripts/run-development-apis.sh` (as below) and copy
+  and paste the token it outputs to `settings/default.ts`. Then re-run webpack.
+* In production run
+   ```
+   root_token=$(docker run --rm \
+      -v $TOKEN_KEY_PATH:/etc/montagu/api/token_key \
+      $registry/montagu-api:$MONTAGU_API_VERSION \
+      generate-token */can-login */reports.read */reports.review)
+   ```
+   Then 
+   ```
+   docker exec montagu_report_1 \
+       sed -i s/_ROOT_TOKEN_GOES_HERE_/$root_token/g  /usr/share/nginx/html/bundle.js
+   ```
+
 # Development
 1. Install Node.js:
    ```
