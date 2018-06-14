@@ -13,7 +13,7 @@ import {Responsibilities} from "../../shared/models/Generated";
 export const responsibilitiesActionCreators = {
 
     clearCacheForResponsibilitySet() {
-        return async (dispatch: Dispatch<ContribAppState>, getState: () => ContribAppState) => {
+        return (dispatch: Dispatch<ContribAppState>, getState: () => ContribAppState) => {
 
             const group = getState().groups.currentUserGroup;
             const touchstone = getState().touchstones.currentTouchstoneVersion;
@@ -41,7 +41,7 @@ export const responsibilitiesActionCreators = {
     },
 
     setCurrentResponsibility(scenarioId: string ) {
-        return async (dispatch: Dispatch<ContribAppState>, getState: () => ContribAppState) => {
+        return (dispatch: Dispatch<ContribAppState>, getState: () => ContribAppState) => {
             const set = getState().responsibilities.responsibilitiesSet;
             const responsibility = set ? set.responsibilities.find((item: ExtendedResponsibility) => item.scenario.id === scenarioId) : null;
             dispatch({
