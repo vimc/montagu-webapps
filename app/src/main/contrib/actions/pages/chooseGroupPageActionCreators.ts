@@ -15,8 +15,9 @@ export const chooseGroupPageActionCreators = {
     },
 
     loadData() {
-        return async (dispatch: Dispatch<ContribAppState>) => {
+        return async (dispatch: Dispatch<ContribAppState>, getState: () => ContribAppState) => {
             await dispatch(modellingGroupsActionCreators.getUserGroups());
+            console.log("Fetched user groups: " + JSON.stringify(getState().groups.userGroups));
         }
     }
 

@@ -17,10 +17,12 @@ export const chooseActionPageActionCreators = {
     },
 
     loadData(props: ChooseActionPageLocationProps) {
-        return async (dispatch: Dispatch<ContribAppState>) => {
+        return async (dispatch: Dispatch<ContribAppState>, getState: () => ContribAppState) => {
             await dispatch(chooseGroupPageActionCreators.loadData());
             dispatch(modellingGroupsActionCreators.setCurrentGroup(props.groupId));
+            console.log("Set current group: " + JSON.stringify(getState().groups.currentUserGroup));
             await dispatch(touchstonesActionCreators.getTouchstonesByGroupId(props.groupId));
+            console.log("Fetched touchstones for group (i.e. responsibilities): " + JSON.stringify(getState().touchstones.touchstones));
         }
     }
 

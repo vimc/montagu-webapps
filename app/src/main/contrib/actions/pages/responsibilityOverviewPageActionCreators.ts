@@ -22,11 +22,14 @@ export const responsibilityOverviewPageActionCreators = {
     },
 
     loadData(props: ResponsibilityOverviewPageLocationProps) {
-        return async (dispatch: Dispatch<ContribAppState>) => {
+        return async (dispatch: Dispatch<ContribAppState>, getState: () => ContribAppState) => {
             await dispatch(chooseActionPageActionCreators.loadData(props));
             await dispatch(diseasesActionCreators.getAllDiseases());
+            console.log("Fetched diseases: " + JSON.stringify(getState().diseases.diseases));
             dispatch(touchstonesActionCreators.setCurrentTouchstoneVersion(props.touchstoneId));
+            console.log("Set current touchstone version: " + JSON.stringify(getState().touchstones.currentTouchstoneVersion));
             await dispatch(responsibilitiesActionCreators.getResponsibilitySet());
+            console.log("Fetched responsibilities: " + JSON.stringify(getState().responsibilities.responsibilitiesSet));
         }
     }
 
