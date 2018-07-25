@@ -7,9 +7,10 @@ import {chooseGroupPageActionCreators} from "../../actions/pages/chooseGroupPage
 import {ContribPage} from "../../ContribPage";
 
 export class ChooseGroupPageComponent extends React.Component<PageProperties<undefined>> {
-
     static title: string = "Modellers' contribution portal";
 
+    // TODO: This is still here for the old action creators - to be removed when
+    // they are all switched to ContribPageActionCreators
     static breadcrumb() : PageBreadcrumb {
         return {
             name: ChooseGroupPageComponent.title,

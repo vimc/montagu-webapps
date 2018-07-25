@@ -1,13 +1,11 @@
 import * as React from "react";
-import { Dispatch } from "redux";
-import { compose } from "recompose";
-import { connect } from 'react-redux';
 
-import { ChooseActionContent } from "./ChooseActionContent";
+import {ChooseActionContent} from "./ChooseActionContent";
 import {ChooseGroupPageComponent} from "../ChooseGroup/ChooseGroupPage";
 import {PageBreadcrumb, PageProperties} from "../../../shared/components/PageWithHeader/PageWithHeader";
 import {ContribAppState} from "../../reducers/contribAppReducers";
 import {PageArticle} from "../../../shared/components/PageWithHeader/PageArticle";
+import {ContribPage} from "../../ContribPage";
 import {chooseActionPageActionCreators} from "../../actions/pages/chooseActionPageActionCreators";
 
 export interface ChooseActionPageLocationProps {
@@ -15,10 +13,8 @@ export interface ChooseActionPageLocationProps {
 }
 
 export class ChooseActionPageComponent extends React.Component<PageProperties<ChooseActionPageLocationProps>> {
-    componentDidMount() {
-        this.props.onLoad(this.props.match.params)
-    }
-
+    // TODO: This is still here for the old action creators - to be removed when
+    // they are all switched to ContribPageActionCreators
     static breadcrumb(state: ContribAppState): PageBreadcrumb {
         return {
             name: state.groups.currentUserGroup.description,
@@ -34,12 +30,4 @@ export class ChooseActionPageComponent extends React.Component<PageProperties<Ch
     }
 }
 
-export const mapDispatchToProps = (dispatch: Dispatch<ContribAppState>): Partial<PageProperties<ChooseActionPageLocationProps>> => {
-    return {
-        onLoad: (params: ChooseActionPageLocationProps) => dispatch(chooseActionPageActionCreators.onLoad(params))
-    }
-};
-
-export const ChooseActionPage = compose(
-    connect(state => state, mapDispatchToProps)
-)(ChooseActionPageComponent) as React.ComponentClass<Partial<PageProperties<ChooseActionPageLocationProps>>>;
+export const ChooseActionPage = ContribPage(chooseActionPageActionCreators)(ChooseActionPageComponent);
