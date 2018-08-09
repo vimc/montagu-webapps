@@ -4,7 +4,7 @@ import {compose} from "recompose";
 import {validations} from "../../../../shared/modules/reduxForm";
 import {ReduxFormInput, ReduxFormTextArea} from "../../../../shared/components/ReduxForm/ReduxFormField";
 import {
-    ReduxFormValidationErrors
+    FormValidationErrors
 } from "../../../../shared/components/ReduxForm/ReduxFormValidationError";
 import {AdminAppState} from "../../../reducers/adminAppReducers";
 import {ReduxFormProps} from "../../../../shared/components/ReduxForm/types";
@@ -64,7 +64,7 @@ export class CreateTouchstoneFormComponent
                 </tbody>
             </table>
 
-            <ReduxFormValidationErrors errors={this.props.errors}/>
+            <FormValidationErrors errors={this.props.errors}/>
             <button type="submit">Create touchstone</button>
         </form>
     }

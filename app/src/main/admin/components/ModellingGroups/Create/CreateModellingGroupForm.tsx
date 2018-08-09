@@ -5,7 +5,7 @@ import {compose} from "recompose";
 import {validations} from "../../../../shared/modules/reduxForm";
 import {ReduxFormInput} from "../../../../shared/components/ReduxForm/ReduxFormField";
 import {
-    ReduxFormValidationErrors
+    FormValidationErrors
 } from "../../../../shared/components/ReduxForm/ReduxFormValidationError";
 import {AdminAppState} from "../../../reducers/adminAppReducers";
 import {modellingGroupsActionCreators} from "../../../actions/modellingGroupsActionCreators";
@@ -104,7 +104,7 @@ export class CreateModellingGroupFormComponent
                 </tbody>
             </table>
 
-            <ReduxFormValidationErrors errors={this.props.errors}/>
+            <FormValidationErrors errors={this.props.errors}/>
             <button type="submit">Create group</button>
         </form>
     }

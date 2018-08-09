@@ -10,7 +10,7 @@ import {usersActionCreators} from "../../../actions/usersActionCreators";
 import {Field, reduxForm} from "redux-form";
 import {montaguForm} from "../../../../shared/components/ReduxForm/MontaguForm";
 import {ReduxFormProps} from "../../../../shared/components/ReduxForm/types";
-import {ReduxFormValidationErrors} from "../../../../shared/components/ReduxForm/ReduxFormValidationError";
+import {FormValidationErrors} from "../../../../shared/components/ReduxForm/ReduxFormValidationError";
 
 interface Fields {
     newPassword: string;
@@ -39,7 +39,7 @@ export class SetPasswordFormComponent extends React.Component<InternalProps, und
                 />
             </div>
             <button type="submit">Update</button>
-            <div><ReduxFormValidationErrors errors={this.props.errors}/></div>
+            <div><FormValidationErrors errors={this.props.errors}/></div>
         </form>;
     }
 }

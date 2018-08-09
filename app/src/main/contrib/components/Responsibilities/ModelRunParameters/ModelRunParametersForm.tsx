@@ -7,21 +7,20 @@ import {Alert} from "reactstrap";
 import {CustomFileInput} from "../../../../shared/components/CustomFileInput";
 import {runParametersActionCreators} from "../../../actions/runParametersActionCreators";
 import {ContribAppState} from "../../../reducers/contribAppReducers";
-import {RunParametersUploadStatus} from "../../../actionTypes/RunParametersTypes";
+import {ValidationError} from "../../../../shared/components/Login/ValidationError";
+import {ErrorInfo} from "../../../../shared/models/Generated";
+import {FormValidationErrors} from "../../../../shared/components/ReduxForm/ReduxFormValidationError";
 
 export interface ModelRunParametersFormProps {
     disease: string;
-    errors: Error[];
-    status: RunParametersUploadStatus;
+    errors: ErrorInfo[];
     uploadSet: (data: FormData) => void;
-    resetUploadStatus: () => void;
+    uploading: boolean;
+    success: boolean;
 }
 
 export interface ModelRunParametersFormState {
     fileInputKey: Date;
-    errors: Error[];
-    success: boolean;
-    disabled: boolean;
 }
 
 export class ModelRunParametersFormComponent extends React.Component<ModelRunParametersFormProps, ModelRunParametersFormState> {
@@ -29,42 +28,16 @@ export class ModelRunParametersFormComponent extends React.Component<ModelRunPar
     constructor() {
         super();
         this.state = {
-            fileInputKey: new Date(),
-            errors: [],
-            success: false,
-            disabled: false,
-        }
+            fileInputKey: new Date()
+        };
         this.resetForm = this.resetForm.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
-        this.onChange = this.onChange.bind(this);
     }
 
     componentWillReceiveProps(nextProps: ModelRunParametersFormProps) {
-        if (this.props.status !== nextProps.status && nextProps.status === RunParametersUploadStatus.completed) {
-            this.setState({disabled: false});
-            if (nextProps.errors) {
-                this.setState({
-                    success: false,
-                    errors: nextProps.errors,
-                    disabled: false
-                });
-            } else {
-                this.setState({
-                    success: true,
-                    errors: [],
-                    disabled: false
-                });
-            }
-            this.props.resetUploadStatus();
+        if (!nextProps.uploading) {
             this.resetForm();
         }
-    }
-
-    onChange() {
-        this.setState({
-            success: false,
-            errors: []
-        });
     }
 
     resetForm() {
@@ -79,11 +52,6 @@ export class ModelRunParametersFormComponent extends React.Component<ModelRunPar
         e.preventDefault();
         const form = e.target as HTMLFormElement;
         const data = new FormData(form);
-        this.setState({
-            disabled: true,
-            success: false,
-            errors: []
-        });
         this.props.uploadSet(data);
     }
 
@@ -92,22 +60,17 @@ export class ModelRunParametersFormComponent extends React.Component<ModelRunPar
             <h4>Upload a new set of parameters:</h4>
             <form encType="multipart/form-data"
                   onSubmit={this.onSubmit}
-                  onChange={this.onChange}
                   noValidate
             >
                 <input type={"hidden"} name={"disease"} value={this.props.disease}/>
                 <CustomFileInput required={true} key={this.state.fileInputKey.toISOString()}>
                     Choose file
                 </CustomFileInput>
-                <Alert color="danger" isOpen={this.state.errors.length > 0}>
-                    {this.state.errors[0] && this.state.errors[0].message}
-                </Alert>
-                <Alert color="success" isOpen={this.state.success}
-                       toggle={this.onChange}
-                >
+                <FormValidationErrors errors={this.props.errors}/>
+                <Alert color="success" isOpen={this.props.success}>
                     Success! You have uploaded a new parameter set
                 </Alert>
-                <button type="submit" className="mt-2" disabled={this.state.disabled}>
+                <button type="submit" className="mt-2" disabled={this.props.uploading}>
                     Upload
                 </button>
             </form>
@@ -118,15 +81,15 @@ export class ModelRunParametersFormComponent extends React.Component<ModelRunPar
 export const mapStateToProps = (state: ContribAppState, props: Partial<ModelRunParametersFormProps>): Partial<ModelRunParametersFormProps> => {
     return {
         disease: props.disease,
-        errors: state.runParameters.uploadStatus.errors,
-        status: state.runParameters.uploadStatus.status
+        errors: state.runParameters.errors,
+        uploading: state.runParameters.uploading,
+        success: state.runParameters.success
     }
 };
 
 export const mapDispatchToProps = (dispatch: Dispatch<ContribAppState>): Partial<ModelRunParametersFormProps> => {
     return {
-        uploadSet: (data: FormData) => dispatch(runParametersActionCreators.uploadSet(data)),
-        resetUploadStatus: () => dispatch(runParametersActionCreators.resetUploadStatus())
+        uploadSet: (data: FormData) => dispatch(runParametersActionCreators.uploadSet(data))
     }
 };
 

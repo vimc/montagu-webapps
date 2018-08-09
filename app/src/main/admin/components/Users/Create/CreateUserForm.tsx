@@ -4,7 +4,7 @@ import {compose} from "recompose";
 import {validations} from "../../../../shared/modules/reduxForm";
 import {ReduxFormInput} from "../../../../shared/components/ReduxForm/ReduxFormField";
 import {
-    ReduxFormValidationErrors
+    FormValidationErrors
 } from "../../../../shared/components/ReduxForm/ReduxFormValidationError";
 import {AdminAppState} from "../../../reducers/adminAppReducers";
 import {usersActionCreators} from "../../../actions/usersActionCreators";
@@ -80,7 +80,7 @@ export class CreateUserFormComponent extends React.Component<ReduxFormProps<Crea
                 </tbody>
             </table>
 
-            <ReduxFormValidationErrors errors={this.props.errors}/>
+            <FormValidationErrors errors={this.props.errors}/>
             <button type="submit">Save user</button>
         </form>
     }

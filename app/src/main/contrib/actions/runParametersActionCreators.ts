@@ -1,12 +1,12 @@
-import { Dispatch } from "redux";
+import {Dispatch} from "redux";
 
 import {ContribAppState} from "../reducers/contribAppReducers";
 import {RunParametersService} from "../services/RunParametersService";
 import {
-    RunParametersSetsFetched, RunParametersSetUploadStatus, RunParametersTokenFetched,
-    RunParametersTypes, RunParametersUploadStatus, RunParametersUploadStatusData
+    RunParametersSetsFetched, RunParametersSetUploaded, RunParametersSetUploading, RunParametersTokenFetched,
+    RunParametersTypes, RunParametersUploadError
 } from "../actionTypes/RunParametersTypes";
-import {ModelRunParameterSet, Result} from "../../shared/models/Generated";
+import {ErrorInfo, ModelRunParameterSet, Result} from "../../shared/models/Generated";
 
 export const runParametersActionCreators = {
 
@@ -23,7 +23,7 @@ export const runParametersActionCreators = {
             return dispatch({
                 type: RunParametersTypes.RUN_PARAMETERS_SETS_FETCHED,
                 data: sets
-            } as RunParametersSetsFetched );
+            } as RunParametersSetsFetched);
         }
     },
 
@@ -46,39 +46,41 @@ export const runParametersActionCreators = {
             const group = getState().groups.currentUserGroup;
             const touchstone = getState().touchstones.currentTouchstoneVersion;
 
-            dispatch(this.clearCacheForGetParameterSets(group.id, touchstone.id))
+            dispatch(this.clearCacheForGetParameterSets(group.id, touchstone.id));
             dispatch(this.getParameterSets(group.id, touchstone.id))
         }
     },
 
     uploadSet(data: FormData) {
         return async (dispatch: Dispatch<ContribAppState>, getState: () => ContribAppState) => {
-            dispatch({
-                type: RunParametersTypes.RUN_PARAMETERS_SET_UPLOAD_STATUS,
-                data: {status: RunParametersUploadStatus.in_progress, errors: null}
-            })
 
             const group = getState().groups.currentUserGroup;
             const touchstone = getState().touchstones.currentTouchstoneVersion;
 
+            dispatch({
+                type: RunParametersTypes.RUN_PARAMETERS_SET_UPLOADING,
+                data: true
+            } as RunParametersSetUploading);
+
             const result: Result = await (new RunParametersService(dispatch, getState))
                 .uploadSet(group.id, touchstone.id, data);
 
-            dispatch({
-                type: RunParametersTypes.RUN_PARAMETERS_SET_UPLOAD_STATUS,
-                data: {status: RunParametersUploadStatus.completed, errors: result && result.errors ? result.errors : null}
-            })
-            if (result && !result.errors) {
+            if (!result || result.errors) {
+                dispatch({
+                    type: RunParametersTypes.RUN_PARAMETERS_SET_UPLOAD_ERROR,
+                    errors: result && result.errors ? result.errors : [{code: "error",
+                        message: "Something went wrong while uploading run parameters"}]
+                } as RunParametersUploadError);
+            }
+            else {
                 dispatch(this.refreshParameterSets());
+                dispatch({
+                    type: RunParametersTypes.RUN_PARAMETERS_SET_UPLOADED,
+                    data: true
+                } as RunParametersSetUploaded);
+
             }
         }
-    },
-
-    resetUploadStatus() {
-        return {
-            type: RunParametersTypes.RUN_PARAMETERS_SET_UPLOAD_STATUS,
-            data: {status: RunParametersUploadStatus.off, errors: null}
-        } as RunParametersSetUploadStatus;
     }
 
 };

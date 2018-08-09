@@ -6,7 +6,7 @@ import {SetPasswordForm} from "../../../../../main/admin/components/Users/Accoun
 import {usersActionCreators} from "../../../../../main/admin/actions/usersActionCreators";
 import {createMockAdminStore} from "../../../../mocks/mockStore";
 import {mockAdminState} from "../../../../mocks/mockStates";
-import {ReduxFormValidationErrors} from "../../../../../main/shared/components/ReduxForm/ReduxFormValidationError";
+import {FormValidationErrors} from "../../../../../main/shared/components/ReduxForm/ReduxFormValidationError";
 import {ErrorInfo} from "../../../../../main/shared/models/Generated";
 import {Provider} from "react-redux";
 
@@ -33,6 +33,6 @@ describe("SetPasswordForm", () => {
         }));
         const rendered = shallow(<SetPasswordForm resetToken="TOKEN"/>, {context: {store}})
             .dive().dive().dive().dive();
-        expect(rendered.find(ReduxFormValidationErrors).prop("errors")).to.eql([error]);
+        expect(rendered.find(FormValidationErrors).prop("errors")).to.eql([error]);
     });
 });

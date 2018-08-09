@@ -13,7 +13,7 @@ import {
     CreateTouchstoneFormComponent
 } from "../../../../../main/admin/components/Touchstones/Create/CreateTouchstoneForm";
 import {adminTouchstoneActionCreators} from "../../../../../main/admin/actions/adminTouchstoneActionCreators";
-import {ReduxFormValidationErrors} from "../../../../../main/shared/components/ReduxForm/ReduxFormValidationError";
+import {FormValidationErrors} from "../../../../../main/shared/components/ReduxForm/ReduxFormValidationError";
 
 describe("CreateTouchstoneForm", () => {
     const sandbox = new Sandbox();
@@ -72,7 +72,7 @@ describe("CreateTouchstoneForm", () => {
         }));
 
         const rendered = shallow(<CreateTouchstoneForm/>, {context: {store}}).dive().dive().dive().dive();
-        expect(rendered.find(ReduxFormValidationErrors).prop("errors")).to.have.members(errors);
+        expect(rendered.find(FormValidationErrors).prop("errors")).to.have.members(errors);
 
     });
 });

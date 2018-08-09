@@ -1,4 +1,4 @@
-import {ModelRunParameterSet} from "../../shared/models/Generated";
+import {ErrorInfo, ModelRunParameterSet} from "../../shared/models/Generated";
 
 export interface RunParametersTokenData {
     id: number,
@@ -8,7 +8,9 @@ export interface RunParametersTokenData {
 export enum RunParametersTypes {
     RUN_PARAMETERS_SETS_FETCHED = "RUN_PARAMETERS_SETS_FETCHED",
     RUN_PARAMETERS_TOKEN_FETCHED = "RUN_PARAMETERS_TOKEN_FETCHED",
-    RUN_PARAMETERS_SET_UPLOAD_STATUS = "RUN_PARAMETERS_SET_UPLOAD_STATUS",
+    RUN_PARAMETERS_SET_UPLOADING = "RUN_PARAMETERS_SET_UPLOADING",
+    RUN_PARAMETERS_SET_UPLOAD_ERROR = "RUN_PARAMETERS_UPLOAD_ERROR",
+    RUN_PARAMETERS_SET_UPLOADED = "RUN_PARAMETERS_SET_UPLOADED"
 }
 
 export interface RunParametersSetsFetched {
@@ -21,23 +23,24 @@ export interface RunParametersTokenFetched {
     data: RunParametersTokenData;
 }
 
-export enum RunParametersUploadStatus {
-    off = 'off' ,
-    in_progress = 'in_progress' ,
-    completed = 'completed'
+export interface RunParametersSetUploading {
+    type: RunParametersTypes.RUN_PARAMETERS_SET_UPLOADING;
+    data: boolean
 }
 
-export interface RunParametersUploadStatusData {
-    status: RunParametersUploadStatus,
-    errors: Error[]
+export interface RunParametersSetUploaded {
+    type: RunParametersTypes.RUN_PARAMETERS_SET_UPLOADED;
+    data: boolean
 }
 
-export interface RunParametersSetUploadStatus {
-    type: RunParametersTypes.RUN_PARAMETERS_SET_UPLOAD_STATUS;
-    data: RunParametersUploadStatusData
+export interface RunParametersUploadError {
+    type: RunParametersTypes.RUN_PARAMETERS_SET_UPLOAD_ERROR;
+    errors: ErrorInfo[]
 }
 
 export type RunParametersAction =
     | RunParametersSetsFetched
     | RunParametersTokenFetched
-    | RunParametersSetUploadStatus
+    | RunParametersSetUploading
+    | RunParametersUploadError
+    | RunParametersSetUploaded
