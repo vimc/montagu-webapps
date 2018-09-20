@@ -97,7 +97,7 @@ export class ReportsListTable extends React.Component<ReportsListTableProps, any
         const numRows = props.reports.length;
         const expanded = {} as any;
         for (let i = 0; i < numRows; i++) {
-            expanded[i] = false;
+            expanded[i] = true;
         }
 
         return expanded
@@ -149,7 +149,7 @@ export class ReportsListTable extends React.Component<ReportsListTableProps, any
                     filterMethod: aggregatedVersionFilterMethod,
                     Filter: ReportVersionFilter,
                     aggregate: getLatestVersion,
-                    Aggregated: AggregatedVersionCell
+                    Aggregated: EmptyCell
                 },
                 {
                     Header: "Author",
