@@ -11,6 +11,7 @@ import {ContribAppState} from "../../../reducers/contribAppReducers";
 import {isNullOrUndefined} from "util";
 import {settings} from "../../../../shared/Settings";
 import {InternalLink} from "../../../../shared/components/InternalLink";
+import {StackedBarChart} from "./Chart";
 
 export interface UploadBurdenEstimatesContentProps {
     touchstone: TouchstoneVersion;
@@ -55,7 +56,7 @@ export class UploadBurdenEstimatesContentComponent extends React.Component<Uploa
                             touchstoneId={this.props.touchstone.id}
                         />}
                         {settings.showNewTemplates &&
-                        <InternalLink href={newTemplatesUrl}>Download templates</InternalLink> }
+                        <InternalLink href={newTemplatesUrl}>Download templates</InternalLink>}
                     </td>
                 </tr>
                 </tbody>
@@ -66,6 +67,10 @@ export class UploadBurdenEstimatesContentComponent extends React.Component<Uploa
                     estimateSet={this.props.responsibility.current_estimate_set}
                     canUpload={this.props.canCreate}
                 />
+
+                <StackedBarChart scenarioId={this.props.scenario.id}
+                                 touchstoneVersionId={this.props.touchstone.id}
+                                 groupId={this.props.group.id}/>
 
                 <UploadBurdenEstimatesForm
                     canUpload={this.props.canUpload}
