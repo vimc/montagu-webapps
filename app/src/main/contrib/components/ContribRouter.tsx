@@ -24,6 +24,7 @@ import {ResponsibilityGuidanceKosovoPage} from "./Responsibilities/Guidance/Demo
 import {ResponsibilityGuidanceTuvaluPage} from "./Responsibilities/Guidance/Demographics/ResponsibilityGuidanceTuvaluPage";
 import {ExpectationsPage} from "./Responsibilities/Expectations/ExpectationsPage";
 import {ForgottenPasswordPage} from "../../shared/components/ForgottenPasswordPage";
+import {ChartPrototypingPage} from "./Responsibilities/BurdenEstimates/ChartPrototypingPage";
 
 interface ContribRouterProps {
     loggedIn: boolean;
@@ -38,6 +39,7 @@ export const ContribRouter : React.StatelessComponent<ContribRouterProps> = (pro
         <Route exact path="/:groupId/responsibilities/:touchstoneId" component={ResponsibilityOverviewPage}/>
         <Route exact path="/:groupId/responsibilities/:touchstoneId/coverage/:scenarioId" component={DownloadCoveragePage}/>
         <Route exact path="/:groupId/responsibilities/:touchstoneId/burdens/:scenarioId" component={UploadBurdenEstimatesPage}/>
+        <Route exact path="/:groupId/responsibilities/:touchstoneId/burdens/:scenarioId/chart/" component={ChartPrototypingPage}/>
         <Route exact path="/:groupId/responsibilities/:touchstoneId/demographics" component={DownloadDemographicsPage}/>
         <Route exact path="/:groupId/responsibilities/:touchstoneId/parameters" component={ModelRunParametersPage}/>
         <Route exact path="/:groupId/responsibilities/:touchstoneId/templates/" component={ExpectationsPage} />

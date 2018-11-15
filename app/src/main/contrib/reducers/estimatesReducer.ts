@@ -1,11 +1,13 @@
 import {EstimatesAction, EstimateTypes} from "../actionTypes/EstimateTypes";
+import {ILookup} from "../../shared/models/Lookup";
+import {DataPoint} from "../components/Responsibilities/BurdenEstimates/ChartPrototypingPage";
 
 export interface EstimatesState {
-    deaths: any[];
+    deaths: ILookup<DataPoint[]>;
 }
 
 export const estimatesInitialState: EstimatesState = {
-    deaths: []
+    deaths: null
 };
 
 export const estimatesReducer = (state = estimatesInitialState, action: EstimatesAction) => {

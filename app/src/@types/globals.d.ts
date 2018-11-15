@@ -15,5 +15,6 @@ declare module 'react-day-picker/moment';
 declare module 'reselect';
 declare module 'moment';
 declare module 'pako';
+declare module 'react-vis';
 
 declare module 'react-open-iconic-svg';
