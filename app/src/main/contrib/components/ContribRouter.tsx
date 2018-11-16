@@ -25,6 +25,8 @@ import {ResponsibilityGuidanceTuvaluPage} from "./Responsibilities/Guidance/Demo
 import {ExpectationsPage} from "./Responsibilities/Expectations/ExpectationsPage";
 import {ForgottenPasswordPage} from "../../shared/components/ForgottenPasswordPage";
 import {ChartPrototypingPage} from "./Responsibilities/BurdenEstimates/ChartPrototypingPage";
+import {ChartPrototypingPage3} from "./Responsibilities/BurdenEstimates/ChartPrototypingPage3";
+import {ChartPrototypingPage2} from "./Responsibilities/BurdenEstimates/ChartPrototypingPage2";
 
 interface ContribRouterProps {
     loggedIn: boolean;
@@ -40,6 +42,8 @@ export const ContribRouter : React.StatelessComponent<ContribRouterProps> = (pro
         <Route exact path="/:groupId/responsibilities/:touchstoneId/coverage/:scenarioId" component={DownloadCoveragePage}/>
         <Route exact path="/:groupId/responsibilities/:touchstoneId/burdens/:scenarioId" component={UploadBurdenEstimatesPage}/>
         <Route exact path="/:groupId/responsibilities/:touchstoneId/burdens/:scenarioId/chart/" component={ChartPrototypingPage}/>
+        <Route exact path="/:groupId/responsibilities/:touchstoneId/burdens/:scenarioId/chart2/" component={ChartPrototypingPage2}/>
+        <Route exact path="/:groupId/responsibilities/:touchstoneId/burdens/:scenarioId/chart3/" component={ChartPrototypingPage3}/>
         <Route exact path="/:groupId/responsibilities/:touchstoneId/demographics" component={DownloadDemographicsPage}/>
         <Route exact path="/:groupId/responsibilities/:touchstoneId/parameters" component={ModelRunParametersPage}/>
         <Route exact path="/:groupId/responsibilities/:touchstoneId/templates/" component={ExpectationsPage} />

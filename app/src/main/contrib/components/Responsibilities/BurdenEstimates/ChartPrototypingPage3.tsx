@@ -17,6 +17,10 @@ import {UploadBurdenEstimatesPageLocationProps} from "./UploadBurdenEstimatesPag
 import {ReactVisStackedBarChart} from "./ReactVisChart";
 import {RechartsChart} from "./RechartsChart";
 import {NumberRange} from "../../../../shared/models/Generated";
+import {VictoryAxis, VictoryBar, VictoryChart, VictoryStack, VictoryTooltip} from "victory";
+import {interpolateWarm} from "d3-scale-chromatic";
+import {FlexibleWidthXYPlot, HorizontalGridLines, VerticalBarSeriesCanvas, VerticalBarSeries, VerticalGridLines, XAxis, YAxis} from "react-vis";
+import {format} from "d3-format";
 
 class ChartPrototypingPageComponent extends React.Component<PageProperties<UploadBurdenEstimatesPageLocationProps>> {
 
@@ -27,7 +31,7 @@ class ChartPrototypingPageComponent extends React.Component<PageProperties<Uploa
     }
 }
 
-export const ChartPrototypingPage = ContribPage(uploadBurdenEstimatesPageActionCreators)
+export const ChartPrototypingPage3 = ContribPage(uploadBurdenEstimatesPageActionCreators)
 (ChartPrototypingPageComponent);
 
 interface ChartProps {
@@ -35,7 +39,7 @@ interface ChartProps {
     touchstoneVersionId: string,
     groupId: string;
     getData: () => void;
-    data: ILookup<DataPoint[]>;
+    data: DataPoint[];
     ages: NumberRange;
 }
 
@@ -52,7 +56,15 @@ class ScenarioChartComponent extends React.Component<ChartProps> {
 
     render() {
         return <div>
-            <VictoryStackedBarChart data={this.props.data} ages={this.props.ages}/>
+            <FlexibleWidthXYPlot height={400} margin={{left: 100}}>
+                <VerticalGridLines/>
+                <HorizontalGridLines/>
+                <XAxis tickTotal={10} />
+                <YAxis tickTotal={10} tickFormat={(tick:any) => {
+                    return format('.2s')(tick);
+                }}/>
+                <VerticalBarSeries data={this.props.data} />
+            </FlexibleWidthXYPlot>
         </div>
     }
 }
@@ -62,7 +74,7 @@ const mapStateToProps = (state: ContribAppState): Partial<ChartProps> => {
     if (!state.responsibilities.currentResponsibility)
         return {};
 
-    const scenarioId = state.responsibilities.currentResponsibility.scenario.id
+    const scenarioId = state.responsibilities.currentResponsibility.scenario.id;
     return {
         touchstoneVersionId: state.touchstones.currentTouchstoneVersion && state.touchstones.currentTouchstoneVersion.id,
         scenarioId: scenarioId,
@@ -76,7 +88,7 @@ const mapStateToProps = (state: ContribAppState): Partial<ChartProps> => {
 
 export const mapDispatchToProps = (dispatch: Dispatch<ContribAppState>): Partial<ChartProps> => {
     return {
-        getData: () => dispatch(estimatesActionCreators.getEstimates())
+        getData: () => dispatch(estimatesActionCreators.getEstimates(false))
     }
 };
 

@@ -21,13 +21,16 @@ import {NumberRange} from "../../../../shared/models/Generated";
 class ChartPrototypingPageComponent extends React.Component<PageProperties<UploadBurdenEstimatesPageLocationProps>> {
 
     render(): JSX.Element {
-        return <PageArticle title={"Prototypes"}>
+        return <PageArticle title={"Diagnostic plots"}>
+            <p>
+                Below are some basic diagnostic plots to help you check your estimates.
+            </p>
             <ScenarioChart/>
         </PageArticle>
     }
 }
 
-export const ChartPrototypingPage = ContribPage(uploadBurdenEstimatesPageActionCreators)
+export const ChartPrototypingPage2 = ContribPage(uploadBurdenEstimatesPageActionCreators)
 (ChartPrototypingPageComponent);
 
 interface ChartProps {
@@ -52,7 +55,7 @@ class ScenarioChartComponent extends React.Component<ChartProps> {
 
     render() {
         return <div>
-            <VictoryStackedBarChart data={this.props.data} ages={this.props.ages}/>
+            <ReactVisStackedBarChart data={this.props.data} ages={this.props.ages}/>
         </div>
     }
 }

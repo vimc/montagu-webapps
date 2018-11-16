@@ -3,7 +3,7 @@ import {ILookup} from "../../shared/models/Lookup";
 import {DataPoint} from "../components/Responsibilities/BurdenEstimates/ChartPrototypingPage";
 
 export interface EstimatesState {
-    deaths: ILookup<DataPoint[]>;
+    deaths: any;
 }
 
 export const estimatesInitialState: EstimatesState = {

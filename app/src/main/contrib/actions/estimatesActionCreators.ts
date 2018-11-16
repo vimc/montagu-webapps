@@ -17,12 +17,12 @@ export const estimatesActionCreators = {
             dispatch(responsibilitiesActionCreators.refreshResponsibilities());
         }
     },
-    getEstimates() {
+    getEstimates(aggregate: boolean = true) {
         return async (dispatch: Dispatch<ContribAppState>, getState: () => ContribAppState) => {
 
             const ids = mapStateToPropsHelper.getResponsibilityIds(getState());
 
-            const data = await (new EstimatesService(dispatch, getState)).getEstimates(ids.groupId, ids.touchstoneId, ids.scenarioId);
+            const data = await (new EstimatesService(dispatch, getState)).getEstimates(aggregate, ids.groupId, ids.touchstoneId, ids.scenarioId);
             return dispatch({
                 type: EstimateTypes.DEATHS_FETCHED,
                 data: data
