@@ -1,12 +1,17 @@
 import * as React from "react";
+import {Alert} from "reactstrap";
+import {checkFileExtensionIsCSV} from "../../../../shared/validation/FileValidationHelpers";
+import rs from "resumablejs"
+import {ErrorInfo, Result} from "../../../../shared/models/Generated";
 
-const Resumable = require('resumablejs')
+const Resumable = require('resumablejs');
 
 interface ResumableUploadState {
-    file: any,
+    file: rs.ResumableFile,
     progress: number,
-    status: string,
     isUploading: boolean,
+    hasSuccess: boolean,
+    errors: ErrorInfo[]
 }
 
 interface ResumableUploadProps {
@@ -17,83 +22,76 @@ interface ResumableUploadProps {
 
 export class ReactResumableJs extends React.Component<ResumableUploadProps, ResumableUploadState> {
 
-    private resumable: any;
-    private uploader: Element;
-
-    constructor(props: any) {
-        super(props);
-        this.state = {
-            progress: 0,
-            status: '',
-            file: null,
-            isUploading: false
-        };
-
-        this.resumable = null;
-    }
-
     componentDidMount = () => {
 
-        const headers = {
-            Authorization: `Bearer ${this.props.bearerToken}`
-        };
-        let ResumableField = new Resumable({
+        // const headers = {
+        //     Authorization: `Bearer ${this.props.bearerToken}`
+        // };
+
+        const settings: rs.ConfigurationHash = {
             target: this.props.url,
             testChunks: false,
             maxFiles: 1,
-            headers: headers
-        });
+            withCredentials: true,
+            setChunkTypeFromFile: true,
+            generateUniqueIdentifier: () => new Date().toISOString()
+        };
 
-        ResumableField.assignBrowse(this.uploader, false);
+        this.resumable = new Resumable(settings);
 
-        ResumableField.on('fileAdded', (file: any, event: any) => {
-            console.log("fileAdded");
+        this.resumable.assignBrowse(this.uploader, false);
+
+        this.resumable.on('fileAdded', (file: rs.ResumableFile) => {
+
             this.setState({
-                file: file
+                file: file,
+                hasSuccess: false,
+                errors: []
             });
         });
 
-        ResumableField.on('fileSuccess', () => {
-            console.log("fileSuccess");
+        this.resumable.on('fileSuccess', () => {
 
             this.setState({
-                status: "Completed",
+                hasSuccess: true,
                 isUploading: false
             }, () => {
                 this.props.onSuccess();
             });
         });
 
-        ResumableField.on('progress', () => {
+        this.resumable.on('progress', () => {
 
             this.setState({
-                isUploading: ResumableField.isUploading()
+                isUploading: this.resumable.isUploading()
             });
 
-            if ((ResumableField.progress() * 100) < 100) {
-                this.setState({
-                    status: ResumableField.progress() * 100 + '%',
-                    progress: ResumableField.progress() * 100
-                });
-            } else {
-                setTimeout(() => {
-                    this.setState({
-                        progress: 0
-                    })
-                }, 1000);
+            let progress = this.resumable.progress();
+            if (progress > 0.9) {
+                progress = 1;
             }
+
+            this.setState({
+                progress: progress * 100
+            });
 
         });
 
-        ResumableField.on('fileError', (file: any, errorCount: any) => {
-            console.log("fileError");
+        this.resumable.on('fileError', (file: any, error: string) => {
+
+            let errors = [];
+            try {
+                const result = JSON.parse(error) as Result;
+                errors = result.errors
+            }
+            catch {
+                errors.push({code: "error", message: "Error contacting server"})
+            }
             this.setState({
-                status: "error",
+                errors: errors,
                 isUploading: false
             });
         });
-
-        this.resumable = ResumableField;
     };
 
     removeFile = (event: any, file: any) => {
@@ -101,53 +99,104 @@ export class ReactResumableJs extends React.Component<ResumableUploadProps, Resu
         event.preventDefault();
 
         this.setState({
-            file: null
+            file: null,
+            hasSuccess: false,
+            errors: []
         });
 
         this.resumable.removeFile(file);
     };
 
     cancelUpload = () => {
+        this.setState({
+            isUploading: false
+        });
         this.resumable.cancel();
     };
 
     startUpload = () => {
         this.setState({
-            status: "Uploading",
             isUploading: true
         });
         this.resumable.upload();
     };
 
-    render() {
+    private resumable: any = null;
+    private uploader: Element;
 
+    constructor(props: any) {
+        super(props);
+        this.state = {
+            progress: 0,
+            file: null,
+            isUploading: false,
+            errors: [],
+            hasSuccess: false
+        };
+
+        this.onDismiss = this.onDismiss.bind(this);
+    }
+
+    renderSelectedFile(): JSX.Element {
         const originFile = this.state.file;
-        let selectedFile = null;
-        if (originFile) {
-            selectedFile = <div className="thumbnail" key={originFile.name}>
-                {originFile.name}
-                <a onClick={(event) => this.removeFile(event, originFile)} href="#">[X]</a>
-            </div>;
+        if (this.state.file) {
+            const problems = checkFileExtensionIsCSV(originFile.fileName);
+            return <span>
+                File selected: {originFile.fileName}
+                <Alert color="danger" isOpen={!problems.isValid} className="mt-3 pathProblems">
+                    {problems.content}
+                </Alert>
+                 <a onClick={(event) => this.removeFile(event, originFile)} href="#">[X]</a>
+            </span>;
+        } else {
+            return null;
         }
+    }
+
+    onDismiss() {
+        this.setState({
+            errors: [],
+            hasSuccess: false,
+            progress: 0,
+            file: null
+        })
+    }
+
+    render() {
 
         return (
             <div>
-                <label>
-                    Choose file
-                    <input
-                        ref={node => this.uploader = node}
-                        type="file"
-                        className='btn'
-                        name={'file-upload'}
-                        accept={"csv"}
-                    />
-                </label>
-                <div className="progress" style={{display: this.state.progress === 0 ? "none" : "block"}}>
-                    <div className="progress-bar" style={{width: this.state.progress + '%'}}></div>
-                </div>
 
-                {selectedFile}
-                <button disabled={this.state.isUploading} className="submit start"
+                <div className="progress" style={{display: this.state.progress === 0 ? "none" : "block"}}>
+                    <div className={`progress-bar ${this.state.errors.length > 0 ? "bg-danger" :"bg-success"}`}
+                         style={{width: this.state.progress + '%'}}>&nbsp;</div>
+                </div>
+                <span>{this.state.isUploading ? "Uploading file" : this.state.progress == 1 ? "Validating estimates" : ""}</span>
+                <div className="form-group">
+                    <label className="customFileUpload">
+                        <input
+                            ref={node => this.uploader = node}
+                            type="file"
+                            className='btn'
+                            name={'file-upload'}
+                            accept={"csv"}
+                        />
+                        <div className="button mt-2 mb-2">
+                            Choose file
+                        </div>
+                    </label>
+
+                    <div className="mr-5">
+                        {this.renderSelectedFile()}
+                    </div>
+                </div>
+                <Alert color="danger" isOpen={this.state.errors.length > 0} toggle={this.onDismiss}>
+                    {this.state.errors.length > 0 && this.state.errors[0].message}
+                </Alert>
+                <Alert color="success" isOpen={this.state.hasSuccess} toggle={this.onDismiss}>
+                    Success! You have uploaded a new burden estimate set
+                </Alert>
+                <button disabled={this.state.isUploading || this.state.file == null} className="submit start"
                         onClick={this.startUpload}>Upload
                 </button>
                 <button disabled={!this.state.isUploading} className="cancel"

@@ -132,7 +132,7 @@
     "redux-form": "7.2.1",
     "redux-thunk": "2.2.0",
     "reselect": "^3.0.1",
-    "resumablejs": "github:23/resumable.js#master",
+    "resumablejs": "github:23/resumable.js#9b9d1663173d4461d516357e25a4d87775262a3d",
     "whatwg-fetch": "^2.0.3"
   }
 }

@@ -13,6 +13,7 @@ import {Col, Row} from "reactstrap";
 import {DiagnosticSection} from "./DiagnosticSection";
 
 export interface UploadBurdenEstimatesContentProps {
+    bearerToken: string;
     touchstone: TouchstoneVersion;
     scenario: Scenario;
     group: ModellingGroup;
@@ -44,6 +45,7 @@ export class UploadBurdenEstimatesContentComponent extends React.Component<Uploa
                         canUpload={this.props.canCreate}
                     />
                     <UploadBurdenEstimatesForm
+                        bearerToken={this.props.bearerToken}
                         canUpload={this.props.canUpload}
                         canCreate={this.props.canCreate}
                         groupId={this.props.group.id}
@@ -61,8 +63,9 @@ export class UploadBurdenEstimatesContentComponent extends React.Component<Uploa
     }
 }
 
-export const mapStateToProps = (state: ContribAppState): Partial<UploadBurdenEstimatesContentProps> => {
+export const mapStateToProps = (state: ContribAppState): UploadBurdenEstimatesContentProps => {
     const newProps = {
+        bearerToken: state.auth.bearerToken,
         touchstone: state.touchstones.currentTouchstoneVersion,
         scenario: state.responsibilities.currentResponsibility ? state.responsibilities.currentResponsibility.scenario : null,
         group: state.groups.currentUserGroup,
