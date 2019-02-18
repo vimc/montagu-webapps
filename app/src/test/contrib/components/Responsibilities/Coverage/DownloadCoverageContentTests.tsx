@@ -65,20 +65,14 @@ describe("Download Coverage Content Component", () => {
         expect(typeof rendered.props().setFormat).to.eql("function");
     });
 
-    it("renders on branch level, passes", () => {
+    it("renders loading element if current touchstone is null", () => {
         const rendered = shallow(<DownloadCoverageContent/>, {context: {store}}).dive();
         expect(rendered.find('Connect').length).to.eql(1);
     });
 
-    it("renders on branch level, not passes", () => {
-        store = createMockContribStore({
-            groups: {currentUserGroup: mockModellingGroup()},
-            touchstones: {currentTouchstoneVersion: null},
-            coverage: {dataSets: [testCoverageSet], selectedFormat: "long"},
-            responsibilities: {currentResponsibility: testResponsibility},
-        });
+    it("does not render loading element if touchstone and scenario are present", () => {
         const rendered = shallow(<DownloadCoverageContent/>, {context: {store}}).dive().dive();
-        expect(rendered.find(LoadingElement).length).to.eql(1);
+        expect(rendered.find(LoadingElement).length).to.eql(0);
     });
 
     it("renders component on confidentiality level if not rfp touchstone", () => {
