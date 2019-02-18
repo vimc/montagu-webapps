@@ -66,7 +66,7 @@ describe("Download Coverage Content Component", () => {
     });
 
     it("renders loading element if current touchstone is null", () => {
-        const rendered = shallow(<DownloadCoverageContent/>, {context: {store}}).dive();
+        const rendered = shallow(<DownloadCoverageContent/>, {context: {store}}).dive().dive();
         expect(rendered.find(LoadingElement).length).to.eql(1);
     });
 
