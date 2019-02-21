@@ -4,9 +4,12 @@ import {EstimatesService} from "../services/EstimatesService";
 import {responsibilitiesActionCreators} from "./responsibilitiesActionCreators";
 import {mapStateToPropsHelper} from "../helpers/mapStateToPropsHelper";
 import {ContribAppState} from "../reducers/contribAppReducers";
-import {CreateBurdenEstimateSet} from "../../shared/models/Generated";
+import {CreateBurdenEstimateSet, ResultStatus} from "../../shared/models/Generated";
 import {BurdenOutcome, Estimates, EstimateTypes} from "../actionTypes/EstimateTypes";
 import BurdenEstimatesFetched = Estimates.BurdenEstimatesFetched;
+import UploadTokenFetched = Estimates.UploadTokenFetched;
+import EstimateSetPopulated = Estimates.EstimateSetPopulated;
+import ResetPopulateState = Estimates.ResetPopulateState;
 
 export const estimatesActionCreators = {
     createBurden(data: CreateBurdenEstimateSet) {
@@ -16,6 +19,44 @@ export const estimatesActionCreators = {
 
             await (new EstimatesService(dispatch, getState)).createBurden(ids.groupId, ids.touchstoneId, ids.scenarioId, data);
             dispatch(responsibilitiesActionCreators.refreshResponsibilities());
+        }
+    },
+    getUploadToken(fileName: string) {
+        return async (dispatch: Dispatch<ContribAppState>, getState: () => ContribAppState) => {
+
+            const ids = mapStateToPropsHelper.getResponsibilityIds(getState());
+            const token = await (new EstimatesService(dispatch, getState))
+                .getUploadToken(ids.groupId, ids.touchstoneId, ids.scenarioId, ids.estimateSetId, fileName);
+
+            dispatch({
+                type: EstimateTypes.UPLOAD_TOKEN_FETCHED,
+                data: token
+            } as UploadTokenFetched);
+        }
+    },
+    populateEstimateSet(uploadToken: string) {
+        return async (dispatch: Dispatch<ContribAppState>, getState: () => ContribAppState) => {
+
+            const ids = mapStateToPropsHelper.getResponsibilityIds(getState());
+            const result = await (new EstimatesService(dispatch, getState))
+                .populateEstimatesFromFile(ids.groupId, ids.touchstoneId, ids.scenarioId, ids.estimateSetId, uploadToken);
+
+            if (result.status == "success") {
+                dispatch({
+                    type: EstimateTypes.ESTIMATE_SET_POPULATED,
+                    data: {setStatus: "complete", errors: []}
+                } as EstimateSetPopulated);
+            }
+            else {
+                let setStatus = "empty";
+                if (result.errors.map((e) => e.code).indexOf("missing-rows")) {
+                    setStatus = "invalid";
+                }
+                dispatch({
+                    type: EstimateTypes.ESTIMATE_SET_POPULATED,
+                    data: {setStatus: setStatus, errors: result.errors}
+                } as EstimateSetPopulated);
+            }
         }
     },
     getEstimates(outcome: BurdenOutcome, scenarioId: string, setId: number) {
@@ -30,6 +71,12 @@ export const estimatesActionCreators = {
                 type: EstimateTypes.BURDEN_ESTIMATES_FETCHED,
                 data: {burdens: data, type: outcome, setId: setId}
             } as BurdenEstimatesFetched);
+        }
+    },
+    resetPopulateState(): ResetPopulateState {
+        return {
+            type: EstimateTypes.RESET_POPULATE_STATE,
+            data: true
         }
     },
     setChartType(outcome: BurdenOutcome) {
