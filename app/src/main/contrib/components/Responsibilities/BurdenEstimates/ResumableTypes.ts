@@ -4,7 +4,7 @@ export interface ConfigurationHash {
     /**
      * The target URL for the multipart POST request. This can be a string or a function that allows you you to construct and return a value, based on supplied params. (Default: /)
      **/
-    target?: string;
+    target?: string | ((params: any) => string);
     /**
      * The size in bytes of each uploaded chunk of data. The last uploaded chunk will be at least this size and up to two the size, see Issue #51 for details and reasons. (Default: 1*1024*1024)
      **/

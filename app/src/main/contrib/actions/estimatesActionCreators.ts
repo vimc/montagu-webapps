@@ -10,6 +10,7 @@ import BurdenEstimatesFetched = Estimates.BurdenEstimatesFetched;
 import UploadTokenFetched = Estimates.UploadTokenFetched;
 import EstimateSetPopulated = Estimates.EstimateSetPopulated;
 import ResetPopulateState = Estimates.ResetPopulateState;
+import PopulatingEstimateSet = Estimates.PopulatingEstimateSet;
 
 export const estimatesActionCreators = {
     createBurden(data: CreateBurdenEstimateSet) {
@@ -21,12 +22,12 @@ export const estimatesActionCreators = {
             dispatch(responsibilitiesActionCreators.refreshResponsibilities());
         }
     },
-    getUploadToken(fileName: string) {
+    getUploadToken() {
         return async (dispatch: Dispatch<ContribAppState>, getState: () => ContribAppState) => {
 
             const ids = mapStateToPropsHelper.getResponsibilityIds(getState());
             const token = await (new EstimatesService(dispatch, getState))
-                .getUploadToken(ids.groupId, ids.touchstoneId, ids.scenarioId, ids.estimateSetId, fileName);
+                .getUploadToken(ids.groupId, ids.touchstoneId, ids.scenarioId, ids.estimateSetId);
 
             dispatch({
                 type: EstimateTypes.UPLOAD_TOKEN_FETCHED,
@@ -36,6 +37,11 @@ export const estimatesActionCreators = {
     },
     populateEstimateSet(uploadToken: string) {
         return async (dispatch: Dispatch<ContribAppState>, getState: () => ContribAppState) => {
+
+            dispatch({
+                type: EstimateTypes.POPULATING_ESTIMATES,
+                data: true
+            } as PopulatingEstimateSet);
 
             const ids = mapStateToPropsHelper.getResponsibilityIds(getState());
             const result = await (new EstimatesService(dispatch, getState))

@@ -1,17 +1,19 @@
 import {ILookup} from "../../shared/models/Lookup";
 import {DataPoint} from "../reducers/estimatesReducer";
+import {BurdenEstimateSetStatus, ErrorInfo} from "../../shared/models/Generated";
 import SetChartType = Estimates.SetChartType;
 import UploadTokenFetched = Estimates.UploadTokenFetched;
-import {BurdenEstimateSetStatus, ErrorInfo} from "../../shared/models/Generated";
 import EstimateSetPopulated = Estimates.EstimateSetPopulated;
 import ResetPopulateState = Estimates.ResetPopulateState;
+import PopulatingEstimateSet = Estimates.PopulatingEstimateSet;
 
 export enum EstimateTypes {
     UPLOAD_TOKEN_FETCHED,
     BURDEN_ESTIMATES_FETCHED,
     ESTIMATE_SET_POPULATED,
     SET_CHART_TYPE,
-    RESET_POPULATE_STATE
+    RESET_POPULATE_STATE,
+    POPULATING_ESTIMATES
 }
 
 export enum BurdenOutcome {
@@ -42,6 +44,11 @@ export namespace Estimates {
         data: { setStatus: BurdenEstimateSetStatus, errors: ErrorInfo[] }
     }
 
+    export interface PopulatingEstimateSet {
+        type: EstimateTypes.POPULATING_ESTIMATES,
+        data: boolean
+    }
+
     export interface ResetPopulateState {
         type: EstimateTypes.RESET_POPULATE_STATE,
         data: boolean
@@ -54,3 +61,4 @@ export type EstimatesAction =
     | UploadTokenFetched
     | EstimateSetPopulated
     | ResetPopulateState
+    | PopulatingEstimateSet

@@ -1,6 +1,6 @@
 import * as React from "react";
 import {Alert} from "reactstrap";
-import {checkFileExtensionIsCSV} from "../../../../shared/validation/FileValidationHelpers";
+import {checkFileExtensionIsCSV, CustomValidationResult} from "../../../../shared/validation/FileValidationHelpers";
 import {ErrorInfo, Result} from "../../../../shared/models/Generated";
 import {ConfigurationHash, ResumableFile} from "./ResumableTypes";
 import {settings} from "../../../../shared/Settings";
@@ -8,26 +8,28 @@ import {ContribAppState} from "../../../reducers/contribAppReducers";
 import {Dispatch} from "redux";
 import {estimatesActionCreators} from "../../../actions/estimatesActionCreators";
 import {connect} from "react-redux";
-import {branch, compose} from "recompose";
+import {branch, compose, renderComponent} from "recompose";
+import {LoadingElement} from "../../../../shared/partials/LoadingElement/LoadingElement";
 
 const Resumable = require('resumablejs');
 
-interface ResumableUploadState {
+interface PopulateEstimatesState {
     file: ResumableFile,
     progress: number,
     isUploading: boolean,
     hasUploadSuccess: boolean,
-    uploadErrors: ErrorInfo[]
+    uploadErrors: ErrorInfo[],
+    validationResult: CustomValidationResult
 }
 
-interface ResumableUploadPublicProps {
+interface PopulateEstimatesPublicProps {
     touchstoneId: string;
     scenarioId: string;
     groupId: string;
     setId: number
 }
 
-interface ResumableUploadProps extends ResumableUploadPublicProps {
+interface PopulateEstimatesProps extends PopulateEstimatesPublicProps {
     getUploadToken: (fileName: string) => void,
     populateEstimateSet: (token: string) => void,
     hasPopulateSuccess: boolean;
@@ -35,21 +37,23 @@ interface ResumableUploadProps extends ResumableUploadPublicProps {
     resetPopulateState: () => void;
     url: string;
     uploadToken: string;
+    populatingInProgress: boolean;
 }
 
-export class ResumableUploadFormComponent extends React.Component<ResumableUploadProps, ResumableUploadState> {
+export class PopulateEstimatesFormComponent extends React.Component<PopulateEstimatesProps, PopulateEstimatesState> {
 
     private resumable: any = null;
     private uploader: Element;
 
-    constructor(props: ResumableUploadProps) {
+    constructor(props: PopulateEstimatesProps) {
         super(props);
         this.state = {
             progress: 0,
             file: null,
             isUploading: false,
             uploadErrors: [],
-            hasUploadSuccess: false
+            hasUploadSuccess: false,
+            validationResult: null
         };
 
         this.onDismiss = this.onDismiss.bind(this);
@@ -58,26 +62,42 @@ export class ResumableUploadFormComponent extends React.Component<ResumableUploa
     componentDidMount = () => {
 
         const settings: ConfigurationHash = {
-            target: this.props.url,
+            target: (params) => `${this.props.url}?${params.join("&")}`,
             testChunks: false,
             maxFiles: 1,
+            minFileSizeErrorCallback: () => {
+                this.props.resetPopulateState();
+                this.setState({
+                    file: null,
+                    uploadErrors: [{
+                        code: "e",
+                        message: "This file is empty."
+                    }]
+                })
+            },
             withCredentials: true,
             setChunkTypeFromFile: true,
-            generateUniqueIdentifier: () => this.props.uploadToken
+            totalSizeParameterName: "totalSize",
+            fileNameParameterName: "fileName",
+            totalChunksParameterName: "totalChunks",
+            chunkNumberParameterName: "chunkNumber",
+            chunkSizeParameterName: "chunkSize"
         };
 
         this.resumable = new Resumable(settings);
-
         this.resumable.assignBrowse(this.uploader, false);
 
         this.resumable.on('fileAdded', (file: ResumableFile) => {
 
             this.props.resetPopulateState();
+            const validationResult = checkFileExtensionIsCSV(file.fileName);
 
             this.setState({
+                validationResult: validationResult,
                 file: file,
                 hasUploadSuccess: false,
-                uploadErrors: []
+                uploadErrors: [],
+                progress: 0
             });
 
             this.props.getUploadToken(file.fileName)
@@ -87,7 +107,8 @@ export class ResumableUploadFormComponent extends React.Component<ResumableUploa
 
             this.setState({
                 hasUploadSuccess: true,
-                isUploading: false
+                isUploading: false,
+                progress: 0
             }, () => {
                 this.props.populateEstimateSet(this.props.uploadToken);
             });
@@ -96,33 +117,29 @@ export class ResumableUploadFormComponent extends React.Component<ResumableUploa
         this.resumable.on('progress', () => {
 
             this.setState({
-                isUploading: this.resumable.isUploading()
-            });
-
-            this.setState({
+                isUploading: this.resumable.isUploading(),
                 progress: Math.round(this.resumable.progress() * 10) / 10 * 100
             });
-
         });
 
-        this.resumable.on('fileError', (file: any, error: string) => {
+        this.resumable.on('fileError', (file: ResumableFile, error: string) => {
 
             let uploadErrors: ErrorInfo[] = [];
             try {
                 const result = JSON.parse(error) as Result;
                 uploadErrors = result.errors
-            }
-            catch {
+            } catch {
                 uploadErrors.push({code: "error", message: "Error contacting server"})
             }
             this.setState({
                 uploadErrors: uploadErrors,
-                isUploading: false
+                isUploading: false,
+                progress: 0
             });
         });
     };
 
-    removeFile = (event: any, file: any) => {
+    removeFile = (event: any, file: ResumableFile) => {
 
         event.preventDefault();
 
@@ -137,29 +154,36 @@ export class ResumableUploadFormComponent extends React.Component<ResumableUploa
 
     cancelUpload = () => {
         this.setState({
-            isUploading: false
+            isUploading: false,
+            file: null
         });
         this.resumable.cancel();
     };
 
     startUpload = () => {
+        this.props.resetPopulateState();
         this.setState({
             isUploading: true
         });
-        this.resumable.upload();
-    };
+        if (this.resumable.files[0].isComplete()) {
+            this.resumable.files[0].retry()
+        } else {
+            this.resumable.upload();
+        }
 
+    };
 
     renderSelectedFile(): JSX.Element {
         const originFile = this.state.file;
         if (this.state.file) {
-            const problems = checkFileExtensionIsCSV(originFile.fileName);
             return <span>
                 File selected: {originFile.fileName}
-                <Alert color="danger" isOpen={!problems.isValid} className="mt-3 pathProblems">
-                    {problems.content}
+                <a onClick={(event) => this.removeFile(event, originFile)} href="#"
+                   className={"text-danger px-3 font-weight-bold"}>x</a>
+                                <Alert color="danger" isOpen={!this.state.validationResult.isValid}
+                                       className="mt-3 pathProblems">
+                    {this.state.validationResult.content}
                 </Alert>
-                 <a onClick={(event) => this.removeFile(event, originFile)} href="#" className={"btn btn-close"}>x</a>
             </span>;
         } else {
             return null;
@@ -205,13 +229,15 @@ export class ResumableUploadFormComponent extends React.Component<ResumableUploa
                 <Alert color="danger" isOpen={this.state.uploadErrors.length > 0} toggle={this.onDismiss}>
                     {this.state.uploadErrors.length > 0 && this.state.uploadErrors[0].message}
                 </Alert>
-                <Alert color="danger" isOpen={this.state.uploadErrors.length > 0} toggle={this.props.resetPopulateState}>
+                <Alert color="danger" isOpen={this.props.populateErrors.length > 0}
+                       toggle={this.props.resetPopulateState}>
                     {this.props.populateErrors.length > 0 && this.props.populateErrors[0].message}
                 </Alert>
                 <Alert color="success" isOpen={this.props.hasPopulateSuccess} toggle={this.props.resetPopulateState}>
                     Success! You have uploaded a new burden estimate set
                 </Alert>
-                <button disabled={this.state.isUploading || this.state.file == null || this.props.uploadToken == null}
+                <button disabled={this.state.isUploading || this.state.file == null || this.props.url == null
+                || !this.state.validationResult.isValid}
                         className="submit start"
                         onClick={this.startUpload}>Upload
                 </button>
@@ -223,29 +249,32 @@ export class ResumableUploadFormComponent extends React.Component<ResumableUploa
     }
 }
 
-const mapStateToProps: (state: ContribAppState, props: ResumableUploadPublicProps) => Partial<ResumableUploadProps>
-    = (state: ContribAppState, props: ResumableUploadPublicProps) => {
+const mapStateToProps: (state: ContribAppState, props: PopulateEstimatesPublicProps) => Partial<PopulateEstimatesProps>
+    = (state: ContribAppState, props: PopulateEstimatesPublicProps) => {
     return {
         ...props,
-        url: `${settings.apiUrl()}/modelling-groups/${props.groupId}/responsibilities/${props.touchstoneId}/${props.scenarioId}/estimate-sets/${props.setId}/`,
+        url: state.estimates.uploadToken == null ? null :
+            `${settings.apiUrl()}/modelling-groups/${props.groupId}/responsibilities/${props.touchstoneId}/${props.scenarioId}/estimate-sets/${props.setId}/actions/upload/${state.estimates.uploadToken}/`,
         uploadToken: state.estimates.uploadToken,
         populateErrors: state.estimates.populateErrors,
-        hasPopulateSuccess: state.estimates.hasPopulateSuccess
+        hasPopulateSuccess: state.estimates.hasPopulateSuccess,
+        populatingInProgress: state.estimates.populatingInProgress
     }
 };
 
 const mapDispatchToProps:
-    (dispatch: Dispatch<ContribAppState>, props: Partial<ResumableUploadProps>) => Partial<ResumableUploadProps>
+    (dispatch: Dispatch<ContribAppState>, props: Partial<PopulateEstimatesProps>) => Partial<PopulateEstimatesProps>
     = (dispatch, props) => {
     return {
         ...props,
-        getUploadToken: (fileName) => dispatch(estimatesActionCreators.getUploadToken(fileName)),
+        getUploadToken: () => dispatch(estimatesActionCreators.getUploadToken()),
         populateEstimateSet: (token) => dispatch(estimatesActionCreators.populateEstimateSet(token)),
         resetPopulateState: () => dispatch(estimatesActionCreators.resetPopulateState())
     }
 };
 
-export const ResumableUploadForm =
-    compose(
-        connect(mapStateToProps, mapDispatchToProps)(ResumableUploadFormComponent)
-    ) as any;
+export const PopulateEstimatesForm =
+    compose<PopulateEstimatesProps, PopulateEstimatesPublicProps>(
+        connect(mapStateToProps, mapDispatchToProps),
+        branch((props: PopulateEstimatesProps) => props.populatingInProgress, renderComponent(LoadingElement))
+    )(PopulateEstimatesFormComponent);
