@@ -4,7 +4,7 @@ import {EstimatesService} from "../services/EstimatesService";
 import {responsibilitiesActionCreators} from "./responsibilitiesActionCreators";
 import {mapStateToPropsHelper} from "../helpers/mapStateToPropsHelper";
 import {ContribAppState} from "../reducers/contribAppReducers";
-import {CreateBurdenEstimateSet, ResultStatus} from "../../shared/models/Generated";
+import {BurdenEstimateSetStatus, CreateBurdenEstimateSet, Result, ResultStatus} from "../../shared/models/Generated";
 import {BurdenOutcome, Estimates, EstimateTypes} from "../actionTypes/EstimateTypes";
 import BurdenEstimatesFetched = Estimates.BurdenEstimatesFetched;
 import UploadTokenFetched = Estimates.UploadTokenFetched;
@@ -47,24 +47,28 @@ export const estimatesActionCreators = {
             const result = await (new EstimatesService(dispatch, getState))
                 .populateEstimatesFromFile(ids.groupId, ids.touchstoneId, ids.scenarioId, ids.estimateSetId, uploadToken);
 
-            if (result.status == "success") {
-                dispatch({
-                    type: EstimateTypes.ESTIMATE_SET_POPULATED,
-                    data: {setStatus: "complete", errors: []}
-                } as EstimateSetPopulated);
+            dispatch(this._estimateSetPopulated(result))
+        }
+    },
+
+    _estimateSetPopulated(result: Result): EstimateSetPopulated {
+
+        if (result.status == "success") {
+            return {
+                type: EstimateTypes.ESTIMATE_SET_POPULATED,
+                data: {setStatus: "complete", errors: []}
             }
-            else {
-                let setStatus = "empty";
-                if (result.errors.map((e) => e.code).indexOf("missing-rows")) {
-                    setStatus = "invalid";
-                }
-                dispatch({
-                    type: EstimateTypes.ESTIMATE_SET_POPULATED,
-                    data: {setStatus: setStatus, errors: result.errors}
-                } as EstimateSetPopulated);
+        }
+        else {
+            const setStatus = result.errors.map((e) => e.code).indexOf("missing-rows") ?
+                "invalid" : "empty" as BurdenEstimateSetStatus;
+            return {
+                type: EstimateTypes.ESTIMATE_SET_POPULATED,
+                data: {setStatus: setStatus, errors: result.errors}
             }
         }
     },
+
     getEstimates(outcome: BurdenOutcome, scenarioId: string, setId: number) {
         return async (dispatch: Dispatch<ContribAppState>, getState: () => ContribAppState) => {
 
