@@ -6,7 +6,7 @@ import {TouchstoneVersion} from "../../../../../main/shared/models/Generated";
 import {ResponsibilityGuidanceContentProps} from "../../../../../main/contrib/components/Responsibilities/Guidance/content/ResponsibilityGuidanceContentProps";
 import {responsibilityGuidanceModelInputsPageActionCreators} from "../../../../../main/contrib/actions/pages/responsibilityGuidancePageActionCreators";
 import {shallow} from "enzyme";
-import {ResponsibilityGuidanceModelInputsContentLatest} from "../../../../../main/contrib/components/Responsibilities/Guidance/content/ResponsibilityGuidanceModelInputsContentLatest";
+import {ResponsibilityGuidanceModelInputsContentDefault} from "../../../../../main/contrib/components/Responsibilities/Guidance/content/ResponsibilityGuidanceModelInputsContentDefault";
 import {ResponsibilityGuidanceModelInputsContent2017} from "../../../../../main/contrib/components/Responsibilities/Guidance/content/ResponsibilityGuidanceModelInputsContent2017";
 import {ResponsibilityGuidanceModelOutputsContentLatest} from "../../../../../main/contrib/components/Responsibilities/Guidance/content/ResponsibilityGuidanceModelOutputsContentLatest";
 import {ResponsibilityGuidanceModelOutputsContent2017} from "../../../../../main/contrib/components/Responsibilities/Guidance/content/ResponsibilityGuidanceModelOutputsContent2017";
@@ -39,7 +39,7 @@ describe("Guidance Content Component tests", () => {
     it("renders Latest Input Content component with expected content", () => {
 
         const onLoadStub = sandbox.setStubReduxAction(responsibilityGuidanceModelInputsPageActionCreators, "onLoad");
-        const rendered = shallow(<ResponsibilityGuidanceModelInputsContentLatest touchstoneVersion={testTouchstone}/>, {context: {store}});
+        const rendered = shallow(<ResponsibilityGuidanceModelInputsContentDefault touchstoneVersion={testTouchstone}/>, {context: {store}});
 
         const props = rendered.props();
         expect(props.touchstoneVersion.name).is.equal(testTouchstone.name);

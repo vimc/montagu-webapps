@@ -1,4 +1,3 @@
-import {LoadingElement} from "../../../../../shared/partials/LoadingElement/LoadingElement";
 import {PageArticle} from "../../../../../shared/components/PageWithHeader/PageArticle";
 import ScrollableAnchor from "react-scrollable-anchor";
 import {InternalLink} from "../../../../../shared/components/InternalLink";
@@ -7,7 +6,7 @@ import * as React from "react";
 import {mapStateToGuidanceContentProps, ResponsibilityGuidanceContentProps} from "./ResponsibilityGuidanceContentProps";
 import {connect} from "react-redux";
 
-export class ResponsibilityGuidanceModelInputsContentLatestComponent extends React.Component<ResponsibilityGuidanceContentProps> {
+export class ResponsibilityGuidanceModelInputsContentDefaultComponent extends React.Component<ResponsibilityGuidanceContentProps> {
 
 
     render() :JSX.Element {
@@ -308,4 +307,4 @@ export class ResponsibilityGuidanceModelInputsContentLatestComponent extends Rea
     }
 }
 
-export const ResponsibilityGuidanceModelInputsContentLatest = connect(mapStateToGuidanceContentProps)(ResponsibilityGuidanceModelInputsContentLatestComponent);
+export const ResponsibilityGuidanceModelInputsContentDefault = connect(mapStateToGuidanceContentProps)(ResponsibilityGuidanceModelInputsContentDefaultComponent);

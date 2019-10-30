@@ -10,7 +10,7 @@ import {responsibilityGuidanceModelInputsPageActionCreators} from "../../../../.
 import {mockTouchstoneVersion} from "../../../../mocks/mockModels";
 import {mockMatch} from "../../../../mocks/mocks";
 import {ResponsibilityGuidancePageLocationProps} from "../../../../../main/contrib/components/Responsibilities/Guidance/ResponsibilityGuidancePageProps";
-import {ResponsibilityGuidanceModelInputsContentLatest} from "../../../../../main/contrib/components/Responsibilities/Guidance/content/ResponsibilityGuidanceModelInputsContentLatest";
+import {ResponsibilityGuidanceModelInputsContentDefault} from "../../../../../main/contrib/components/Responsibilities/Guidance/content/ResponsibilityGuidanceModelInputsContentDefault";
 import {ResponsibilityGuidanceModelInputsContent2017} from "../../../../../main/contrib/components/Responsibilities/Guidance/content/ResponsibilityGuidanceModelInputsContent2017";
 import {ResponsibilityGuidanceTouchstoneNotOpenContent} from "../../../../../main/contrib/components/Responsibilities/Guidance/content/ResponsibilityGuidanceTouchstoneNotOpenContent";
 
@@ -60,7 +60,7 @@ describe("Guidance Model Inputs Page Component tests", () => {
 
         expect(onLoadStub.called).is.equal(true);
 
-        const content = rendered.find(ResponsibilityGuidanceModelInputsContentLatest);
+        const content = rendered.find(ResponsibilityGuidanceModelInputsContentDefault);
         expect(content.getElements().length).is.equal(1);
 
 
