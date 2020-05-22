@@ -21,8 +21,7 @@ RUN add-apt-repository \
    stable"
 RUN apt-get update
 
-# TODO: update this to latest
-RUN apt-get install -y docker-ce=5:18.09.0~3-0~debian-stretch
+RUN apt-get install -y docker-ce=5:19.03.9~3-0~debian-stretch
 
 # Install Docker Compose
 RUN curl -L https://github.com/docker/compose/releases/download/1.16.1/docker-compose-`uname -s`-`uname -m` \
