@@ -20,6 +20,8 @@ RUN add-apt-repository \
    $(lsb_release -cs) \
    stable"
 RUN apt-get update
+
+# TODO: update this to latest
 RUN apt-get install -y docker-ce=5:18.09.0~3-0~debian-stretch
 
 # Install Docker Compose
