@@ -3,7 +3,7 @@ set -e
 HERE=$(dirname $0)
 . $HERE/common
 
-docker pull vimc/node-docker-openjdk:master
+docker pull vimc/node-docker-openjdk:mrc-2639
 
 # Shared build env between the main build (being executed now) and the
 # reusable integration test image that will be run in the main Montagu build.

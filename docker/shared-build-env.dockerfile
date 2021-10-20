@@ -1,4 +1,4 @@
-FROM vimc/node-docker-openjdk:master
+FROM vimc/node-docker-openjdk:mrc-2639
 
 # Install Docker Compose
 RUN curl -L https://github.com/docker/compose/releases/download/1.16.1/docker-compose-`uname -s`-`uname -m` \
