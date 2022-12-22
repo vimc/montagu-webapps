@@ -102,7 +102,7 @@
     "file-loader": "^1.1.11",
     "history": "^4.7.2",
     "js-base64": "^2.5.1",
-    "jsonwebtoken": "^8.4.0",
+    "jsonwebtoken": "^9.0.0",
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.19",
     "mock-browser": "^0.92.14",
