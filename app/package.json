@@ -106,7 +106,7 @@
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.19",
     "mock-browser": "^0.92.14",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "pako": "^1.0.8",
     "prop-types": "^15.7.2",
     "react": "^16.8.2",
